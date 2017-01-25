@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using MathExecutor.Models;
 
 namespace MathExecutor.Interfaces
@@ -11,5 +13,7 @@ namespace MathExecutor.Interfaces
         int Order { get; }
         bool CanBeExecuted();
         void AddStep(IExpression expressionBefore, IExpression expressionAfter);
+        IExpression ReplaceVariables(Dictionary<string, double> values);
+        IExpression Clone();
     }
 }

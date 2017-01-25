@@ -9,7 +9,7 @@ namespace MathExecutor.Models
         public IList Steps { get; set; }
         public IExpression Result { get; set; }
         public bool HasNumericResult { get; set; }
-        public decimal NumericResult { get; set; }
+        public double NumericResult { get; set; }
 
         public Solution()
         {

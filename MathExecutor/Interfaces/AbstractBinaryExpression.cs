@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using MathExecutor.Models;
 
 namespace MathExecutor.Interfaces
@@ -13,6 +15,9 @@ namespace MathExecutor.Interfaces
         {
             LeftOperand = leftOperand;
             RightOperand = rightOperand;
+
+            LeftOperand.ParentExpression = this;
+            RightOperand.ParentExpression = this;
         }
 
         public IExpression Execute()
@@ -34,9 +39,19 @@ namespace MathExecutor.Interfaces
 
         public int Arity => 2;
         public IExpression ParentExpression { get; set; }
+
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
-            ParentExpression.AddStep(expressionBefore, expressionAfter);
+            ParentExpression?.AddStep(expressionBefore, expressionAfter);
         }
+
+        public IExpression ReplaceVariables(Dictionary<string, double> values)
+        {
+            LeftOperand = LeftOperand.ReplaceVariables(values);
+            RightOperand = RightOperand.ReplaceVariables(values);
+            return this;
+        }
+
+        public abstract IExpression Clone();
     }
 }

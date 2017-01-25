@@ -52,6 +52,7 @@
     <Compile Include="Interfaces\AbstractUnaryExpression.cs" />
     <Compile Include="Interfaces\IExpression.cs" />
     <Compile Include="Models\ExpressionType.cs" />
+    <Compile Include="Interfaces\IVariable.cs" />
     <Compile Include="Models\Monomial.cs" />
     <Compile Include="Models\Solution.cs" />
     <Compile Include="Models\Step.cs" />

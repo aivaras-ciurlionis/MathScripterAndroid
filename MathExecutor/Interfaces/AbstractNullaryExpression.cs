@@ -19,18 +19,22 @@ namespace MathExecutor.Interfaces
         public int Arity => 0;
         public abstract int Order { get; }
         public bool CanBeExecuted() => true;
-        protected abstract decimal Value { get; }
+        protected abstract double Value { get; }
 
         public IExpression Execute()
         {
-            return new Monomial
-            {
-                Coefficient = Value
-            };
+            return new Monomial(Value);
         }
         public IExpression ParentExpression { get; set; }
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
         }
+
+        public IExpression ReplaceVariables(Dictionary<string, double> values)
+        {
+            return this;
+        }
+
+        public abstract IExpression Clone();
     }
 }

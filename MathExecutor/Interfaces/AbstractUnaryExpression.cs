@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MathExecutor.Models;
 
 namespace MathExecutor.Interfaces
@@ -9,6 +10,7 @@ namespace MathExecutor.Interfaces
         protected AbstractUnaryExpression(IExpression operand)
         {
             Operand = operand;
+            Operand.ParentExpression = this;
         }
 
         public IExpression Execute()
@@ -28,9 +30,18 @@ namespace MathExecutor.Interfaces
         public int Arity => 1;
         public abstract bool CanBeExecuted();
         public IExpression ParentExpression { get; set; }
+
         public virtual void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
-            ParentExpression.AddStep(expressionBefore, expressionAfter);
+            ParentExpression?.AddStep(expressionBefore, expressionAfter);
         }
+
+        public IExpression ReplaceVariables(Dictionary<string, double> values)
+        {
+            Operand = Operand.ReplaceVariables(values);
+            return this;
+        }
+
+        public abstract IExpression Clone();
     }
 }
