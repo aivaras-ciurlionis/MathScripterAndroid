@@ -70,7 +70,7 @@ namespace MathExecutor.Models
         public override string ToString()
         {
             return Variables?.Aggregate(Coefficient.ToString(CultureInfo.InvariantCulture),
-                (text, variable) => variable.ToString())
+                (text, variable) => text + variable.ToString())
                 ?? Coefficient.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -78,5 +78,7 @@ namespace MathExecutor.Models
         {
             return new Monomial(Coefficient, Variables);
         }
+
+        public IList<IExpression> Operands => null;
     }
 }

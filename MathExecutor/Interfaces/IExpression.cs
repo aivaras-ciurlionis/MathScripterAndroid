@@ -6,6 +6,7 @@ namespace MathExecutor.Interfaces
 {
     public interface IExpression
     {
+        IList<IExpression> Operands { get; }
         IExpression Execute();
         IExpression ParentExpression { get; set; }
         ExpressionType Type { get; }

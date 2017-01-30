@@ -9,10 +9,10 @@ namespace MathExecutor.Expressions.Arithmetic
         {
         }
 
-        protected override IExpression InnerExecute()
+        public override IExpression InnerExecute()
         {
-            var left = LeftOperand as Monomial;
-            var right = RightOperand as Monomial;
+            var left = Operands[0] as Monomial;
+            var right = Operands[1] as Monomial;
             return new Monomial(left.Coefficient - right.Coefficient, left.Variables);
         }
 
@@ -20,8 +20,8 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override bool CanBeExecuted()
         {
-            var left = LeftOperand as Monomial;
-            var right = RightOperand as Monomial;
+            var left = Operands[0] as Monomial;
+            var right = Operands[1] as Monomial;
             return left != null && left.AreVariablesEqual(right);
         }
 
@@ -29,12 +29,12 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override string ToString()
         {
-            return $"{LeftOperand} - {RightOperand}";
+            return $"{Operands[0]} - {Operands[1]}";
         }
 
         public override IExpression Clone()
         {
-            return new SubtractExpression(LeftOperand.Clone(), RightOperand.Clone());
+            return new SubtractExpression(Operands[0].Clone(), Operands[1].Clone());
         }
     }
 }

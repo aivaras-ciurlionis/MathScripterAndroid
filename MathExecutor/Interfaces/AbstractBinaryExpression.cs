@@ -1,57 +1,22 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using MathExecutor.Models;
 
 namespace MathExecutor.Interfaces
 {
-    public abstract class AbstractBinaryExpression : IExpression
+    public abstract class AbstractBinaryExpression : AbstractExpression
     {
-        protected IExpression LeftOperand;
-        protected IExpression RightOperand;
-
         protected AbstractBinaryExpression(
             IExpression leftOperand,
-            IExpression rightOperand)
+            IExpression rightOperand) : base(new List<IExpression> {leftOperand, rightOperand})
         {
-            LeftOperand = leftOperand;
-            RightOperand = rightOperand;
-
-            LeftOperand.ParentExpression = this;
-            RightOperand.ParentExpression = this;
         }
 
-        public IExpression Execute()
-        {
-            LeftOperand = LeftOperand.Execute();
-            RightOperand = RightOperand.Execute();
-            if (!(LeftOperand is Monomial) || !(RightOperand is Monomial) || !CanBeExecuted())
-                return this;
-            var expressionBefore = this;
-            var result = InnerExecute();
-            AddStep(expressionBefore, result);
-            return result;
-        }
+        public override int Arity => 2;
 
-        protected abstract IExpression InnerExecute();
-        public abstract bool CanBeExecuted();
-        public abstract ExpressionType Type { get; }
-        public abstract int Order { get; }
-
-        public int Arity => 2;
-        public IExpression ParentExpression { get; set; }
-
-        public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
-        {
-            ParentExpression?.AddStep(expressionBefore, expressionAfter);
-        }
-
-        public IExpression ReplaceVariables(Dictionary<string, double> values)
-        {
-            LeftOperand = LeftOperand.ReplaceVariables(values);
-            RightOperand = RightOperand.ReplaceVariables(values);
-            return this;
-        }
-
-        public abstract IExpression Clone();
+        public abstract override IExpression InnerExecute();
+        public abstract override bool CanBeExecuted();
+        public abstract override ExpressionType Type { get; }
+        public abstract override int Order { get; }
+        public abstract override IExpression Clone();
     }
 }

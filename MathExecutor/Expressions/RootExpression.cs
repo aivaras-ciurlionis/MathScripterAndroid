@@ -9,12 +9,10 @@ namespace MathExecutor.Expressions
     {
         private Solution SolutionTracker { get; }
 
-        protected IExpression Operand;
-
         public RootExpression(IExpression operand, Solution solution)
         {
-            Operand = operand;
-            Operand.ParentExpression = this;
+            operand.ParentExpression = this;
+            Operands = new List<IExpression> {operand};
             SolutionTracker = solution;
         }
 
@@ -23,12 +21,11 @@ namespace MathExecutor.Expressions
         public bool CanBeExecuted() => false;
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
-           ;
             var step = new Step
             {
                 ComputedExpression = expressionBefore,
                 ExpressionResult = expressionAfter,
-                FullExpression = Operand.Clone(),
+                FullExpression = Operands[0].Clone(),
                 TextExpressionResult = ToString()
             };
             Debug.WriteLine(step.TextExpressionResult);
@@ -37,7 +34,7 @@ namespace MathExecutor.Expressions
 
         public IExpression Execute()
         {
-            return Operand.Execute();
+            return Operands[0].Execute();
         }
 
         public Solution FindSolution()
@@ -62,18 +59,20 @@ namespace MathExecutor.Expressions
 
         public IExpression ReplaceVariables(Dictionary<string, double> values)
         {
-            Operand = Operand.ReplaceVariables(values);
-            return Operand;
+            Operands[0] = Operands[0].ReplaceVariables(values);
+            return Operands[0];
         }
 
         public override string ToString()
         {
-            return Operand.ToString();
+            return Operands[0].ToString();
         }
 
         public IExpression Clone()
         {
-            return new RootExpression(Operand, SolutionTracker);
+            return new RootExpression(Operands[0], SolutionTracker);
         }
+
+        public IList<IExpression> Operands { get; }
     }
 }
