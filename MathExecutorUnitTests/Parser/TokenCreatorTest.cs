@@ -18,11 +18,11 @@ namespace MathExecutorUnitTests.Parser
         public void Init()
         {
             _expressionFactory = Substitute.For<IExpressionFactory>();
-            _expressionFactory.GetExpression("a").ReturnsNull();
-            _expressionFactory.GetExpression("x").ReturnsNull();
-            _expressionFactory.GetExpression("abc").ReturnsNull();
-            _expressionFactory.GetExpression("+").Returns(new SumExpression(null, null));
-            _expressionFactory.GetExpression("*").Returns(new MultiplyExpression(null, null));
+            _expressionFactory.GetExpression("a", Arg.Any<Token>()).ReturnsNull();
+            _expressionFactory.GetExpression("x", Arg.Any<Token>()).ReturnsNull();
+            _expressionFactory.GetExpression("abc", Arg.Any<Token>()).ReturnsNull();
+            _expressionFactory.GetExpression("+", Arg.Any<Token>()).Returns(new SumExpression(null, null));
+            _expressionFactory.GetExpression("*", Arg.Any<Token>()).Returns(new MultiplyExpression(null, null));
             _tokenCreator = new TokenCreator(_expressionFactory);
         }
 
@@ -43,7 +43,7 @@ namespace MathExecutorUnitTests.Parser
             Assert.AreEqual(TokenType.Operation, createdToken.TokenType);
             Assert.AreEqual("+", createdToken.Value);
             Assert.AreEqual(1, createdToken.Level);
-            Assert.AreEqual(2, createdToken.Order);
+            Assert.AreEqual(3, createdToken.Order);
         }
 
         [Test]

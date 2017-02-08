@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Expressions\Arithmetic\DivisionExpression.cs" />
+    <Compile Include="Expressions\Arithmetic\ExponentExpression.cs" />
     <Compile Include="Expressions\Arithmetic\MultiplyExpression.cs" />
+    <Compile Include="Expressions\Arithmetic\NegationExpression.cs" />
     <Compile Include="Expressions\Arithmetic\ParenthesisExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SubtractExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SumExpression.cs" />
@@ -57,10 +59,15 @@
     <Compile Include="Interfaces\IExpression.cs" />
     <Compile Include="Interfaces\IExpressionCreator.cs" />
     <Compile Include="Interfaces\IExpressionFactory.cs" />
+    <Compile Include="Interfaces\IInterpreter.cs" />
+    <Compile Include="Interfaces\IMinOperationFinder.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\ISymbolTypeChecker.cs" />
     <Compile Include="Interfaces\ITokenCreator.cs" />
+    <Compile Include="Interfaces\ITokenFixer.cs" />
     <Compile Include="Interfaces\ITokenParser.cs" />
+    <Compile Include="Interfaces\IMonomialResolver.cs" />
+    <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="Models\ExpressionType.cs" />
     <Compile Include="Interfaces\IVariable.cs" />
     <Compile Include="Models\Monomial.cs" />
@@ -70,9 +77,13 @@
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\TokenType.cs" />
     <Compile Include="Models\Variable.cs" />
+    <Compile Include="Parser\ExpressionCreator.cs" />
+    <Compile Include="Parser\MinOperationFinder.cs" />
+    <Compile Include="Parser\MonomialResolver.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\SymbolTypeChecker.cs" />
     <Compile Include="Parser\TokenCreator.cs" />
+    <Compile Include="Parser\TokenFixer.cs" />
     <Compile Include="Parser\TokenParser.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

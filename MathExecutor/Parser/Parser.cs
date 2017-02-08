@@ -15,7 +15,8 @@ namespace MathExecutor.Parser
 
         public IExpression Parse(string equation)
         {
-            return _expressionCreator.CreateExpression(_tokenParser.ParseTokens(equation));
+            var tokens = _tokenParser.ParseTokens(equation);
+            return _expressionCreator.CreateExpression(tokens);
         }
     }
 }

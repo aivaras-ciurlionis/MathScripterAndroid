@@ -12,7 +12,7 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override IExpression Clone()
         {
-            return new ParenthesisExpression(Operands.First());
+            return new ParenthesisExpression(Operands.First().Clone());
         }
 
         public override IExpression InnerExecute()
@@ -20,8 +20,13 @@ namespace MathExecutor.Expressions.Arithmetic
             return Operands.First();
         }
 
+        public override string ToString()
+        {
+            return $"({Operands[0]})";
+        }
+
         public override ExpressionType Type => ExpressionType.Arithmetic;
-        public override int Order => 0;
+        public override int Order => 5;
         public override bool CanBeExecuted() => true;
     }
 }

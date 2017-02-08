@@ -67,11 +67,17 @@ namespace MathExecutor.Models
             return new Monomial(product);
         }
 
+        private string GetCoefficientString()
+        {
+            return Math.Abs(Coefficient - 1) < 0.001 && !IsNumeral() ? "" : 
+                Coefficient.ToString(CultureInfo.InvariantCulture);
+        }
+
         public override string ToString()
         {
-            return Variables?.Aggregate(Coefficient.ToString(CultureInfo.InvariantCulture),
+            return Variables?.Aggregate(GetCoefficientString(),
                 (text, variable) => text + variable.ToString())
-                ?? Coefficient.ToString(CultureInfo.InvariantCulture);
+                ?? GetCoefficientString();
         }
 
         public IExpression Clone()

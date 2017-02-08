@@ -4,6 +4,8 @@ using MathExecutor.Interfaces;
 using MathExecutor.Models;
 using MathExecutor.Parser;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
+using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
 
 namespace MathExecutorUnitTests.Parser
@@ -14,12 +16,16 @@ namespace MathExecutorUnitTests.Parser
         private ITokenParser _tokenParser;
         private ISymbolTypeChecker _symbolTypeChecker;
         private ITokenCreator _tokenCreator;
+        private ITokenFixer _tokenFixer;
 
         [SetUp]
         public void Init()
         {
             _symbolTypeChecker = Substitute.For<ISymbolTypeChecker>();
             _tokenCreator = Substitute.For<ITokenCreator>();
+            _tokenFixer = Substitute.For<ITokenFixer>();
+
+            _tokenFixer.GetAditionalToken(Arg.Any<Token>(), Arg.Any<Token>()).ReturnsNullForAnyArgs();
 
             _symbolTypeChecker.GetSymbolType('2').Returns(SymbolType.Numeric);
             _symbolTypeChecker.GetSymbolType('3').Returns(SymbolType.Numeric);
@@ -31,56 +37,55 @@ namespace MathExecutorUnitTests.Parser
             _symbolTypeChecker.GetSymbolType(')').Returns(SymbolType.Parenthesis);
             _symbolTypeChecker.GetSymbolType('a').Returns(SymbolType.Other);
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "2", 0)
+            _tokenCreator.GetToken(SymbolType.Numeric, "2", 0, Arg.Any<Token>())
                 .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Number, Value = "2" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "2", 1)
+            _tokenCreator.GetToken(SymbolType.Numeric, "2", 1, Arg.Any<Token>())
                 .Returns(new Token { Level = 1, Order = 0, TokenType = TokenType.Number, Value = "2" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "223", 1)
+            _tokenCreator.GetToken(SymbolType.Numeric, "223", 1, Arg.Any<Token>())
                .Returns(new Token { Level = 1, Order = 0, TokenType = TokenType.Number, Value = "223" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "3", 0)
+            _tokenCreator.GetToken(SymbolType.Numeric, "3", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Number, Value = "3" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "23", 0)
+            _tokenCreator.GetToken(SymbolType.Numeric, "23", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Number, Value = "23" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "2.33", 0)
+            _tokenCreator.GetToken(SymbolType.Numeric, "2.33", 0, Arg.Any<Token>())
                 .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Number, Value = "2.33" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "3.23", 0)
+            _tokenCreator.GetToken(SymbolType.Numeric, "3.23", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Number, Value = "3.23" });
 
-            _tokenCreator.GetToken(SymbolType.Numeric, "3", 2)
+            _tokenCreator.GetToken(SymbolType.Numeric, "3", 2, Arg.Any<Token>())
                .Returns(new Token { Level = 2, Order = 0, TokenType = TokenType.Number, Value = "3" });
 
-            _tokenCreator.GetToken(SymbolType.Symbol, "+", 0)
+            _tokenCreator.GetToken(SymbolType.Symbol, "+", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 2, TokenType = TokenType.Operation, Value = "+" });
 
-            _tokenCreator.GetToken(SymbolType.Parenthesis, "(", 0)
-              .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Operation, Value = "(" });
+            _tokenCreator.GetToken(SymbolType.Parenthesis, "(", 1, Arg.Any<Token>())
+              .Returns(new Token { Level = 1, Order = 3, TokenType = TokenType.Operation, Value = "(" });
 
-            _tokenCreator.GetToken(SymbolType.Parenthesis, "(", 1)
-              .Returns(new Token { Level = 1, Order = 0, TokenType = TokenType.Operation, Value = "(" });
+            _tokenCreator.GetToken(SymbolType.Parenthesis, "(", 2, Arg.Any<Token>())
+              .Returns(new Token { Level = 2, Order = 3, TokenType = TokenType.Operation, Value = "(" });
 
-            _tokenCreator.GetToken(SymbolType.Symbol, "+", 1)
+            _tokenCreator.GetToken(SymbolType.Symbol, "+", 1, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 2, TokenType = TokenType.Operation, Value = "+" });
 
-            _tokenCreator.GetToken(SymbolType.Symbol, "*", 0)
+            _tokenCreator.GetToken(SymbolType.Symbol, "*", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 1, TokenType = TokenType.Operation, Value = "*" });
 
-            _tokenCreator.GetToken(SymbolType.Symbol, "*", 1)
+            _tokenCreator.GetToken(SymbolType.Symbol, "*", 1, Arg.Any<Token>())
                .Returns(new Token { Level = 1, Order = 1, TokenType = TokenType.Operation, Value = "*" });
 
-            _tokenCreator.GetToken(SymbolType.Symbol, "*", 2)
+            _tokenCreator.GetToken(SymbolType.Symbol, "*", 2, Arg.Any<Token>())
                .Returns(new Token { Level = 2, Order = 1, TokenType = TokenType.Operation, Value = "*" });
 
-            _tokenCreator.GetToken(SymbolType.Other, "a", 0)
+            _tokenCreator.GetToken(SymbolType.Other, "a", 0, Arg.Any<Token>())
                .Returns(new Token { Level = 0, Order = 0, TokenType = TokenType.Variable, Value = "a" });
 
-
-            _tokenParser = new TokenParser(_symbolTypeChecker, _tokenCreator);
+            _tokenParser = new TokenParser(_symbolTypeChecker, _tokenCreator, _tokenFixer);
         }
 
         [Test]

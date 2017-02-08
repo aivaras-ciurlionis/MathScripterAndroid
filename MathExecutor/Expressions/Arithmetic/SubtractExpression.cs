@@ -16,7 +16,7 @@ namespace MathExecutor.Expressions.Arithmetic
             return new Monomial(left.Coefficient - right.Coefficient, left.Variables);
         }
 
-        public override int Order => 2;
+        public override int Order => 3;
 
         public override bool CanBeExecuted()
         {

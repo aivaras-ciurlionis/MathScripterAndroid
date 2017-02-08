@@ -8,5 +8,10 @@ namespace MathExecutor.Models
         public IExpression ComputedExpression { get; set; }
         public IExpression ExpressionResult { get; set; }
         public string TextExpressionResult { get; set; }
+
+        public override string ToString()
+        {
+            return TextExpressionResult;
+        }
     }
 }

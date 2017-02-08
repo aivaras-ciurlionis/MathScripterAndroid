@@ -13,7 +13,7 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override IExpression Clone()
         {
-            return new MultiplyExpression(Operands[0], Operands[1]);
+            return new MultiplyExpression(Operands[0].Clone(), Operands[1].Clone());
         }
 
         public override IExpression InnerExecute()
@@ -36,10 +36,13 @@ namespace MathExecutor.Expressions.Arithmetic
             return new Monomial(left.Coefficient * right.Coefficient, variables);
         }
 
-        public override int Order => 1;
+        public override string ToString()
+        {
+            return $"{Operands[0]} * {Operands[1]}";
+        }
 
+        public override int Order => 2;
         public override bool CanBeExecuted() => true;
-
         public override ExpressionType Type => ExpressionType.Arithmetic;
     }
 }

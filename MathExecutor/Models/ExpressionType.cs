@@ -8,6 +8,8 @@
         Equation = 3,
         Logarithmic = 4,
         Rational = 5,
-        Root = 6
+        Root = 6,
+        Exponent = 7,
+        List = 8
     }
 }

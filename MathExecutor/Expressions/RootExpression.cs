@@ -28,7 +28,6 @@ namespace MathExecutor.Expressions
                 FullExpression = Operands[0].Clone(),
                 TextExpressionResult = ToString()
             };
-            Debug.WriteLine(step.TextExpressionResult);
             SolutionTracker.AddStep(step);
         }
 

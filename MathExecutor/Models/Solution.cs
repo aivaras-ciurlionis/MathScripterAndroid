@@ -6,7 +6,7 @@ namespace MathExecutor.Models
 {
     public class Solution
     {
-        public IList Steps { get; set; }
+        public IList<Step> Steps { get; set; }
         public IExpression Result { get; set; }
         public bool HasNumericResult { get; set; }
         public double NumericResult { get; set; }
@@ -20,5 +20,6 @@ namespace MathExecutor.Models
         {
             Steps.Add(step);
         }
+
     }
 }
