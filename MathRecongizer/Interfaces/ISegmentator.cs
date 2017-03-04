@@ -5,6 +5,6 @@ namespace MathRecongizer.Interfaces
 {
     public interface ISegmentator
     {
-        IEnumerable<Segment> GetImageSegments(byte[] pixels);
+        IEnumerable<Segment> GetImageSegments(byte[] pixels, int width, int height);
     }
 }

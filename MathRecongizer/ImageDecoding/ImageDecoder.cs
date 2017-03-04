@@ -24,7 +24,7 @@ namespace MathRecongizer.ImageDecoding
                 .Pixels;
 
             return processedPixels
-                .Select(p => p.R)
+                .Select(p => (byte)(255 - p.R))
                 .ToArray();
         }
     }

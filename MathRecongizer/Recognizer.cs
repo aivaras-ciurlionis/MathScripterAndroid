@@ -27,7 +27,7 @@ namespace MathRecongizer
         public IEnumerable<string> GetEquationsInImage(Bitmap image)
         {
             var imagePixels = _imageDecoder.GetPixels(image);
-            var segments = _segmentator.GetImageSegments(imagePixels);
+            var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
             var namedSegments = _segmentsProcessor.RecognizeSegments(segments);
             return _equationsBuilder.GetEquations(namedSegments);
         }
