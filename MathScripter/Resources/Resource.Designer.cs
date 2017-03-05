@@ -26,6 +26,10 @@ namespace MathScripter
 		
 		public static void UpdateIdValues()
 		{
+			global::MathExecutor.Resource.String.ApplicationName = global::MathScripter.Resource.String.ApplicationName;
+			global::MathExecutor.Resource.String.Hello = global::MathScripter.Resource.String.Hello;
+			global::MathRecognizer.Resource.String.ApplicationName = global::MathScripter.Resource.String.ApplicationName;
+			global::MathRecognizer.Resource.String.Hello = global::MathScripter.Resource.String.Hello;
 		}
 		
 		public partial class Attribute

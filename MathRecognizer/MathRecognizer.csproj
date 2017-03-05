@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MathRecognizer</RootNamespace>
+    <AssemblyName>MathRecongizer</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImageSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageSharp.1.0.0-alpha2-00117\lib\netstandard1.3\ImageSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageSharp.Formats.Jpeg, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageSharp.Formats.Jpeg.1.0.0-alpha2-00117\lib\netstandard1.1\ImageSharp.Formats.Jpeg.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageSharp.Processing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageSharp.Processing.1.0.0-alpha2-00105\lib\netstandard1.1\ImageSharp.Processing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.17.0\lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.0.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.0.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EquationBuilding\EquationsBuilder.cs" />
+    <Compile Include="ImageDecoding\ImageDecoder.cs" />
+    <Compile Include="ImageProcessing\CenterOfMassComputor.cs" />
+    <Compile Include="ImageProcessing\ImageMover.cs" />
+    <Compile Include="ImageProcessing\PixelsToImageConverter.cs" />
+    <Compile Include="ImageProcessing\RatioResizer.cs" />
+    <Compile Include="Interfaces\ICenterOfMassComputor.cs" />
+    <Compile Include="Interfaces\IEquationBuilder.cs" />
+    <Compile Include="Interfaces\IEquationsBuilder.cs" />
+    <Compile Include="Interfaces\IImageDecoder.cs" />
+    <Compile Include="Interfaces\IImageMover.cs" />
+    <Compile Include="Interfaces\IIndexMapper.cs" />
+    <Compile Include="Interfaces\IInputNormalizer.cs" />
+    <Compile Include="Interfaces\INeuralNetwork.cs" />
+    <Compile Include="Interfaces\IPixelsToImageConverter.cs" />
+    <Compile Include="Interfaces\IRecognizer.cs" />
+    <Compile Include="Interfaces\ISegmentator.cs" />
+    <Compile Include="Interfaces\ISegmentRecognizer.cs" />
+    <Compile Include="Interfaces\ISegmentsProcessor.cs" />
+    <Compile Include="Interfaces\ISegmentsResizer.cs" />
+    <Compile Include="Interfaces\ISegmentsSplitter.cs" />
+    <Compile Include="Interfaces\RatioResizer.cs" />
+    <Compile Include="Models\BoundaryRowResult.cs" />
+    <Compile Include="Models\NamedSegment.cs" />
+    <Compile Include="Models\NetworkLayer.cs" />
+    <Compile Include="Models\Point.cs" />
+    <Compile Include="Models\PointValue.cs" />
+    <Compile Include="Models\Segment.cs" />
+    <Compile Include="Models\TraversePixelResult.cs" />
+    <Compile Include="Network\InputNormalizer.cs" />
+    <Compile Include="Network\NetworkWrapper.cs" />
+    <Compile Include="Network\NeuralNetwork.cs" />
+    <Compile Include="Recognizer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Segmentation\Segmentator.cs" />
+    <Compile Include="Segmentation\SegmentsResizer.cs" />
+    <Compile Include="SegmentsRecognition\IndexMapper.cs" />
+    <Compile Include="SegmentsRecognition\SegmentsProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

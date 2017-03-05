@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExecutor", "MathExecuto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExecutorUnitTests", "MathExecutorUnitTests\MathExecutorUnitTests.csproj", "{1FA1DEAF-A4A5-4FF8-8BBC-B726940102B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathRecognizer", "MathRecognizer\MathRecognizer.csproj", "{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{1FA1DEAF-A4A5-4FF8-8BBC-B726940102B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FA1DEAF-A4A5-4FF8-8BBC-B726940102B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FA1DEAF-A4A5-4FF8-8BBC-B726940102B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF2A7A6-2D97-45FE-9173-DB1008AB722E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

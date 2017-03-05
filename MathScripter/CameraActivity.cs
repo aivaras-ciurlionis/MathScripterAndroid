@@ -1,15 +1,17 @@
 using System;
-using System.IO;
 using Android.App;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Java.IO;
+using MathRecognizer;
+using MathRecognizer.ImageDecoding;
+using MathRecognizer.ImageProcessing;
 using Camera = Android.Hardware.Camera;
-using ImageSharp;
 using Console = System.Console;
+using MathRecognizer.Interfaces;
 using Environment = Android.OS.Environment;
-using File = Java.IO.File;
 using Path = System.IO.Path;
 
 namespace MathScripter
@@ -21,6 +23,7 @@ namespace MathScripter
         private TextureView _textureView;
         private Button _captureButton;
         private ImageView _imageView;
+        private IRecognizer _recognizer;
 
         const int BX = 500;
         const int BY = 200;
@@ -32,6 +35,7 @@ namespace MathScripter
 
             _textureView = FindViewById<TextureView>(Resource.Id.cameraView);
             _textureView.SurfaceTextureListener = this;
+
             _imageView = FindViewById<ImageView>(Resource.Id.imageView1);
             _captureButton = FindViewById<Button>(Resource.Id.captureButton);
             _captureButton.Click += OnCapture;
@@ -90,32 +94,36 @@ namespace MathScripter
         {
             if (!_textureView.IsAvailable) return;
             var b1 = _textureView.GetBitmap(_textureView.Width, _textureView.Height);
-
+            _recognizer = App.Container.Resolve(typeof(Recognizer), "recognizer") as IRecognizer;
             var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - BX / 2, _textureView.Height / 2 - BY / 2, BX, BY);
             _imageView.SetImageBitmap(bitmap);
-            using (var stream = new MemoryStream())
+
+            Console.WriteLine("start segmentation");
+
+            var inputDir = new File(
+                Environment.GetExternalStoragePublicDirectory(
+                Environment.DirectoryPictures), "MathScript");
+            var dir = new File(
+                Environment.GetExternalStoragePublicDirectory(
+                Environment.DirectoryPictures), "MathScripter");
+
+            if (!inputDir.Exists())
             {
-                Console.WriteLine("compressing");
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, stream);
-                var bitmapData = stream.ToArray();
-                var img = new Image(bitmapData);
-                Console.WriteLine("grayscale");
-                var changed = img.Grayscale().Brightness(20).Contrast(70);
-
-                var dir = new File(Environment.GetExternalStoragePublicDirectory(
-                    Environment.DirectoryPictures), "MathScript");
-
-                var path = Path.Combine(dir.AbsolutePath, "test.bmp");
-
-                if (!dir.Exists())
-                {
-                    dir.Mkdir();
-                }
-
-                changed.Save(path);
-                Console.WriteLine($"{img.Width}:{img.Height}");
+                dir.Mkdirs();
             }
-            _textureView.Alpha = 0;
+            else
+            {
+                var children = dir.List();
+                foreach (var child in children)
+                {
+                    new File(dir, child).Delete();
+                }
+            }
+         
+            var bmp = BitmapFactory.DecodeFile(Path.Combine(inputDir.AbsolutePath, "test.bmp"));
+
+            var equations = _recognizer.GetEquationsInImage(bmp);
+            Console.WriteLine("Finish segmentation");
         }
 
         public void OnAutoFocus(bool success, Camera camera)
