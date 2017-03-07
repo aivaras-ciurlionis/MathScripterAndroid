@@ -5,6 +5,6 @@ namespace MathRecognizer.Interfaces
 {
     public interface IEquationsBuilder
     {
-        IEnumerable<string> GetEquations(IEnumerable<NamedSegment> segments);
+        IEnumerable<string> GetEquations(IEnumerable<NamedSegment> segments, int imageHeight);
     }
 }

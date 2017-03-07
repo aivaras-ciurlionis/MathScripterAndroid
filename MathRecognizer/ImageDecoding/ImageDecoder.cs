@@ -18,11 +18,14 @@ namespace MathRecognizer.ImageDecoding
                 image = new Image(bitmapData);
             }
 
+            return GetPixels(image);
+        }
+
+        public byte[] GetPixels(Image image)
+        {
             return image
                 .Grayscale()
                 .Invert()
-                //.Brightness(-20)
-                //.DetectEdges()
                 .Pixels
                 .Select(p => p.R)
                 .ToArray();

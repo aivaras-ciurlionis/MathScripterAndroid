@@ -73,7 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EquationBuilding\EquationBuilder.cs" />
     <Compile Include="EquationBuilding\EquationsBuilder.cs" />
+    <Compile Include="EquationBuilding\RectangleDistanceFinder.cs" />
+    <Compile Include="EquationBuilding\SegmentsSplitter.cs" />
     <Compile Include="ImageDecoding\ImageDecoder.cs" />
     <Compile Include="ImageProcessing\CenterOfMassComputor.cs" />
     <Compile Include="ImageProcessing\ImageMover.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Interfaces\INeuralNetwork.cs" />
     <Compile Include="Interfaces\IPixelsToImageConverter.cs" />
     <Compile Include="Interfaces\IRecognizer.cs" />
+    <Compile Include="Interfaces\IRectangleDistanceFinder.cs" />
     <Compile Include="Interfaces\ISegmentator.cs" />
     <Compile Include="Interfaces\ISegmentRecognizer.cs" />
     <Compile Include="Interfaces\ISegmentsProcessor.cs" />

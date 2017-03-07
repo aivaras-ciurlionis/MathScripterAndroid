@@ -19,9 +19,9 @@ namespace MathRecognizer.EquationBuilding
             _equationBuilder = equationBuilder;
         }
 
-        public IEnumerable<string> GetEquations(IEnumerable<NamedSegment> segments)
+        public IEnumerable<string> GetEquations(IEnumerable<NamedSegment> segments, int imageEdge)
         {
-            var groupedSegments = _segmentsSplitter.SplitSegments(segments);
+            var groupedSegments = _segmentsSplitter.SplitSegments(segments, imageEdge);
             return groupedSegments
                 .Select(segmentGroup => _equationBuilder.GetEquation(segmentGroup))
                 .ToList();

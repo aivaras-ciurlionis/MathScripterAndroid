@@ -7,7 +7,7 @@ namespace MathRecognizer.Network
     {
         public double[] NormalizeInput(byte[] input)
         {
-            return input.Select(i => (double) i / 255).ToArray();
+            return input.Take(4096).Select(i => (double) i / 255).ToArray();
         }
     }
 }

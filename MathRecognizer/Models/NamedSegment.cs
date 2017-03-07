@@ -7,5 +7,9 @@ namespace MathRecognizer.Models
         public int MaxX { get; set; }
         public int MinY { get; set; }
         public int MaxY { get; set; }
+        public override string ToString()
+        {
+            return $"  {SegmentName}    {MinX}:{MinY} - {MaxX}:{MaxY}";
+        }
     }
 }
