@@ -13,7 +13,7 @@ namespace MathRecognizer
         private readonly IImageDecoder _imageDecoder;
         private readonly ISegmentator _segmentator;
         private readonly ISegmentsProcessor _segmentsProcessor;
-        private readonly ISegmentsSplitter _segmentsSplitter;
+        private readonly IEquationsBuilder _equationsBuilder;
 
         private readonly ISegmentsResizer _segmentsResizer;
 
@@ -22,13 +22,13 @@ namespace MathRecognizer
             ISegmentator segmentator,
             ISegmentsResizer segmentsResizer,
             ISegmentsProcessor segmentsProcessor,
-            ISegmentsSplitter segmentsSplitter)
+            IEquationsBuilder equationsBuilder)
         {
             _imageDecoder = imageDecoder;
             _segmentator = segmentator;
             _segmentsResizer = segmentsResizer;
             _segmentsProcessor = segmentsProcessor;
-            _segmentsSplitter = segmentsSplitter;
+            _equationsBuilder = equationsBuilder;
         }
 
         //public IEnumerable<NamedSegment> GetEquationsInImage(Bitmap image)
@@ -47,15 +47,14 @@ namespace MathRecognizer
         //    return _segmentsResizer.ResizeSegments(segments); 
         //}
 
-        public IEnumerable<NamedSegment> GetEquationsInImage(Image image)
+        public IEnumerable<string> GetEquationsInImage(Image image)
         {
             var imagePixels = _imageDecoder.GetPixels(image);
             var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
             var resizedSegments = _segmentsResizer.ResizeSegmentsPixels(segments);
             var namedSegments = _segmentsProcessor.RecognizeSegments(resizedSegments);
-            var equationsInImage = namedSegments as NamedSegment[] ?? namedSegments.ToArray();
-            var splitSegments = _segmentsSplitter.SplitSegments(equationsInImage, (image.Height + image.Width) / 2);
-            return equationsInImage;
+            var enumerable = namedSegments as NamedSegment[] ?? namedSegments.ToArray();
+            return _equationsBuilder.GetEquations(enumerable, (image.Height + image.Width) / 2);
         }
     }
 }

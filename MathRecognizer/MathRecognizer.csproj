@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EquationBuilding\BlockBuilder.cs" />
     <Compile Include="EquationBuilding\EquationBuilder.cs" />
     <Compile Include="EquationBuilding\EquationsBuilder.cs" />
     <Compile Include="EquationBuilding\RectangleDistanceFinder.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="ImageProcessing\ImageMover.cs" />
     <Compile Include="ImageProcessing\PixelsToImageConverter.cs" />
     <Compile Include="ImageProcessing\RatioResizer.cs" />
+    <Compile Include="Interfaces\IBlockBuilder.cs" />
     <Compile Include="Interfaces\ICenterOfMassComputor.cs" />
     <Compile Include="Interfaces\IEquationBuilder.cs" />
     <Compile Include="Interfaces\IEquationsBuilder.cs" />

@@ -7,7 +7,7 @@ namespace MathRecognizer.Interfaces
 {
     public interface IRecognizer
     {
-        IEnumerable<NamedSegment> GetEquationsInImage(Image image);
+        IEnumerable<string> GetEquationsInImage(Image image);
         //IEnumerable<NamedSegment> GetEquationsInImage(Bitmap image);
         //IEnumerable<Image> GetSegmentsInImage(Bitmap image);
     }

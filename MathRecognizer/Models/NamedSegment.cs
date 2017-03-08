@@ -11,5 +11,13 @@ namespace MathRecognizer.Models
         {
             return $"  {SegmentName}    {MinX}:{MinY} - {MaxX}:{MaxY}";
         }
+
+        public bool HasSuperscript(NamedSegment next)
+        {
+            var height = MaxY - MinY;
+            return next.MaxY < MaxY - height / 2 &&
+                   next.MinY < MinY && next.MaxY < MaxY;
+        }
+
     }
 }

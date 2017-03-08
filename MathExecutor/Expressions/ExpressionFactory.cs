@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
@@ -14,7 +13,7 @@ namespace MathExecutor.Expressions
             return GetExpression(key, operands);
         }
 
-        private static IExpression GetSubtractExpression(IExpression op1, 
+        private static IExpression GetSubtractExpression(IExpression op1,
             IExpression op2,
             TokenType lastTokenType)
         {
@@ -44,6 +43,8 @@ namespace MathExecutor.Expressions
                 case "-": return GetSubtractExpression(operands[0], operands.Count > 1 ? operands[1] : null, lastTokenType);
                 case "*": return new MultiplyExpression(operands[0], operands[1]);
                 case "(": return new ParenthesisExpression(operands[0]);
+                case "^": return new ExponentExpression(operands[0], operands[1]);
+                case "/": return new DivisionExpression(operands[0], operands[1]);
                 default:
                     return null;
             }
