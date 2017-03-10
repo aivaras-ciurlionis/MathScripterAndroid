@@ -46,7 +46,6 @@ namespace MathRecognizer.EquationBuilding
                         var d = _distanceFinder.DistanceBetweenSegments(currentSegment, otherSegment);
                         if (d < minDist)
                         {
-                            Console.WriteLine($"{currentSegment} : {otherSegment}  -> {d}");
                             segmentGroup.Add(otherSegment);
                             _unusedSegments.Remove(otherSegment);
                         }

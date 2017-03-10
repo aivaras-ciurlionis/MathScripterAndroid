@@ -16,7 +16,6 @@ namespace MathRecognizer.ImageProcessing
                 var temp = (Image)source.Resize(size, Convert.ToInt32(r));
                 var d = (size - temp.Height) / 2;
                 var placeholder = new Image(size, size);
-                Console.WriteLine(placeholder.Pixels.Length);
                 var pixelCount = temp.Width * temp.Height;
                 for (var i = 0; i < pixelCount; i++)
                 {
@@ -33,7 +32,6 @@ namespace MathRecognizer.ImageProcessing
                 var temp = (Image)source.Resize(Convert.ToInt32(r), size);
                 var d = (size - temp.Width) / 2;
                 var placeholder = new Image(size, size);
-                Console.WriteLine(placeholder.Pixels.Length);
                 var pixelCount = temp.Width * temp.Height;
                 for (var i = 0; i < pixelCount; i++)
                 {

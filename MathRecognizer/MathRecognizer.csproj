@@ -74,9 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EquationBuilding\BlockBuilder.cs" />
+    <Compile Include="EquationBuilding\CharacterFixer.cs" />
     <Compile Include="EquationBuilding\EquationBuilder.cs" />
     <Compile Include="EquationBuilding\EquationsBuilder.cs" />
+    <Compile Include="EquationBuilding\EquationStripper.cs" />
+    <Compile Include="EquationBuilding\MinusRowSeparator.cs" />
     <Compile Include="EquationBuilding\RectangleDistanceFinder.cs" />
+    <Compile Include="EquationBuilding\RectangleIntersectionFinder.cs" />
+    <Compile Include="EquationBuilding\SegmentBuilder.cs" />
     <Compile Include="EquationBuilding\SegmentsSplitter.cs" />
     <Compile Include="ImageDecoding\ImageDecoder.cs" />
     <Compile Include="ImageProcessing\CenterOfMassComputor.cs" />
@@ -85,22 +90,27 @@
     <Compile Include="ImageProcessing\RatioResizer.cs" />
     <Compile Include="Interfaces\IBlockBuilder.cs" />
     <Compile Include="Interfaces\ICenterOfMassComputor.cs" />
+    <Compile Include="Interfaces\ICharacterFixer.cs" />
     <Compile Include="Interfaces\IEquationBuilder.cs" />
     <Compile Include="Interfaces\IEquationsBuilder.cs" />
+    <Compile Include="Interfaces\IEquationStripper.cs" />
     <Compile Include="Interfaces\IImageDecoder.cs" />
     <Compile Include="Interfaces\IImageMover.cs" />
     <Compile Include="Interfaces\IIndexMapper.cs" />
     <Compile Include="Interfaces\IInputNormalizer.cs" />
+    <Compile Include="Interfaces\IMinusRowSeparator.cs" />
     <Compile Include="Interfaces\INeuralNetwork.cs" />
     <Compile Include="Interfaces\IPixelsToImageConverter.cs" />
     <Compile Include="Interfaces\IRecognizer.cs" />
     <Compile Include="Interfaces\IRectangleDistanceFinder.cs" />
     <Compile Include="Interfaces\ISegmentator.cs" />
+    <Compile Include="Interfaces\ISegmentBuilder.cs" />
     <Compile Include="Interfaces\ISegmentRecognizer.cs" />
     <Compile Include="Interfaces\ISegmentsProcessor.cs" />
     <Compile Include="Interfaces\ISegmentsResizer.cs" />
     <Compile Include="Interfaces\ISegmentsSplitter.cs" />
     <Compile Include="Interfaces\RatioResizer.cs" />
+    <Compile Include="Interfaces\IRectangleIntersectionFinder.cs" />
     <Compile Include="Models\BoundaryRowResult.cs" />
     <Compile Include="Models\NamedSegment.cs" />
     <Compile Include="Models\NetworkLayer.cs" />
