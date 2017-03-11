@@ -1,3 +1,5 @@
+using System;
+
 namespace MathRecognizer.Models
 {
     public class Point
@@ -31,5 +33,16 @@ namespace MathRecognizer.Models
             return new Point(X, Y);
         }
 
+        public bool IsNear(Point other)
+        {
+            var dx = Math.Abs(X - other.X);
+            var dy = Math.Abs(Y - other.Y);
+            return dx <= 1 && dy <= 1;
+        }
+
+        public override string ToString()
+        {
+            return $"({X}:{Y})";
+        }
     }
 }

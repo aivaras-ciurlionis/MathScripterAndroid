@@ -34,8 +34,8 @@ namespace MathRecognizer.Segmentation
             {
                 return null;
             }
-
-            return _pixels[y * _width + x];
+            var p = _pixels[y * _width + x];
+            return p;
         }
 
         private void MarkUsed(int x, int y)
@@ -65,8 +65,13 @@ namespace MathRecognizer.Segmentation
             var minX = 1000;
             var maxX = -1;
             var boundaryHit = false;
-            while (!currentPoint.Equals(startPoint))
+            var movesCount = 0;
+
+            boundary.Add(startPoint.Y, new List<int> { startPoint.X });
+
+            while (!currentPoint.IsNear(startPoint) || movesCount < 4)
             {
+                movesCount++;
                 if (directionI < 0)
                 {
                     directionI = 3;
@@ -74,7 +79,7 @@ namespace MathRecognizer.Segmentation
                 var directionP = Directions[(directionI + 1) % 4];
                 var currentDirection = Directions[directionI];
 
-              //  Console.WriteLine($"Current point {currentPoint.X}:{currentPoint.Y}; D {directionI}");
+                //Console.WriteLine($"Current point {currentPoint.X}:{currentPoint.Y}; D {directionI}");
 
                 if (currentPoint.X < 0)
                 {
@@ -97,7 +102,7 @@ namespace MathRecognizer.Segmentation
 
                 if (nextValue == null)
                 {
-                  //  Console.WriteLine("Boundary Hit");
+                    // Console.WriteLine("Boundary Hit");
                     boundaryHit = true;
                     do
                     {
@@ -110,14 +115,14 @@ namespace MathRecognizer.Segmentation
 
                 if (nearValue <= Treshold)
                 {
-                //    Console.WriteLine("Going perpendicular");
+                    //Console.WriteLine("Going perpendicular");
                     directionI += 1;
                     directionI %= 4;
                     currentPoint += Directions[directionI];
                 }
                 else if (nextValue > Treshold)
                 {
-                  //  Console.WriteLine("Going back");
+                    //Console.WriteLine("Going back");
                     directionI -= 1;
                 }
                 else
@@ -143,6 +148,7 @@ namespace MathRecognizer.Segmentation
                     maxY = currentPoint.Y;
                 }
             }
+
             return new TraversePixelResult
             {
                 Boundary = boundary,
@@ -215,6 +221,15 @@ namespace MathRecognizer.Segmentation
             return pixels;
         }
 
+        private bool SegmentExists(Segment s1, IEnumerable<Segment> segments)
+        {
+
+            return segments.Any(s => s.MinY == s1.MinY &&
+                                     s.MaxY == s1.MaxY &&
+                                     s.MinX == s1.MinX &&
+                                     s.MaxX == s1.MaxX);
+        }
+
         private Segment ProcessPixel(int x, int y)
         {
             var traverseResult = TraverseChar(x, y);
@@ -242,7 +257,7 @@ namespace MathRecognizer.Segmentation
                 for (var x = 0; x < width; x++)
                 {
                     var segment = ProcessIfNotUsed(x, y);
-                    if (segment != null)
+                    if (segment != null && !SegmentExists(segment, segments))
                     {
                         segments.Add(segment);
                     }
