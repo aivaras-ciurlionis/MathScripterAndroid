@@ -2,6 +2,7 @@ using System;
 using Android.App;
 using Android.Runtime;
 using MathRecognizer;
+using MathRecognizer.EquationBuilding;
 using MathRecognizer.ImageDecoding;
 using MathRecognizer.ImageProcessing;
 using MathRecognizer.Interfaces;
@@ -42,6 +43,16 @@ namespace MathScripter
             Container.RegisterType<IInputNormalizer, InputNormalizer>();
             Container.RegisterType<IIndexMapper, IndexMapper>();
             Container.RegisterType<IRatioResizer, RatioResizer>();
+            Container.RegisterType<IEquationsBuilder, EquationsBuilder>();
+            Container.RegisterType<IEquationBuilder, EquationBuilder>();
+            Container.RegisterType<IBlockBuilder, BlockBuilder>();
+            Container.RegisterType<ISegmentsSplitter, SegmentsSplitter>();
+            Container.RegisterType<IRectangleDistanceFinder, RectangleDistanceFinder>();
+            Container.RegisterType<IRectangleIntersectionFinder, RectangleIntersectionFinder>();
+            Container.RegisterType<IMinusRowSeparator, MinusRowSeparator>();
+            Container.RegisterType<ISegmentBuilder, SegmentBuilder>();
+            Container.RegisterType<IEquationStripper, EquationStripper>();
+            Container.RegisterType<ICharacterFixer, CharacterFixer>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MathRecognizer.EquationBuilding
     public class SegmentsSplitter : ISegmentsSplitter
     {
         private const double DistanceLimit = 0.1;
-        private const double MinLimit = 30;
+        private const double MinLimit = 100;
 
         private IList<NamedSegment> _unusedSegments;
         private readonly IRectangleDistanceFinder _distanceFinder;

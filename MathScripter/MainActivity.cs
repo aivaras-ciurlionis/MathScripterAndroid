@@ -39,7 +39,11 @@ namespace MathScripter
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            LoadData();
+            if (!NeuralNetwork.Instance.DataLoaded)
+            {
+                LoadData();
+            }
+          
             SetContentView(Resource.Layout.Main);
             _cameraButton = FindViewById<Button>(Resource.Id.cameraButton);
             _cameraButton.Click += _openCamera;

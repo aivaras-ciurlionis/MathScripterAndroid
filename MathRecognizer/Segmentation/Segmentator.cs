@@ -223,6 +223,10 @@ namespace MathRecognizer.Segmentation
 
         private bool SegmentExists(Segment s1, IEnumerable<Segment> segments)
         {
+            if (s1.MaxX - s1.MinX < 6 && s1.MaxY - s1.MinY < 6)
+            {
+                return true;
+            }
 
             return segments.Any(s => s.MinY == s1.MinY &&
                                      s.MaxY == s1.MaxY &&

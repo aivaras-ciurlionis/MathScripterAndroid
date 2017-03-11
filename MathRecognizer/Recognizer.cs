@@ -23,7 +23,7 @@ namespace MathRecognizer
             ISegmentator segmentator,
             ISegmentsResizer segmentsResizer,
             ISegmentsProcessor segmentsProcessor,
-            IEquationsBuilder equationsBuilder, 
+            IEquationsBuilder equationsBuilder,
             IPixelsToImageConverter imageConverter)
         {
             _imageDecoder = imageDecoder;
@@ -34,25 +34,11 @@ namespace MathRecognizer
             _imageConverter = imageConverter;
         }
 
-        //public IEnumerable<NamedSegment> GetEquationsInImage(Bitmap image)
-        //{
-        //    var imagePixels = _imageDecoder.GetPixels(image);
-        //    var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
-        //    var resizedSegments = _segmentsResizer.ResizeSegmentsPixels(segments);
-        //    return _segmentsProcessor.RecognizeSegments(resizedSegments);
-        //}
-
-        //public IEnumerable<Image> GetSegmentsInImage(Bitmap image)
-        //{
-        //    var imagePixels = _imageDecoder.GetPixels(image);
-        //    Console.WriteLine("Image decoded");
-        //    var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
-        //    return _segmentsResizer.ResizeSegments(segments); 
-        //}
-
         public IEnumerable<string> GetEquationsInImage(Image image)
         {
-            var imagePixels = _imageDecoder.GetPixels(image);
+            var processed = GetProcessedImage(image, 230, 0);
+          //  processed.Save("o/contrast.bmp");
+            var imagePixels = processed.Pixels.Select(s => s.R).ToArray();
             var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
             var resizedSegments = _segmentsResizer.ResizeSegmentsPixels(segments);
             var namedSegments = _segmentsProcessor.RecognizeSegments(resizedSegments);
@@ -60,19 +46,29 @@ namespace MathRecognizer
             return _equationsBuilder.GetEquations(enumerable, (image.Height + image.Width) / 2);
         }
 
+        public Image GetProcessedImage(Image image, int contrast, int brightness)
+        {
+            var imagePixels = _imageDecoder.GetPixels(image);
+            var factor = (float)(259 * (contrast + 255)) / (255 * (259 - contrast));
+            var contrasted = new Image(image.Width, image.Height);
+            var i = 0;
+            foreach (var pixel in imagePixels)
+            {
+                var br = Math.Min(pixel + brightness, 255);
+                var color = (factor * (br - 128) + 128) / 255;
+                contrasted.Pixels[i] = new ImageSharp.Color(color, color, color);
+                i++;
+            }
+            return (Image)contrasted;
+        }
+
         public IEnumerable<Image> GetSegmentsInImage(Image image)
         {
             var imagePixels = _imageDecoder.GetPixels(image);
             var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);
             var resizedSegments = _segmentsResizer.ResizeSegmentsPixels(segments);
-            return resizedSegments.Select(s =>  _imageConverter.GetImage(s.Pixels, 64, 64));
-
-
-            //var namedSegments = _segmentsProcessor.RecognizeSegments(resizedSegments);
-            //var enumerable = namedSegments as NamedSegment[] ?? namedSegments.ToArray();
-            //return _equationsBuilder.GetEquations(enumerable, (image.Height + image.Width) / 2);
+            return resizedSegments.Select(s => _imageConverter.GetImage(s.Pixels, 64, 64));
         }
-
 
     }
 }
