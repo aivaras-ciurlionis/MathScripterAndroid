@@ -7,21 +7,17 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using ImageSharp;
-using Java.Util;
+using MathExecutor.Interfaces;
+using MathExecutor.Interpreter;
 using MathRecognizer;
-using MathRecognizer.ImageDecoding;
-using MathRecognizer.ImageProcessing;
 using Camera = Android.Hardware.Camera;
 using Console = System.Console;
 using MathRecognizer.Interfaces;
-using Environment = Android.OS.Environment;
-using File = Java.IO.File;
-using Path = System.IO.Path;
 
 namespace MathScripter
 {
     [Activity(Label = "CameraActivity")]
-    public class CameraActivity : Activity, TextureView.ISurfaceTextureListener, Camera.IAutoFocusCallback
+    public class CameraActivity : Activity, TextureView.ISurfaceTextureListener
     {
         private Camera _camera;
         private TextureView _textureView;
@@ -47,10 +43,27 @@ namespace MathScripter
             _captureButton.Click += OnCapture;
         }
 
+        private void TrySolveEquation(string equation)
+        {
+            var interpreter = App.Container.Resolve(typeof(Interpreter), "interpreter") as IInterpreter;
+            var solution = interpreter.FindSolution(equation);
+            var steps = solution.Steps.Select(s => s.FullExpression.ToString());
+            var stringSteps = string.Join("\n", steps);
+            _textView.Text += stringSteps + "\n";
+            _textView.Text += solution.Result;
+        }
 
         public void OnCapture(object sender, EventArgs args)
         {
-            // _camera.AutoFocus(this);
+            try
+            {
+                _camera.StopPreview();
+                _camera.Release();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             ProcessImage();
         }
 
@@ -81,8 +94,15 @@ namespace MathScripter
 
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
         {
-            _camera.StopPreview();
-            _camera.Release();
+            try
+            {
+                _camera.StopPreview();
+                _camera.Release();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             return true;
         }
 
@@ -101,33 +121,8 @@ namespace MathScripter
             if (!_textureView.IsAvailable) return;
             var b1 = _textureView.GetBitmap(_textureView.Width, _textureView.Height);
             _recognizer = App.Container.Resolve(typeof(Recognizer), "recognizer") as IRecognizer;
-            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - BX / 2, _textureView.Height / 2 - BY / 2, BX, BY);
-            // _imageView.SetImageBitmap(bitmap);
-
-            Console.WriteLine("start segmentation");
-
-            var inputDir = new File(
-                Environment.GetExternalStoragePublicDirectory(
-                Environment.DirectoryPictures), "MathScript");
-            var dir = new File(
-                Environment.GetExternalStoragePublicDirectory(
-                Environment.DirectoryPictures), "MathScripter");
-
-            if (!inputDir.Exists())
-            {
-                dir.Mkdirs();
-            }
-            else
-            {
-                //var children = dir.List();
-                //foreach (var child in children)
-                //{
-                //    new File(dir, child).Delete();
-                //}
-            }
-
-            //var bmp = BitmapFactory.DecodeFile(Path.Combine(inputDir.AbsolutePath, "test.bmp"));
-
+            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - BX / 2, _textureView.Height / 2 - BY / 2, BX,
+                BY);
             Image image;
             using (var stream = new MemoryStream())
             {
@@ -135,31 +130,19 @@ namespace MathScripter
                 var bitmapData = stream.ToArray();
                 image = new Image(bitmapData);
             }
+            var equation = "";
 
-
-
-            //IImageDecoder d = new ImageDecoder();
-            //IPixelsToImageConverter pc = new PixelsToImageConverter();
-            //var img = pc.GetImage(d.GetPixels(bitmap), bitmap.Width, bitmap.Height);
-            //img.Save(Path.Combine(dir.AbsolutePath, DateTime.Now.ToLongTimeString()+".bmp"));
-
-
-
-            var equations = _recognizer.GetEquationsInImage(image);
-            _textView.Text = equations.ElementAt(0);
-            Console.WriteLine("Finish segmentation");
-        }
-
-        public void OnAutoFocus(bool success, Camera camera)
-        {
-            if (success)
+            try
             {
-                ProcessImage();
+                equation = _recognizer.GetEquationsInImage(image);
+                _textView.Text = equation +="\n\n";
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Failed to focus");
+                Console.WriteLine(e.Message);
+                _textView.Text = Resources.GetString(Resource.String.ImageParsingError);
             }
         }
+
     }
 }

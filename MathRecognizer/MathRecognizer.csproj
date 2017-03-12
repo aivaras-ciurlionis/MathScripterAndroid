@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="EquationBuilding\BlockBuilder.cs" />
     <Compile Include="EquationBuilding\CharacterFixer.cs" />
+    <Compile Include="EquationBuilding\EqualitySignFinder.cs" />
     <Compile Include="EquationBuilding\EquationBuilder.cs" />
     <Compile Include="EquationBuilding\EquationsBuilder.cs" />
     <Compile Include="EquationBuilding\EquationStripper.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Interfaces\IBlockBuilder.cs" />
     <Compile Include="Interfaces\ICenterOfMassComputor.cs" />
     <Compile Include="Interfaces\ICharacterFixer.cs" />
+    <Compile Include="Interfaces\IEqualitySignFinder.cs" />
     <Compile Include="Interfaces\IEquationBuilder.cs" />
     <Compile Include="Interfaces\IEquationsBuilder.cs" />
     <Compile Include="Interfaces\IEquationStripper.cs" />

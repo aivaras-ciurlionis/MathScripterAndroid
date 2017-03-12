@@ -1,6 +1,10 @@
 using System;
 using Android.App;
 using Android.Runtime;
+using MathExecutor.Expressions;
+using MathExecutor.Interfaces;
+using MathExecutor.Interpreter;
+using MathExecutor.Parser;
 using MathRecognizer;
 using MathRecognizer.EquationBuilding;
 using MathRecognizer.ImageDecoding;
@@ -53,6 +57,18 @@ namespace MathScripter
             Container.RegisterType<ISegmentBuilder, SegmentBuilder>();
             Container.RegisterType<IEquationStripper, EquationStripper>();
             Container.RegisterType<ICharacterFixer, CharacterFixer>();
+            Container.RegisterType<IEqualitySignFinder, EqualitySignFinder>();
+
+            Container.RegisterType<IMonomialResolver, MonomialResolver>();
+            Container.RegisterType<IExpressionFactory, ExpressionFactory>();
+            Container.RegisterType<IMinOperationFinder, MinOperationFinder>();
+            Container.RegisterType<IExpressionCreator, ExpressionCreator>();
+            Container.RegisterType<ISymbolTypeChecker, SymbolTypeChecker>();
+            Container.RegisterType<ITokenCreator, TokenCreator>();
+            Container.RegisterType<ITokenFixer, TokenFixer>();
+            Container.RegisterType<ITokenParser, TokenParser>();
+            Container.RegisterType<IParser, Parser>();
+            Container.RegisterType<IInterpreter, Interpreter>();
         }
     }
 }

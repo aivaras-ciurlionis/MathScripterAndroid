@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">MathScripter</string>
+  <string name="Hello">Hello World, Click Me!</string>
+  <string name="ApplicationName">MathScripter</string>
+  <string name="CaptureImage">Capture</string>
+  <string name="ImageParsingError">Unable to read image. Please try again.</string>
 </resources>

@@ -10,18 +10,21 @@ namespace MathRecognizer.EquationBuilding
     {
         private readonly IBlockBuilder _blockBuilder;
         private readonly IMinusRowSeparator _rowSeparator;
+        private readonly IEqualitySignFinder _equalitySignFinder;
 
         public EquationBuilder(IBlockBuilder blockBuilder,
-            IMinusRowSeparator rowSeparator
-            )
+            IMinusRowSeparator rowSeparator,
+            IEqualitySignFinder equalitySignFinder)
         {
             _blockBuilder = blockBuilder;
             _rowSeparator = rowSeparator;
+            _equalitySignFinder = equalitySignFinder;
         }
 
         public string GetEquation(IEnumerable<NamedSegment> segments)
         {
             segments = _rowSeparator.FindEquationRowSegments(segments.ToList());
+            segments = _equalitySignFinder.FindEqualitySigns(segments.ToList());
             return _blockBuilder.GetEquationInBlock(segments.ToList());
         }
     }

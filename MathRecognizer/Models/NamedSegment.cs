@@ -14,8 +14,10 @@ namespace MathRecognizer.Models
 
         public bool HasSuperscript(NamedSegment next)
         {
+
             var height = MaxY - MinY;
-            return next.MaxY < MaxY - height / 2 &&
+            var heightMult = "-+.,=".Contains(next.SegmentName) ? 0.8 : 0.5;
+            return next.MaxY < MaxY - height * heightMult &&
                   next.MaxY < MaxY;
         }
 

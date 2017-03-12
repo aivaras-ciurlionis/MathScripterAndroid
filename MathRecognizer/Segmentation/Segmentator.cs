@@ -99,30 +99,16 @@ namespace MathRecognizer.Segmentation
                 }
 
                 var nextValue = GetPixelAt(nextPoint);
-
-                if (nextValue == null)
-                {
-                    // Console.WriteLine("Boundary Hit");
-                    boundaryHit = true;
-                    do
-                    {
-                        currentPoint += Directions[(directionI + 1) % 4];
-                        nextValue = GetPixelAt(currentPoint + Directions[(directionI + 1) % 4]);
-                    } while (nextValue > Treshold);
-                }
-
                 var nearValue = GetPixelAt(pointP);
 
-                if (nearValue <= Treshold)
+                if (nextValue == null || nearValue <= Treshold)
                 {
-                    //Console.WriteLine("Going perpendicular");
                     directionI += 1;
                     directionI %= 4;
                     currentPoint += Directions[directionI];
                 }
                 else if (nextValue > Treshold)
                 {
-                    //Console.WriteLine("Going back");
                     directionI -= 1;
                 }
                 else
@@ -147,8 +133,20 @@ namespace MathRecognizer.Segmentation
                 {
                     maxY = currentPoint.Y;
                 }
-            }
 
+                if (nextValue == null)
+                {
+                    boundaryHit = true;
+                   // Console.WriteLine("Boundary hit");
+                }
+
+                if (movesCount > 5000)
+                {
+                    throw new TimeoutException();
+                }
+
+            }
+            Console.WriteLine(movesCount);
             return new TraversePixelResult
             {
                 Boundary = boundary,
@@ -237,6 +235,7 @@ namespace MathRecognizer.Segmentation
         private Segment ProcessPixel(int x, int y)
         {
             var traverseResult = TraverseChar(x, y);
+            var pixels = CopyBoundaryValues(traverseResult);
             return traverseResult.BoundaryHit ? null :
                 new Segment
                 {
@@ -244,7 +243,7 @@ namespace MathRecognizer.Segmentation
                     MinX = traverseResult.MinX,
                     MinY = traverseResult.MinY,
                     MaxY = traverseResult.MaxY,
-                    Pixels = CopyBoundaryValues(traverseResult)
+                    Pixels = pixels
                 };
         }
 

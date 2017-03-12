@@ -20,6 +20,13 @@ namespace MathRecognizer.EquationBuilding
             {
                 return "*";
             }
+            const string digits = "0123456789";
+
+            if (!digits.Contains(lastSegment.SegmentName) || !digits.Contains(nextSegment.SegmentName))
+            {
+                return "";
+            }
+
             return ".";
         }
 
@@ -44,6 +51,11 @@ namespace MathRecognizer.EquationBuilding
             if (currentSegment.SegmentName == "g" && equation.EndsWith("1"))
             {
                 return equation.Substring(0, equation.Length - 1) + "lg";
+            }
+
+            if (currentSegment.SegmentName == "n" && equation.EndsWith("1"))
+            {
+                return equation.Substring(0, equation.Length - 1) + "ln";
             }
 
             if (currentSegment.SegmentName == ".")

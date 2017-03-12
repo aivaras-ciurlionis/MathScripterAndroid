@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathRecognizer.Interfaces;
@@ -63,11 +62,12 @@ namespace MathRecognizer.EquationBuilding
         {
             var innerBuilder = new BlockBuilder(new RectangleIntersectionFinder(),
             new SegmentBuilder(), new EquationStripper(), new CharacterFixer());
-            for (var i = 0; i < _segments.Count; i++)
+            var rootSegments = _segments.Where(s => s.SegmentName == "q").ToList();
+            for (var i = 0; i < rootSegments.Count; i++)
             {
                 if (_segments[i].SegmentName != "q") continue;
-                var innerSegments = _intersectionFinder.SegmentsInside(_segments[i], _segments);
-                _segments.Remove(_segments[i]);
+                var innerSegments = _intersectionFinder.SegmentsInside(rootSegments[i], _segments);
+                _segments.Remove(rootSegments[i]);
                 RemoveSegments(innerSegments);
                 var inner = innerBuilder.GetEquationInBlock(innerSegments);
                 if (!string.IsNullOrEmpty(inner))
@@ -81,12 +81,12 @@ namespace MathRecognizer.EquationBuilding
         {
             var innerBuilder = new BlockBuilder(new RectangleIntersectionFinder(),
             new SegmentBuilder(), new EquationStripper(), new CharacterFixer());
-            for (var i = 0; i < _segments.Count; i++)
+            var divisionSegments = _segments.Where(s => s.SegmentName == "_").ToList();
+            foreach (var segment in divisionSegments)
             {
-                if (_segments[i].SegmentName != "_") continue;
-                var topSegments = GetDivisionTopSegments(_segments[i]);
-                var botSegments = GetDivisionBottomSegments(_segments[i]);
-                _segments.Remove(_segments[i]);
+                var topSegments = GetDivisionTopSegments(segment);
+                var botSegments = GetDivisionBottomSegments(segment);
+                _segments.Remove(segment);
                 RemoveSegments(botSegments);
                 RemoveSegments(topSegments);
                 var top = innerBuilder.GetEquationInBlock(topSegments);
@@ -115,7 +115,6 @@ namespace MathRecognizer.EquationBuilding
                 {
                     var superscriptEquation = innerBuilder.GetEquationInBlock(superscriptSegments);
                     equation += string.IsNullOrEmpty(superscriptEquation) ? "" : $"^({superscriptEquation})";
-                    //lastSegment = null;
                 }
                 else
                 {

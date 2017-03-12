@@ -13,7 +13,7 @@ namespace MathRecognizer
         private readonly IImageDecoder _imageDecoder;
         private readonly ISegmentator _segmentator;
         private readonly ISegmentsProcessor _segmentsProcessor;
-        private readonly IEquationsBuilder _equationsBuilder;
+        private readonly IEquationBuilder _equationBuilder;
         private readonly IPixelsToImageConverter _imageConverter;
 
         private readonly ISegmentsResizer _segmentsResizer;
@@ -23,18 +23,18 @@ namespace MathRecognizer
             ISegmentator segmentator,
             ISegmentsResizer segmentsResizer,
             ISegmentsProcessor segmentsProcessor,
-            IEquationsBuilder equationsBuilder,
+            IEquationBuilder equationBuilder,
             IPixelsToImageConverter imageConverter)
         {
             _imageDecoder = imageDecoder;
             _segmentator = segmentator;
             _segmentsResizer = segmentsResizer;
             _segmentsProcessor = segmentsProcessor;
-            _equationsBuilder = equationsBuilder;
+            _equationBuilder = equationBuilder;
             _imageConverter = imageConverter;
         }
 
-        public IEnumerable<string> GetEquationsInImage(Image image)
+        public string GetEquationsInImage(Image image)
         {
             var processed = GetProcessedImage(image, 230, 0);
           //  processed.Save("o/contrast.bmp");
@@ -43,7 +43,7 @@ namespace MathRecognizer
             var resizedSegments = _segmentsResizer.ResizeSegmentsPixels(segments);
             var namedSegments = _segmentsProcessor.RecognizeSegments(resizedSegments);
             var enumerable = namedSegments as NamedSegment[] ?? namedSegments.ToArray();
-            return _equationsBuilder.GetEquations(enumerable, (image.Height + image.Width) / 2);
+            return _equationBuilder.GetEquation(enumerable);
         }
 
         public Image GetProcessedImage(Image image, int contrast, int brightness)
