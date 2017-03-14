@@ -13,6 +13,8 @@ using MathRecognizer.Interfaces;
 using MathRecognizer.Network;
 using MathRecognizer.Segmentation;
 using MathRecognizer.SegmentsRecognition;
+using MathScripter.Interfaces;
+using MathScripter.Providers;
 using Microsoft.Practices.Unity;
 
 namespace MathScripter
@@ -35,6 +37,9 @@ namespace MathScripter
         public static void Initialize()
         {
             Container = new UnityContainer();
+
+            Container.RegisterType<INetworkDataLoader, NetworkDataLoader>();
+
             Container.RegisterType<IRecognizer, Recognizer>();
             Container.RegisterType<ICenterOfMassComputor, CenterOfMassComputor>();
             Container.RegisterType<IImageDecoder, ImageDecoder>();

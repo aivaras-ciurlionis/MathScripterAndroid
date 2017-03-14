@@ -5,6 +5,7 @@ using Android.App;
 using Android.Widget;
 using Android.OS;
 using MathRecognizer.Network;
+using MathScripter.Interfaces;
 
 namespace MathScripter
 {
@@ -12,38 +13,13 @@ namespace MathScripter
     public class MainActivity : Activity
     {
         private Button _cameraButton;
-
-        private void LoadData()
-        {
-            var assets = this.Assets;
-            var contents = new List<string>();
-            using (var sr = new StreamReader(assets.Open("layer1_weights.txt")))
-            {
-                contents.Add(sr.ReadToEnd());
-            }
-            using (var sr = new StreamReader(assets.Open("layer1_biases.txt")))
-            {
-                contents.Add(sr.ReadToEnd());
-            }
-            using (var sr = new StreamReader(assets.Open("layer2_weights.txt")))
-            {
-                contents.Add(sr.ReadToEnd());
-            }
-            using (var sr = new StreamReader(assets.Open("layer2_biases.txt")))
-            {
-                contents.Add(sr.ReadToEnd());
-            }
-            NeuralNetwork.Instance.LoadNetwork(new[] { 4096, 100, 32 }, contents.ToArray());
-        }
+        //private readonly INetworkDataLoader _networkDataLoader =
+        //    App.Container.Resolve(typeof(INetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            if (!NeuralNetwork.Instance.DataLoaded)
-            {
-                LoadData();
-            }
-          
+           // _networkDataLoader.LoadData(Assets);
             SetContentView(Resource.Layout.Main);
             _cameraButton = FindViewById<Button>(Resource.Id.cameraButton);
             _cameraButton.Click += _openCamera;

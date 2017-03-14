@@ -45,6 +45,22 @@ namespace MathScripter
 			}
 		}
 		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int white = 2131034112;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -67,20 +83,32 @@ namespace MathScripter
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050004
-			public const int cameraButton = 2131034116;
+			// aapt resource value: 0x7f060008
+			public const int cameraButton = 2131099656;
 			
-			// aapt resource value: 0x7f050001
-			public const int cameraView = 2131034113;
+			// aapt resource value: 0x7f060001
+			public const int cameraView = 2131099649;
 			
-			// aapt resource value: 0x7f050000
-			public const int captureButton = 2131034112;
+			// aapt resource value: 0x7f060006
+			public const int canvas1 = 2131099654;
 			
-			// aapt resource value: 0x7f050002
-			public const int imageView1 = 2131034114;
+			// aapt resource value: 0x7f060000
+			public const int captureButton = 2131099648;
 			
-			// aapt resource value: 0x7f050003
-			public const int textView1 = 2131034115;
+			// aapt resource value: 0x7f060002
+			public const int imageView1 = 2131099650;
+			
+			// aapt resource value: 0x7f060005
+			public const int leftPanel = 2131099653;
+			
+			// aapt resource value: 0x7f060004
+			public const int linearLayout1 = 2131099652;
+			
+			// aapt resource value: 0x7f060007
+			public const int rightPanel = 2131099655;
+			
+			// aapt resource value: 0x7f060003
+			public const int textView1 = 2131099651;
 			
 			static Id()
 			{
@@ -117,14 +145,17 @@ namespace MathScripter
 			// aapt resource value: 0x7f040001
 			public const int ApplicationName = 2130968577;
 			
+			// aapt resource value: 0x7f040003
+			public const int Camera = 2130968579;
+			
 			// aapt resource value: 0x7f040002
 			public const int CaptureImage = 2130968578;
 			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
 			
-			// aapt resource value: 0x7f040003
-			public const int ImageParsingError = 2130968579;
+			// aapt resource value: 0x7f040004
+			public const int ImageParsingError = 2130968580;
 			
 			static String()
 			{
