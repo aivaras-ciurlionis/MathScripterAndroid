@@ -37,5 +37,6 @@ namespace MathExecutor.Expressions.Arithmetic
             return new SumExpression(Operands[0].Clone(), Operands[1].Clone());
         }
 
+        public override string Name => "+";
     }
 }

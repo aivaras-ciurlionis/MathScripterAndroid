@@ -28,5 +28,6 @@ namespace MathExecutor.Interfaces
         public abstract IExpression Clone();
 
         public IList<IExpression> Operands => null;
+        public abstract string Name { get; }
     }
 }

@@ -32,5 +32,7 @@ namespace MathExecutor.Expressions.Arithmetic
         {
             return $"-{Operands[0]}";
         }
+
+        public override string Name => "-";
     }
 }

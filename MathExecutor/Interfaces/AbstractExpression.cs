@@ -55,5 +55,6 @@ namespace MathExecutor.Interfaces
         public abstract IExpression Clone();
         public abstract IExpression InnerExecute();
         public abstract override string ToString();
+        public abstract string Name { get; }
     }
 }

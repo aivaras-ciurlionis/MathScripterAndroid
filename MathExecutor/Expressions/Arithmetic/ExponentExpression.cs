@@ -52,5 +52,7 @@ namespace MathExecutor.Expressions.Arithmetic
         {
             return $"{Operands[0]} ^ {Operands[1]}";
         }
+
+        public override string Name => "^";
     }
 }

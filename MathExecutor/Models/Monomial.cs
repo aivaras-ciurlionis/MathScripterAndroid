@@ -86,5 +86,6 @@ namespace MathExecutor.Models
         }
 
         public IList<IExpression> Operands => null;
+        public string Name => "MONOMIAL";
     }
 }

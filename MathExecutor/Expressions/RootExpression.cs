@@ -19,6 +19,7 @@ namespace MathExecutor.Expressions
         public ExpressionType Type => ExpressionType.Root;
         public int Order => 0;
         public bool CanBeExecuted() => false;
+        public string Name => "ROOT";
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
             var step = new Step

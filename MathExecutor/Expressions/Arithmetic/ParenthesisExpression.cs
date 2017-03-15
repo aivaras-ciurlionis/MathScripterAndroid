@@ -28,5 +28,6 @@ namespace MathExecutor.Expressions.Arithmetic
         public override ExpressionType Type => ExpressionType.Arithmetic;
         public override int Order => 5;
         public override bool CanBeExecuted() => true;
+        public override string Name => "()";
     }
 }

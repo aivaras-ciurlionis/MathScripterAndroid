@@ -128,6 +128,10 @@
     <AndroidResource Include="Resources\drawable\rect.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MathDrawer\MathDrawer.csproj">
+      <Project>{80299ad9-d155-4a0b-a8ec-962a2be48027}</Project>
+      <Name>MathDrawer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MathExecutor\MathExecutor.csproj">
       <Project>{70a5671e-2a59-4255-8704-82231d85782b}</Project>
       <Name>MathExecutor</Name>

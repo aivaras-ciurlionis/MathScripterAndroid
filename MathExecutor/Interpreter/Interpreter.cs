@@ -20,5 +20,11 @@ namespace MathExecutor.Interpreter
             var root = new RootExpression(parsedExpression, new Solution());
             return root.FindSolution();
         }
+
+        public IExpression GetExpression(string expression)
+        {
+            var parsedExpression = _parser.Parse(expression);
+            return new RootExpression(parsedExpression, new Solution());
+        }
     }
 }

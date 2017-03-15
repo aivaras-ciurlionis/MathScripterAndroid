@@ -1,6 +1,8 @@
 using System;
 using Android.App;
 using Android.Runtime;
+using MathDrawer;
+using MathDrawer.Interfaces;
 using MathExecutor.Expressions;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
@@ -74,6 +76,9 @@ namespace MathScripter
             Container.RegisterType<ITokenParser, TokenParser>();
             Container.RegisterType<IParser, Parser>();
             Container.RegisterType<IInterpreter, Interpreter>();
+
+            Container.RegisterType<IBaseDrawer, BaseDrawer>();
+            Container.RegisterType<IDrawerFactory, DrawerFactory>();
         }
     }
 }

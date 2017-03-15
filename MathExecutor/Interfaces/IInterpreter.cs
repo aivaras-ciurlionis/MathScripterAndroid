@@ -16,5 +16,6 @@ namespace MathExecutor.Interfaces
     public interface IInterpreter
     {
         Solution FindSolution(string expression);
+        IExpression GetExpression(string expression);
     }
 }

@@ -44,5 +44,6 @@ namespace MathExecutor.Expressions.Arithmetic
         public override int Order => 2;
         public override bool CanBeExecuted() => true;
         public override ExpressionType Type => ExpressionType.Arithmetic;
+        public override string Name => "•";
     }
 }

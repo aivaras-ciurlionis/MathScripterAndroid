@@ -36,5 +36,7 @@ namespace MathExecutor.Expressions.Arithmetic
         {
             return new SubtractExpression(Operands[0].Clone(), Operands[1].Clone());
         }
+
+        public override string Name => "-";
     }
 }
