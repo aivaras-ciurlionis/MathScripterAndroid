@@ -13,42 +13,69 @@ namespace MathDrawer.Drawers
     public class MonomialDrawer : IDrawer
     {
 
-        private static void DrawVariable(IVariable v, int positionX, int positionY, Paint p, Canvas c)
+        private static IList<DrawableElement> DrawVariable(IVariable v, int positionX, int positionY, Paint p)
         {
+            var elements = new List<DrawableElement>();
             var originalSize = p.TextSize;
             var exponent = v.Exponent.ToString(CultureInfo.InvariantCulture);
             var nameWidth = p.MeasureText(v.Name);
-            var nameBounds = new Rect();
+          
             var expBounds = new Rect();
-            p.GetTextBounds(v.Name, 0, v.Name.Length, nameBounds);
-            c.DrawText(v.Name, positionX, positionY, p);
-            p.TextSize = (float) Math.Round(0.7 * originalSize);
+            elements.Add(new DrawableElement
+            {
+                Text = v.Name,
+                X = positionX,
+                Y = positionY,
+                Size = p.TextSize,
+                Type = DrawableType.Symbolic
+            });
             p.GetTextBounds(exponent, 0, exponent.Length, expBounds);
             var expHeight = Math.Abs(expBounds.Top - expBounds.Bottom);
-            c.DrawText(exponent, positionX + nameWidth, (float)(positionY - 0.7 * expHeight), p);
-            p.TextSize = originalSize;
+            elements.Add(new DrawableElement
+            {
+                Text = exponent,
+                X = positionX + nameWidth,
+                Y = (float) (positionY - 0.7 * expHeight),
+                Size = 0.7f * p.TextSize,
+                Type = DrawableType.Symbolic
+            });
+            return elements;
         }
 
-        public void DrawExpression(IExpression expression, Paint p, Canvas c, EquationBounds bounds)
+        public IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds)
         {
+            var elements = new List<DrawableElement>();
             var monomial = expression as Monomial;
             var coefficient = monomial.Coefficient.ToString(CultureInfo.InvariantCulture);
             var coefBounds = new Rect();
             p.GetTextBounds(coefficient, 0, coefficient.Length, coefBounds);
-            c.DrawText(coefficient, bounds.X, bounds.Y + bounds.Height / 2, p);
+
+            elements.Add(new DrawableElement
+            {
+                Size = p.TextSize,
+                X = bounds.X,
+                Y = bounds.Y + bounds.Height / 2,
+                Type = DrawableType.Symbolic,
+                Text = coefficient
+            });
             var posX = bounds.X + coefBounds.Width();
             var posY = bounds.Y + bounds.Height / 2;
 
-            if (monomial.Variables == null)
+            if (monomial.Variables != null)
             {
-                return;
+                foreach (var variable in monomial.Variables)
+                {
+                    elements.AddRange(DrawVariable(variable, posX, posY, p));
+                    posX += GetVariableBounds(variable, p).X;
+                }
             }
 
-            foreach (var variable in monomial.Variables)
+            
+            var drawable = new DrawableExpression
             {
-                DrawVariable(variable, posX, posY, p, c);
-                posX += GetVariableBounds(variable, p).X;
-            }
+                Elements = elements
+            };
+            return new List<DrawableExpression> { drawable };
         }
 
         public EquationBounds GetBounds(IExpression expression, Paint p)

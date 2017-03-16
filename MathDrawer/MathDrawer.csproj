@@ -52,9 +52,14 @@
     <Compile Include="Drawers\RootDrawer.cs" />
     <Compile Include="Drawers\SuperscriptDrawer.cs" />
     <Compile Include="Drawers\UnaryDrawer.cs" />
+    <Compile Include="ElementsDrawer.cs" />
     <Compile Include="Interfaces\IBaseDrawer.cs" />
     <Compile Include="Interfaces\IDrawer.cs" />
     <Compile Include="Interfaces\IDrawerFactory.cs" />
+    <Compile Include="Interfaces\IElementsDrawer.cs" />
+    <Compile Include="Models\DrawableElement.cs" />
+    <Compile Include="Models\DrawableExpression.cs" />
+    <Compile Include="Models\DrawableType.cs" />
     <Compile Include="Models\EquationBounds.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

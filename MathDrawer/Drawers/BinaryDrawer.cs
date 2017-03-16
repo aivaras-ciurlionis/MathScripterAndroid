@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Android.Graphics;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
@@ -17,8 +18,9 @@ namespace MathDrawer.Drawers
                 .GetBounds(operand, _paint);
         }
 
-        public void DrawExpression(IExpression expression, Paint p, Canvas c, EquationBounds bounds)
+        public IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds)
         {
+
             _paint = p;
             if (bounds.Width < 0 || bounds.Height < 0)
             {
@@ -32,26 +34,41 @@ namespace MathDrawer.Drawers
             var nameBounds = new Rect();
             p.GetTextBounds(expressionName, 0, expressionName.Length, nameBounds);
 
+            var testBounds = new Rect();
+            p.GetTextBounds("a", 0, expressionName.Length, testBounds);
+
             var leftOperand = expression.Operands[0];
             var rightOperand = expression.Operands[1];
 
             var leftBounds = GetOperandBounds(leftOperand);
-            var rightBounds = GetOperandBounds(leftOperand);
+            var rightBounds = GetOperandBounds(rightOperand);
+
+            var hd = 0;
 
             var drawX = bounds.X + leftBounds.Width;
-            var h = nameBounds.Height();
-            var drawY = bounds.Y + bounds.Height / 2;
-
-            c.DrawText(expressionName, drawX, drawY, p);
+            var drawY = bounds.Y + testBounds.Height() / 2;
+            var operationElement = new DrawableElement
+            {
+                Type = DrawableType.Symbolic,
+                Text = expressionName,
+                X = drawX,
+                Y = drawY,
+                Size = p.TextSize
+            };
 
             leftBounds.Y = bounds.Y;
             leftBounds.X = drawX - leftBounds.Width;
 
             rightBounds.Y = bounds.Y;
-            rightBounds.X = drawX + (nameBounds.Right - nameBounds.Left);
+            rightBounds.X = drawX + nameBounds.Width();
 
-            _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, c, leftBounds);
-            _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, c, rightBounds);
+            var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
+            var rightDrawables = _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, rightBounds);
+            var drawableExpressions = new List<DrawableExpression>();
+            drawableExpressions.AddRange(leftDrawables);
+            drawableExpressions.AddRange(rightDrawables);
+            drawableExpressions.Add(new DrawableExpression { Elements = new List<DrawableElement> { operationElement } });
+            return drawableExpressions;
         }
 
         public EquationBounds GetBounds(IExpression expression, Paint p)
@@ -60,7 +77,7 @@ namespace MathDrawer.Drawers
             var name = expression.Name;
             var exprBounds = new Rect();
             p.GetTextBounds(name, 0, name.Length, exprBounds);
-            
+
             var leftOperand = expression.Operands[0];
             var rightOperand = expression.Operands[1];
             var leftBounds = GetOperandBounds(leftOperand);
@@ -68,7 +85,7 @@ namespace MathDrawer.Drawers
             return new EquationBounds
             {
                 Height = Math.Max(leftBounds.Height, rightBounds.Height),
-                Width = (int)exprBounds.Width() + leftBounds.Width + rightBounds.Width
+                Width = exprBounds.Width() + leftBounds.Width + rightBounds.Width
             };
         }
     }

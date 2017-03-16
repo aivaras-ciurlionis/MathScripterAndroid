@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Android.Graphics;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
@@ -7,7 +8,7 @@ namespace MathDrawer.Drawers
 {
     public class RootDrawer : IDrawer
     {
-        public void DrawExpression(IExpression expression, Paint p, Canvas c, EquationBounds bounds)
+        public IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds)
         {
             throw new System.NotImplementedException();
         }

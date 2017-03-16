@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Android.Graphics;
 using MathDrawer.Models;
 using MathExecutor.Interfaces;
@@ -6,7 +7,7 @@ namespace MathDrawer.Interfaces
 {
     public interface IDrawer
     {
-        void DrawExpression(IExpression expression, Paint p, Canvas c, EquationBounds bounds);
+        IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds);
         EquationBounds GetBounds(IExpression expression, Paint p);
     }
 }

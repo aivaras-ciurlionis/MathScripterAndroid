@@ -102,6 +102,7 @@
     <Compile Include="Views\ExpressionView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\LinLibertine_R.ttf" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />

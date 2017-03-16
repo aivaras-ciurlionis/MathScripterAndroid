@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Android.Graphics;
 using MathDrawer.Interfaces;
@@ -15,13 +16,13 @@ namespace MathDrawer
             _drawerFactory = drawerFactory;
         }
 
-        public void DrawExpression(IExpression expression, Paint p, Canvas c)
+        public IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds)
         {
             var innerExpression = expression.Operands.First();
             var drawer = _drawerFactory.GetDrawer(innerExpression);
             var width = GetBounds(expression, p).Width;
-            drawer.DrawExpression(innerExpression, p, c,
-                new EquationBounds { X = c.Width / 2 - width / 2, Y = c.Height / 2, Width = -1, Height = -1 });
+            return drawer.DrawExpression(innerExpression, p,
+                new EquationBounds { X = bounds.X - width / 2, Y = bounds.Y, Width = -1, Height = -1 });
         }
 
         public EquationBounds GetBounds(IExpression expression, Paint p)
