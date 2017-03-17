@@ -6,6 +6,7 @@ using Android.Widget;
 using Android.OS;
 using MathRecognizer.Network;
 using MathScripter.Interfaces;
+using MathScripter.Providers;
 
 namespace MathScripter
 {
@@ -13,13 +14,13 @@ namespace MathScripter
     public class MainActivity : Activity
     {
         private Button _cameraButton;
-        //private readonly INetworkDataLoader _networkDataLoader =
-        //    App.Container.Resolve(typeof(INetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
+        private readonly INetworkDataLoader _networkDataLoader =
+            App.Container.Resolve(typeof(NetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-           // _networkDataLoader.LoadData(Assets);
+            _networkDataLoader.LoadData(Assets);
             SetContentView(Resource.Layout.Main);
             _cameraButton = FindViewById<Button>(Resource.Id.cameraButton);
             _cameraButton.Click += _openCamera;

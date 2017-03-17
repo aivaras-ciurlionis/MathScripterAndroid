@@ -46,7 +46,7 @@ namespace MathScripter.Views
             var tf = Typeface.CreateFromAsset(_assets, "LinLibertine_R.ttf");
             p.SetTypeface(tf);
 
-            const string expressionText = "1+2+3+4+((1/3)*6)";
+            const string expressionText = "(1+2+3+4)-(6*2)+(1/6)";
             var expression = _interpreter.GetExpression(expressionText);
             var steps = _interpreter.FindSolution(expressionText);
             var i = 0;
