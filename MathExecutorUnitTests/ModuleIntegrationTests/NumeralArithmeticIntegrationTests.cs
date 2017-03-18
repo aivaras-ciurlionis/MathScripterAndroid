@@ -45,8 +45,7 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             var solution = _interpreter.FindSolution("7*(2+3)");
             Assert.AreEqual(35, solution.NumericResult);
             Assert.AreEqual("7 * (2 + 3)", solution.Steps[0].FullExpression.ToString());
-            Assert.AreEqual("7 * (5)", solution.Steps[1].FullExpression.ToString());
-            Assert.AreEqual("7 * 5", solution.Steps[2].FullExpression.ToString());
+            Assert.AreEqual("7 * 5", solution.Steps[1].FullExpression.ToString());
         }
 
         [Test]
@@ -55,11 +54,9 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             var solution = _interpreter.FindSolution("(2-(3+4)*6)+0.5");
             Assert.AreEqual(-39.5, solution.NumericResult);
             Assert.AreEqual("(2 - (3 + 4) * 6) + 0.5", solution.Steps[0].FullExpression.ToString());
-            Assert.AreEqual("(2 - (7) * 6) + 0.5", solution.Steps[1].FullExpression.ToString());
-            Assert.AreEqual("(2 - 7 * 6) + 0.5", solution.Steps[2].FullExpression.ToString());
-            Assert.AreEqual("(2 - 42) + 0.5", solution.Steps[3].FullExpression.ToString());
-            Assert.AreEqual("(-40) + 0.5", solution.Steps[4].FullExpression.ToString());
-            Assert.AreEqual("-40 + 0.5", solution.Steps[5].FullExpression.ToString());
+            Assert.AreEqual("(2 - 7 * 6) + 0.5", solution.Steps[1].FullExpression.ToString());
+            Assert.AreEqual("(2 - 42) + 0.5", solution.Steps[2].FullExpression.ToString());
+            Assert.AreEqual("-40 + 0.5", solution.Steps[3].FullExpression.ToString());
         }
 
         [Test]
@@ -69,10 +66,9 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             Assert.AreEqual(-18, solution.NumericResult);
             Assert.AreEqual("2 * (-3 + (-6))", solution.Steps[0].FullExpression.ToString());
             Assert.AreEqual("2 * (-3 + (-6))", solution.Steps[1].FullExpression.ToString());
-            Assert.AreEqual("2 * (-3 + (-6))", solution.Steps[2].FullExpression.ToString());
-            Assert.AreEqual("2 * (-3 + -6)", solution.Steps[3].FullExpression.ToString());
-            Assert.AreEqual("2 * (-9)", solution.Steps[4].FullExpression.ToString());
-            Assert.AreEqual("2 * -9", solution.Steps[5].FullExpression.ToString());
+            Assert.AreEqual("2 * (-3 + -6)", solution.Steps[2].FullExpression.ToString());
+            Assert.AreEqual("2 * -9", solution.Steps[3].FullExpression.ToString());
+            Assert.AreEqual("-18", solution.Steps[4].FullExpression.ToString());
         }
 
         [Test]

@@ -50,6 +50,7 @@
     <Compile Include="Expressions\Arithmetic\ParenthesisExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SubtractExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SumExpression.cs" />
+    <Compile Include="Expressions\Equality\EqualityExpression.cs" />
     <Compile Include="Expressions\ExpressionFactory.cs" />
     <Compile Include="Expressions\RootExpression.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />

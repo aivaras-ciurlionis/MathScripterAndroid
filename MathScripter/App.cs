@@ -80,6 +80,8 @@ namespace MathScripter
             Container.RegisterType<IBaseDrawer, BaseDrawer>();
             Container.RegisterType<IDrawerFactory, DrawerFactory>();
             Container.RegisterType<IElementsDrawer, ElementsDrawer>();
+            Container.RegisterType<IStepsDrawer, StepsDrawer>();
+            Container.RegisterType<IExpressionDrawer, ExpressionDrawer>();
         }
     }
 }

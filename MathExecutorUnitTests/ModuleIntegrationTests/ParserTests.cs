@@ -133,5 +133,13 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             Assert.AreEqual(typeof(SubtractExpression), result.GetType());
         }
 
+        [Test]
+        public void ItShouldImplicitlyAddMultiplicationInDivision()
+        {
+            var result = _parser.Parse("(3x^2+4x-3)/(9x^2+3x+4)");
+            Assert.AreEqual("(3 * x ^ 2 + 4 * x - 3) / (9 * x ^ 2 + 3 * x + 4)", result.ToString());
+            Assert.AreEqual(typeof(DivisionExpression), result.GetType());
+        }
+
     }
 }

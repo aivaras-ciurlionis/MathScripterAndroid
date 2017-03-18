@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Android.Graphics;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
 using MathExecutor.Interfaces;
@@ -9,19 +8,21 @@ namespace MathDrawer.Drawers
 {
     public class BinaryDrawer : IDrawer
     {
-        private readonly IDrawerFactory _drawerFactory = new DrawerFactory();
-        private Paint _paint;
+        private readonly IBoundsMeasurer _boundsMeasurer;
+        private readonly IDrawerFactory _drawerFactory;
+        private readonly ITextMeasurer _textMeasurer;
 
-        private EquationBounds GetOperandBounds(IExpression operand)
+        public BinaryDrawer(IDrawerFactory drawerFactory,
+            IBoundsMeasurer boundsMeasurer,
+            ITextMeasurer textMeasurer)
         {
-            return _drawerFactory.GetDrawer(operand)
-                .GetBounds(operand, _paint);
+            _boundsMeasurer = boundsMeasurer;
+            _textMeasurer = textMeasurer;
+            _drawerFactory = drawerFactory;
         }
 
-        public IList<DrawableExpression> DrawExpression(IExpression expression, Paint p, EquationBounds bounds)
+        public IList<DrawableExpression> DrawExpression(IExpression expression, TextParameters p, EquationBounds bounds)
         {
-
-            _paint = p;
             if (bounds.Width < 0 || bounds.Height < 0)
             {
                 var expressionBounds = GetBounds(expression, p);
@@ -31,36 +32,30 @@ namespace MathDrawer.Drawers
 
             var expressionName = expression.Name;
 
-            var nameBounds = new Rect();
-            p.GetTextBounds(expressionName, 0, expressionName.Length, nameBounds);
-
-            var testBounds = new Rect();
-            p.GetTextBounds("a", 0, expressionName.Length, testBounds);
+            var realBounds = _textMeasurer.GetTextBounds(expressionName, p);
 
             var leftOperand = expression.Operands[0];
             var rightOperand = expression.Operands[1];
 
-            var leftBounds = GetOperandBounds(leftOperand);
-            var rightBounds = GetOperandBounds(rightOperand);
-
-            var hd = 0;
+            var leftBounds = _boundsMeasurer.GetOperandBounds(leftOperand, p);
+            var rightBounds = _boundsMeasurer.GetOperandBounds(rightOperand, p);
 
             var drawX = bounds.X + leftBounds.Width;
-            var drawY = bounds.Y + testBounds.Height() / 2;
+            var drawY = bounds.Y + _textMeasurer.GetGenericTextHeight(p) / 2;
             var operationElement = new DrawableElement
             {
                 Type = DrawableType.Symbolic,
                 Text = expressionName,
                 X = drawX,
                 Y = drawY,
-                Size = p.TextSize
+                Size = p.Size
             };
 
             leftBounds.Y = bounds.Y;
             leftBounds.X = drawX - leftBounds.Width;
 
             rightBounds.Y = bounds.Y;
-            rightBounds.X = drawX + nameBounds.Width();
+            rightBounds.X = drawX + realBounds.Width();
 
             var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
             var rightDrawables = _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, rightBounds);
@@ -71,17 +66,14 @@ namespace MathDrawer.Drawers
             return drawableExpressions;
         }
 
-        public EquationBounds GetBounds(IExpression expression, Paint p)
+        public EquationBounds GetBounds(IExpression expression, TextParameters p)
         {
-            _paint = p;
             var name = expression.Name;
-            var exprBounds = new Rect();
-            p.GetTextBounds(name, 0, name.Length, exprBounds);
-
+            var exprBounds = _textMeasurer.GetTextBounds(name, p);
             var leftOperand = expression.Operands[0];
             var rightOperand = expression.Operands[1];
-            var leftBounds = GetOperandBounds(leftOperand);
-            var rightBounds = GetOperandBounds(rightOperand);
+            var leftBounds = _boundsMeasurer.GetOperandBounds(leftOperand, p);
+            var rightBounds = _boundsMeasurer.GetOperandBounds(rightOperand, p);
             return new EquationBounds
             {
                 Height = Math.Max(leftBounds.Height, rightBounds.Height),

@@ -36,6 +36,7 @@ namespace MathExecutor.Parser
             if (fixedToken != null)
             {
                 fixedToken.Index = _tokens.Count;
+                fixedToken.Level = lastToken?.Level ?? token.Level;
                 _tokens.Add(fixedToken);
             }
             token.Index = _tokens.Count;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MathExecutor.Expressions.Arithmetic;
+using MathExecutor.Expressions.Equality;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -45,6 +46,7 @@ namespace MathExecutor.Expressions
                 case "(": return new ParenthesisExpression(operands[0]);
                 case "^": return new ExponentExpression(operands[0], operands[1]);
                 case "/": return new DivisionExpression(operands[0], operands[1]);
+                case "=": return new EqualityExpression(operands[0], operands[1]);
                 default:
                     return null;
             }

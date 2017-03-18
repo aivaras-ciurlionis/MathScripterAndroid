@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
@@ -26,8 +27,8 @@ namespace MathScripter
         private TextView _textView;
         private IRecognizer _recognizer;
 
-        const int BX = 600;
-        const int BY = 120;
+        const int BX = 400;
+        const int BY = 200;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,16 +42,6 @@ namespace MathScripter
             _imageView = FindViewById<ImageView>(Resource.Id.imageView1);
             _captureButton = FindViewById<Button>(Resource.Id.captureButton);
             _captureButton.Click += OnCapture;
-        }
-
-        private void TrySolveEquation(string equation)
-        {
-            var interpreter = App.Container.Resolve(typeof(Interpreter), "interpreter") as IInterpreter;
-            var solution = interpreter.FindSolution(equation);
-            var steps = solution.Steps.Select(s => s.FullExpression.ToString());
-            var stringSteps = string.Join("\n", steps);
-            _textView.Text += stringSteps + "\n";
-            _textView.Text += solution.Result;
         }
 
         public void OnCapture(object sender, EventArgs args)
@@ -130,12 +121,14 @@ namespace MathScripter
                 var bitmapData = stream.ToArray();
                 image = new Image(bitmapData);
             }
-            var equation = "";
-
             try
             {
-                equation = _recognizer.GetEquationsInImage(image);
-                _textView.Text = equation +="\n\n";
+                var equation = _recognizer.GetEquationsInImage(image);
+                _textView.Text = equation;
+                var result = new Intent(this, typeof(MainActivity));
+                result.PutExtra("expression", equation);
+                SetResult(Result.Ok, result);
+                Finish();
             }
             catch (Exception e)
             {

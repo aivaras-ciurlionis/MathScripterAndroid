@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Diagnostics;
+using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -22,6 +22,11 @@ namespace MathExecutor.Expressions
         public string Name => "ROOT";
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
         {
+            if (expressionBefore is ParenthesisExpression)
+            {
+                return;
+            }
+
             var step = new Step
             {
                 ComputedExpression = expressionBefore,

@@ -20,7 +20,7 @@
         p1:layout_width="0dp"
         p1:layout_weight="0.80"
         p1:layout_height="match_parent"
-        p1:id="@+id/canvas1" />
+        p1:id="@+id/expressionView" />
     <ScrollView
         p1:minWidth="25px"
         p1:minHeight="25px"

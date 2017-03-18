@@ -18,7 +18,9 @@ namespace MathExecutor.Interpreter
         {
             var parsedExpression = _parser.Parse(expression);
             var root = new RootExpression(parsedExpression, new Solution());
-            return root.FindSolution();
+            var solution = root.FindSolution();
+            solution.Steps.Add(new Step { FullExpression = solution.Result });
+            return solution;
         }
 
         public IExpression GetExpression(string expression)

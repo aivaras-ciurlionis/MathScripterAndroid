@@ -21,7 +21,7 @@ namespace MathExecutor.Models
 
         public override string ToString()
         {
-            return (Math.Abs(Exponent - 1) < 0.001) ? $"{Name}" : $"{Name}^{Exponent}";
+            return Math.Abs(Exponent - 1) < 0.001 ? $"{Name}" : $"{Name}^{Exponent}";
         }
 
 
