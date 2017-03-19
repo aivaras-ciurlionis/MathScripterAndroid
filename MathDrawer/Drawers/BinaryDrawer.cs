@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
+using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
+using MathExecutor.Models;
 
 namespace MathDrawer.Drawers
 {
@@ -23,40 +25,27 @@ namespace MathDrawer.Drawers
 
         public IList<DrawableExpression> DrawExpression(IExpression expression, TextParameters p, EquationBounds bounds)
         {
-            if (bounds.Width < 0 || bounds.Height < 0)
-            {
-                var expressionBounds = GetBounds(expression, p);
-                bounds.Width = expressionBounds.Width;
-                bounds.Height = expressionBounds.Height;
-            }
-
             var expressionName = expression.Name;
-
             var realBounds = _textMeasurer.GetTextBounds(expressionName, p);
-
             var leftOperand = expression.Operands[0];
             var rightOperand = expression.Operands[1];
-
             var leftBounds = _boundsMeasurer.GetOperandBounds(leftOperand, p);
             var rightBounds = _boundsMeasurer.GetOperandBounds(rightOperand, p);
-
+            var centerPosition = Math.Max(leftBounds.CenterOffset, rightBounds.CenterOffset);
             var drawX = bounds.X + leftBounds.Width;
-            var drawY = bounds.Y + _textMeasurer.GetGenericTextHeight(p) / 2;
+            var drawY = bounds.Y;
             var operationElement = new DrawableElement
             {
                 Type = DrawableType.Symbolic,
                 Text = expressionName,
                 X = drawX,
-                Y = drawY,
+                Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
-
-            leftBounds.Y = bounds.Y;
+            leftBounds.Y = bounds.Y - (centerPosition - leftBounds.CenterOffset) / 2;
             leftBounds.X = drawX - leftBounds.Width;
-
-            rightBounds.Y = bounds.Y;
+            rightBounds.Y = bounds.Y - (centerPosition - rightBounds.CenterOffset) / 2;
             rightBounds.X = drawX + realBounds.Width();
-
             var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
             var rightDrawables = _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, rightBounds);
             var drawableExpressions = new List<DrawableExpression>();
@@ -77,7 +66,8 @@ namespace MathDrawer.Drawers
             return new EquationBounds
             {
                 Height = Math.Max(leftBounds.Height, rightBounds.Height),
-                Width = exprBounds.Width() + leftBounds.Width + rightBounds.Width
+                Width = exprBounds.Width() + leftBounds.Width + rightBounds.Width,
+                CenterOffset = Math.Max(leftBounds.CenterOffset, rightBounds.CenterOffset)
             };
         }
     }

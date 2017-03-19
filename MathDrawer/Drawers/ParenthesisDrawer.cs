@@ -10,13 +10,16 @@ namespace MathDrawer.Drawers
         private readonly IBoundsMeasurer _boundsMeasurer;
         private readonly IDrawerFactory _drawerFactory;
         private readonly ITextMeasurer _textMeasurer;
+        private readonly IParenthesisChecker _parenthesisChecker;
 
         public ParenthesisDrawer(IDrawerFactory drawerFactory,
             IBoundsMeasurer boundsMeasurer,
-            ITextMeasurer textMeasurer)
+            ITextMeasurer textMeasurer,
+            IParenthesisChecker parenthesisChecker)
         {
             _boundsMeasurer = boundsMeasurer;
             _textMeasurer = textMeasurer;
+            _parenthesisChecker = parenthesisChecker;
             _drawerFactory = drawerFactory;
         }
 
@@ -31,12 +34,12 @@ namespace MathDrawer.Drawers
 
             const string expressionName = "(";
             var realBounds = _textMeasurer.GetTextBounds(expressionName, p);
-            var textBounds = _textMeasurer.GetTextBounds(p);
             var operand = expression.Operands[0];
             var insBounds = _boundsMeasurer.GetOperandBounds(operand, p);
 
             var drawX = bounds.X;
-            var drawY = bounds.Y + textBounds.Height() / 2;
+            var drawY = bounds.Y;
+            var needsParenthesis = _parenthesisChecker.NeedsParenthesis(expression);
             var operationElement1 = new DrawableElement
             {
                 Type = DrawableType.Symbolic,
@@ -55,27 +58,32 @@ namespace MathDrawer.Drawers
             };
 
             insBounds.Y = bounds.Y;
-            insBounds.X = drawX + realBounds.Width();
+            insBounds.X = drawX + (needsParenthesis ? realBounds.Width() : 0);
             var insDrawables = _drawerFactory.GetDrawer(operand).DrawExpression(operand, p, insBounds);
             var drawableExpressions = new List<DrawableExpression>();
             drawableExpressions.AddRange(insDrawables);
-            drawableExpressions.Add(new DrawableExpression
+            if (needsParenthesis)
             {
-                Elements = new List<DrawableElement> { operationElement1, operationElement2 }
-            });
+                drawableExpressions.Add(new DrawableExpression
+                {
+                    Elements = new List<DrawableElement> { operationElement1, operationElement2 }
+                });
+            }
             return drawableExpressions;
         }
 
         public EquationBounds GetBounds(IExpression expression, TextParameters p)
         {
             var name = expression.Name;
+            var needsParenthesis = _parenthesisChecker.NeedsParenthesis(expression);
             var exprBounds = _textMeasurer.GetTextBounds(name, p);
             var operand = expression.Operands[0];
             var bounds = _boundsMeasurer.GetOperandBounds(operand, p);
             return new EquationBounds
             {
                 Height = bounds.Height,
-                Width = exprBounds.Width() + bounds.Width
+                Width = (needsParenthesis ? exprBounds.Width() : 0) + bounds.Width,
+                CenterOffset = bounds.CenterOffset
             };
         }
     }

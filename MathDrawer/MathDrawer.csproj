@@ -56,6 +56,7 @@
     <Compile Include="ElementsDrawer.cs" />
     <Compile Include="ExpressionDrawer.cs" />
     <Compile Include="Helpers\BoundsMeasurer.cs" />
+    <Compile Include="Helpers\ParenthesisChecker.cs" />
     <Compile Include="Helpers\TextMeasurer.cs" />
     <Compile Include="Interfaces\IBaseDrawer.cs" />
     <Compile Include="Interfaces\IBoundsMeasurer.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Interfaces\IDrawerFactory.cs" />
     <Compile Include="Interfaces\IElementsDrawer.cs" />
     <Compile Include="Interfaces\IExpressionDrawer.cs" />
+    <Compile Include="Interfaces\IParenthesisChecker.cs" />
     <Compile Include="Interfaces\IStepsDrawer.cs" />
     <Compile Include="Interfaces\ITextMeasurer.cs" />
     <Compile Include="Interfaces\IVariableDrawer.cs" />

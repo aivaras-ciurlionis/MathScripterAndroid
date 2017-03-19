@@ -15,6 +15,7 @@ namespace MathDrawer
             var measurer = new BoundsMeasurer(factory);
             var textMeasurer = new TextMeasurer();
             var variableDrawer = new VariableDrawer(textMeasurer);
+            var parenthesisChecker = new ParenthesisChecker();
 
             if (expression is DivisionExpression)
             {
@@ -33,7 +34,7 @@ namespace MathDrawer
 
             if (expression is ParenthesisExpression)
             {
-                return new ParenthesisDrawer(factory, measurer, textMeasurer);
+                return new ParenthesisDrawer(factory, measurer, textMeasurer, parenthesisChecker);
             }
 
             switch (expression.Arity)

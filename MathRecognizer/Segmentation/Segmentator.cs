@@ -140,7 +140,7 @@ namespace MathRecognizer.Segmentation
                    // Console.WriteLine("Boundary hit");
                 }
 
-                if (movesCount > 5000)
+                if (movesCount > 10000)
                 {
                     throw new TimeoutException();
                 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Android.Graphics;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
 using MathExecutor.Interfaces;
@@ -7,12 +8,12 @@ namespace MathDrawer.Drawers
 {
     public class SuperscriptDrawer : IDrawer
     {
-        private const float SizeModifier = 0.8f;
+        private const float SizeModifier = 0.7f;
 
         private readonly IBoundsMeasurer _boundsMeasurer;
         private readonly IDrawerFactory _drawerFactory;
 
-        public SuperscriptDrawer(IDrawerFactory drawerFactory, 
+        public SuperscriptDrawer(IDrawerFactory drawerFactory,
             IBoundsMeasurer boundsMeasurer)
         {
             _drawerFactory = drawerFactory;
@@ -29,7 +30,7 @@ namespace MathDrawer.Drawers
             var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
             p.Size *= SizeModifier;
             var exponentBounds = _boundsMeasurer.GetOperandBounds(exponentOperand, p);
-            exponentBounds.Y = bounds.Y - leftBounds.Height / 2;
+            exponentBounds.Y = leftBounds.Y - leftBounds.Height / 2;
             exponentBounds.X = bounds.X + leftBounds.Width;
             var rightDrawables = _drawerFactory.GetDrawer(exponentOperand).DrawExpression(exponentOperand, p, exponentBounds);
             var drawableExpressions = new List<DrawableExpression>();
@@ -47,8 +48,9 @@ namespace MathDrawer.Drawers
             var rightBounds = _boundsMeasurer.GetOperandBounds(rightOperand, p);
             return new EquationBounds
             {
-                Height = (int)(leftBounds.Height + rightBounds.Height * SizeModifier),
-                Width = leftBounds.Width + rightBounds.Width
+                Height = leftBounds.Height + (rightBounds.Height - leftBounds.Height / 2),
+                Width = leftBounds.Width + rightBounds.Width,
+                CenterOffset = leftBounds.CenterOffset
             };
         }
     }

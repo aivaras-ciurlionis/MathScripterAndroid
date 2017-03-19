@@ -27,8 +27,8 @@ namespace MathScripter
         private TextView _textView;
         private IRecognizer _recognizer;
 
-        const int BX = 400;
-        const int BY = 200;
+        const int BX = 500;
+        const int BY = 120;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

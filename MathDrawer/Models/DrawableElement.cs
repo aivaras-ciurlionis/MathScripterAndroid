@@ -1,3 +1,5 @@
+using Android.Graphics;
+
 namespace MathDrawer.Models
 {
     public class DrawableElement
@@ -9,5 +11,6 @@ namespace MathDrawer.Models
         public float Width { get; set; }
         public float Height { get; set; }
         public float Size { get; set; }
+        public Color Color { get; set; }
     }
 }

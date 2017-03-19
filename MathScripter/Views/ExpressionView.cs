@@ -22,7 +22,10 @@ namespace MathScripter.Views
         private readonly IExpressionDrawer _expressionDrawer =
            App.Container.Resolve(typeof(ExpressionDrawer), "expressionDrawer") as IExpressionDrawer;
 
-        private string _expression;
+        private readonly IStepsDrawer _stepsDrawer =
+           App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
+
+        private string _expression = "1/3+1/4=2";
 
         private readonly AssetManager _assets;
 
@@ -52,6 +55,10 @@ namespace MathScripter.Views
             canvas.DrawText(_expression, 50, 75, p);
             var e = _interpreter.GetExpression(_expression);
             _expressionDrawer.Draw(e, p, canvas);
+            //var steps = _interpreter.FindSolution(_expression).Steps;
+            //_stepsDrawer.DrawSteps(steps, p, canvas);
+
+
         }
     }
 }

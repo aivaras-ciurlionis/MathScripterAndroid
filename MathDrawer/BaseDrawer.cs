@@ -30,7 +30,7 @@ namespace MathDrawer
                 new EquationBounds
                 {
                     X = bounds.X - newBounds.Width / 2,
-                    Y = bounds.Y,
+                    Y = bounds.Y + newBounds.Height / 2,
                     Width = newBounds.Width,
                     Height = newBounds.Height
                 });

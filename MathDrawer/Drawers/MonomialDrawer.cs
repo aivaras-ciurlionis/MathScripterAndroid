@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Android.Graphics;
 using MathDrawer.Interfaces;
 using MathDrawer.Models;
 using MathExecutor.Interfaces;
@@ -30,24 +31,23 @@ namespace MathDrawer.Drawers
             var coefficient = Math.Round(monomial.Coefficient, RoundingPrecision).ToString(CultureInfo.InvariantCulture);
             var hasCoefficient = Math.Abs(monomial.Coefficient - 1) > 0.001;
             var coefBounds = _textMeasurer.GetTextBounds(coefficient, p);
-            if (hasCoefficient)
+            if (hasCoefficient || monomial.IsNumeral())
             {
                 elements.Add(new DrawableElement
                 {
                     Size = p.Size,
                     X = bounds.X,
-                    Y = bounds.Y + bounds.Height / 2,
+                    Y = bounds.Y,
                     Type = DrawableType.Symbolic,
                     Text = coefficient
                 });
             }
             var posX = bounds.X + (hasCoefficient ? coefBounds.Width() : 0);
-            var posY = bounds.Y + bounds.Height / 2;
-            if (monomial.Variables != null)
+            if (!monomial.IsNumeral())
             {
                 foreach (var variable in monomial.Variables)
                 {
-                    elements.AddRange(_variableDrawer.DrawVariable(variable, posX, posY, p));
+                    elements.AddRange(_variableDrawer.DrawVariable(variable, posX, bounds.Y, p));
                     posX += _variableDrawer.GetVariableBounds(variable, p).Width;
                 }
             }
@@ -75,8 +75,9 @@ namespace MathDrawer.Drawers
             var hasCoefficient = Math.Abs(monomial.Coefficient - 1) > 0.001;
             return new EquationBounds
             {
-                Height = Math.Max(coefBounds.Height(), boundings.Max(b => b.Height)),
-                Width = boundings.Sum(b => b.Width) + (hasCoefficient ? coefBounds.Width() : 0)
+                Height = Math.Max(hasCoefficient ? coefBounds.Height() : 0, boundings.Max(b => b.Height)),
+                Width = boundings.Sum(b => b.Width) + (hasCoefficient ? coefBounds.Width() : 0),
+                CenterOffset = 0
             };
         }
 
