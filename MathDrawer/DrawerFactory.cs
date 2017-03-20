@@ -37,6 +37,11 @@ namespace MathDrawer
                 return new ParenthesisDrawer(factory, measurer, textMeasurer, parenthesisChecker);
             }
 
+            if (expression is SqrRootExpression)
+            {
+                return new RootDrawer(measurer, factory);
+            }
+
             switch (expression.Arity)
             {
                 case 2: return new BinaryDrawer(factory, measurer, textMeasurer);

@@ -49,6 +49,7 @@ namespace MathExecutor.Expressions
                 case "/": return new DivisionExpression(operands[0], operands[1]);
                 case "=": return new EqualityExpression(operands[0], operands[1]);
                 case "sin": return new SinExpression(operands[0]);
+                case "sqrt": return new SqrRootExpression(operands[0]);
                 default:
                     return null;
             }

@@ -25,7 +25,7 @@ namespace MathScripter.Views
         private readonly IStepsDrawer _stepsDrawer =
            App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
 
-        private string _expression = "sin3+sin45";
+        private string _expression = "sqrt(611/2)/8+3-x^x";
 
         private readonly AssetManager _assets;
 

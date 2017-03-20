@@ -16,7 +16,7 @@ namespace MathExecutor.Expressions
             SolutionTracker = solution;
         }
 
-        public ExpressionType Type => ExpressionType.Root;
+        public ExpressionType Type => ExpressionType.List;
         public int Order => 0;
         public bool CanBeExecuted() => false;
         public string Name => "ROOT";

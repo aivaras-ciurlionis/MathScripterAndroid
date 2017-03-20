@@ -48,6 +48,7 @@
     <Compile Include="Expressions\Arithmetic\MultiplyExpression.cs" />
     <Compile Include="Expressions\Arithmetic\NegationExpression.cs" />
     <Compile Include="Expressions\Arithmetic\ParenthesisExpression.cs" />
+    <Compile Include="Expressions\Arithmetic\SqrRootExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SubtractExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SumExpression.cs" />
     <Compile Include="Expressions\Equality\EqualityExpression.cs" />

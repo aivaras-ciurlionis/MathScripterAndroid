@@ -11,7 +11,8 @@ namespace MathDrawer.Helpers
             var parentExpression = expression.ParentExpression;
             if (parentExpression == null) return false;
             return !(parentExpression is DivisionExpression ||
-                   parentExpression is ExponentExpression);
+                   parentExpression is ExponentExpression ||
+                   parentExpression is SqrRootExpression);
         }
     }
 }
