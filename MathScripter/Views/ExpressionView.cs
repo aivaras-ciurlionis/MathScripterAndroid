@@ -25,7 +25,7 @@ namespace MathScripter.Views
         private readonly IStepsDrawer _stepsDrawer =
            App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
 
-        private string _expression = "1/3+1/4=2";
+        private string _expression = "sin3+sin45";
 
         private readonly AssetManager _assets;
 

@@ -40,7 +40,7 @@ namespace MathDrawer
             switch (expression.Arity)
             {
                 case 2: return new BinaryDrawer(factory, measurer, textMeasurer);
-                case 1: return new UnaryDrawer();
+                case 1: return new UnaryDrawer(measurer, factory, textMeasurer);
                 default: return new BinaryDrawer(factory, measurer, textMeasurer);
             }
 

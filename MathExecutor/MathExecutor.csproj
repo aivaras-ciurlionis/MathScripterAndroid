@@ -53,6 +53,7 @@
     <Compile Include="Expressions\Equality\EqualityExpression.cs" />
     <Compile Include="Expressions\ExpressionFactory.cs" />
     <Compile Include="Expressions\RootExpression.cs" />
+    <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />
     <Compile Include="Interfaces\AbstractExpression.cs" />
     <Compile Include="Interfaces\AbstractNullaryExpression.cs" />

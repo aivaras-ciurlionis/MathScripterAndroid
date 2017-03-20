@@ -25,13 +25,6 @@ namespace MathDrawer.Drawers
 
         public IList<DrawableExpression> DrawExpression(IExpression expression, TextParameters p, EquationBounds bounds)
         {
-            if (bounds.Width < 0 || bounds.Height < 0)
-            {
-                var expressionBounds = GetBounds(expression, p);
-                bounds.Width = expressionBounds.Width;
-                bounds.Height = expressionBounds.Height;
-            }
-
             const string expressionName = "(";
             var realBounds = _textMeasurer.GetTextBounds(expressionName, p);
             var operand = expression.Operands[0];
