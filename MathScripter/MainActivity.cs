@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
-using MathRecognizer.Network;
 using MathScripter.Interfaces;
 using MathScripter.Providers;
 using MathScripter.Views;
@@ -16,7 +13,9 @@ namespace MathScripter
     public class MainActivity : Activity
     {
         private Button _cameraButton;
+        private Button _editButton;
         private ExpressionView _expressionView;
+        private string _expression = "sqrt(611/2)/8+3-x^x";
 
         private readonly INetworkDataLoader _networkDataLoader =
             App.Container.Resolve(typeof(NetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
@@ -27,8 +26,11 @@ namespace MathScripter
             _networkDataLoader.LoadData(Assets);
             SetContentView(Resource.Layout.Main);
             _cameraButton = FindViewById<Button>(Resource.Id.cameraButton);
+            _editButton = FindViewById<Button>(Resource.Id.editButton);
             _expressionView = FindViewById<ExpressionView>(Resource.Id.expressionView);
             _cameraButton.Click += _openCamera;
+            _editButton.Click += _openEdit;
+            _expressionView.SetExpression(_expression);
         }
 
         private void _openCamera(object sender, EventArgs args)
@@ -36,12 +38,19 @@ namespace MathScripter
             StartActivityForResult(typeof(CameraActivity), 0);
         }
 
+        private void _openEdit(object sender, EventArgs args)
+        {
+            var intent = new Intent(this, typeof(ExpressionEditActivity));
+            intent.PutExtra("expression", _expression);
+            StartActivityForResult(intent, 0);
+        }
+
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode != Result.Ok) return;
-            var expression = data.GetStringExtra("expression");
-            _expressionView.SetExpression(expression);
+            _expression = data.GetStringExtra("expression");
+            _expressionView.SetExpression(_expression);
         }
 
     }

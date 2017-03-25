@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="CameraActivity.cs" />
+    <Compile Include="ExpressionEditActivity.cs" />
     <Compile Include="Interfaces\INetworkDataLoader.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Providers\NetworkDataLoader.cs" />
@@ -108,6 +109,9 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\Camera.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ExpressionEdit.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

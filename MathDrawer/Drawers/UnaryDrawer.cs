@@ -29,16 +29,17 @@ namespace MathDrawer.Drawers
             var operand = expression.Operands[0];
             var insBounds = _boundsMeasurer.GetOperandBounds(operand, p);
             var drawX = bounds.X;
-            var drawY = bounds.Y - bounds.CenterOffset;
+            var drawY = bounds.Y;
+            var centerPosition = insBounds.CenterOffset;
             var operationElement = new DrawableElement
             {
                 Type = DrawableType.Symbolic,
                 Text = expressionName,
                 X = drawX,
-                Y = drawY,
+                Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
-            insBounds.Y = drawY;
+            insBounds.Y = bounds.Y;
             insBounds.X = drawX + realBounds.Width();
             var insDrawables = _drawerFactory.GetDrawer(operand).DrawExpression(operand, p, insBounds);
             var drawableExpressions = new List<DrawableExpression>();

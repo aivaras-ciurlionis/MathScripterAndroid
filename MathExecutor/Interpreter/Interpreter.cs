@@ -14,6 +14,21 @@ namespace MathExecutor.Interpreter
             _parser = parser;
         }
 
+        public bool CanBeParsed(string expression)
+        {
+            try
+            {
+                var parsedExpression = _parser.Parse(expression);
+                var root = new RootExpression(parsedExpression, new Solution());
+                root.FindSolution();
+            }
+            catch (Exception exception)
+            {
+                return exception is ArithmeticException;
+            }
+            return true;
+        }
+
         public Solution FindSolution(string expression)
         {
             var parsedExpression = _parser.Parse(expression);

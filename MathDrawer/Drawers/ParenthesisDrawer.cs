@@ -29,7 +29,7 @@ namespace MathDrawer.Drawers
             var realBounds = _textMeasurer.GetTextBounds(expressionName, p);
             var operand = expression.Operands[0];
             var insBounds = _boundsMeasurer.GetOperandBounds(operand, p);
-
+            var centerPosition = insBounds.CenterOffset;
             var drawX = bounds.X;
             var drawY = bounds.Y;
             var needsParenthesis = _parenthesisChecker.NeedsParenthesis(expression);
@@ -38,7 +38,7 @@ namespace MathDrawer.Drawers
                 Type = DrawableType.Symbolic,
                 Text = "(",
                 X = drawX,
-                Y = drawY,
+                Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
             var operationElement2 = new DrawableElement
@@ -46,7 +46,7 @@ namespace MathDrawer.Drawers
                 Type = DrawableType.Symbolic,
                 Text = ")",
                 X = drawX + realBounds.Width() + insBounds.Width,
-                Y = drawY,
+                Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
 

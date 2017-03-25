@@ -42,9 +42,12 @@ namespace MathDrawer.Drawers
                 Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
-            leftBounds.Y = bounds.Y - (centerPosition - leftBounds.CenterOffset) / 2;
+            var leftD = centerPosition - leftBounds.CenterOffset;
+            var rightD = centerPosition - rightBounds.CenterOffset;
+            var offsetD = Math.Abs(leftBounds.CenterOffset - rightBounds.CenterOffset);
+            leftBounds.Y = (int)(bounds.Y - leftD + (leftD == centerPosition && centerPosition > 0 ? _textMeasurer.GetGenericTextHeight(p) / 2 : 0));
             leftBounds.X = drawX - leftBounds.Width;
-            rightBounds.Y = bounds.Y - (centerPosition - rightBounds.CenterOffset) / 2;
+            rightBounds.Y = (int)(bounds.Y - rightD + (rightD == centerPosition && centerPosition > 0 ? _textMeasurer.GetGenericTextHeight(p) / 2 : 0));
             rightBounds.X = drawX + realBounds.Width();
             var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
             var rightDrawables = _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, rightBounds);

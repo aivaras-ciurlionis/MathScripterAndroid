@@ -25,7 +25,7 @@ namespace MathScripter.Views
         private readonly IStepsDrawer _stepsDrawer =
            App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
 
-        private string _expression = "sqrt(611/2)/8+3-x^x";
+        private string _expression = "";
 
         private readonly AssetManager _assets;
 
@@ -51,14 +51,10 @@ namespace MathScripter.Views
             };
             var tf = Typeface.CreateFromAsset(_assets, "LinLibertine_R.ttf");
             p.SetTypeface(tf);
-            if (string.IsNullOrWhiteSpace(_expression)) return;
-            canvas.DrawText(_expression, 50, 75, p);
+            if (string.IsNullOrWhiteSpace(_expression)
+                || !_interpreter.CanBeParsed(_expression)) return;
             var e = _interpreter.GetExpression(_expression);
             _expressionDrawer.Draw(e, p, canvas);
-            //var steps = _interpreter.FindSolution(_expression).Steps;
-            //_stepsDrawer.DrawSteps(steps, p, canvas);
-
-
         }
     }
 }

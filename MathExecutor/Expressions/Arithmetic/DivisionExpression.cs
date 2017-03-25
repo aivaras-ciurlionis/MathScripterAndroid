@@ -24,7 +24,7 @@ namespace MathExecutor.Expressions.Arithmetic
 
             if (Math.Abs(right.Coefficient) < 0.001)
             {
-                throw new ArgumentException("Division by zero:!");
+                throw new ArithmeticException("Division by zero:!");
             }
 
             var topVariables = new List<IVariable>();
