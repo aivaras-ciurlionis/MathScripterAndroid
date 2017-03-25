@@ -63,6 +63,7 @@
       <HintPath>..\packages\ImageSharp.Processing.1.0.0-alpha2-00105\lib\netstandard1.1\ImageSharp.Processing.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -95,8 +96,10 @@
     <Compile Include="App.cs" />
     <Compile Include="CameraActivity.cs" />
     <Compile Include="ExpressionEditActivity.cs" />
+    <Compile Include="Interfaces\IEquationKeyResolver.cs" />
     <Compile Include="Interfaces\INetworkDataLoader.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Providers\EquationKeyResolver.cs" />
     <Compile Include="Providers\NetworkDataLoader.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\LinLibertine_R.ttf" />
+    <AndroidAsset Include="Assets\keyCodes.json" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
@@ -112,6 +116,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ExpressionEdit.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\EquationKeyboard.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

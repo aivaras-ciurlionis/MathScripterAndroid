@@ -1,0 +1,57 @@
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="12%p"
+    android:keyHeight="9%p" >
+  <Row>
+    <Key android:codes="1" android:keyLabel="(" android:horizontalGap="1%p"/>
+    <Key android:codes="2" android:keyLabel=")" android:horizontalGap="1%p"/>
+    <Key android:codes="3" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="4" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="-2" android:keyLabel="S" android:horizontalGap="1%p" />
+    <Key android:codes="6" android:keyLabel="/" android:horizontalGap="1%p" />
+    <Key android:codes="7" android:keyLabel="*" android:horizontalGap="1%p" />
+    <Key android:codes="-1" android:keyLabel="D" android:horizontalGap="1%p" />
+  </Row>
+  
+  <Row>
+    <Key android:codes="9" android:keyLabel="^?" android:horizontalGap="1%p"/>
+    <Key android:codes="10" android:keyLabel="q" android:horizontalGap="1%p"/>
+    <Key android:codes="11" android:keyLabel="^2" android:horizontalGap="1%p" />
+    <Key android:codes="12" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="13" android:keyLabel="7" android:horizontalGap="1%p" />
+    <Key android:codes="14" android:keyLabel="8" android:horizontalGap="1%p" />
+    <Key android:codes="15" android:keyLabel="9" android:horizontalGap="1%p" />
+    <Key android:codes="16" android:keyLabel="-" android:horizontalGap="1%p" />
+  </Row>
+  
+  <Row>
+    <Key android:codes="17" android:keyLabel="x" android:horizontalGap="1%p"/>
+    <Key android:codes="18" android:keyLabel="y" android:horizontalGap="1%p"/>
+    <Key android:codes="19" android:keyLabel="a" android:horizontalGap="1%p" />
+    <Key android:codes="20" android:keyLabel="b" android:horizontalGap="1%p" />
+    <Key android:codes="21" android:keyLabel="4" android:horizontalGap="1%p" />
+    <Key android:codes="22" android:keyLabel="5" android:horizontalGap="1%p" />
+    <Key android:codes="23" android:keyLabel="6" android:horizontalGap="1%p" />
+    <Key android:codes="24" android:keyLabel="+" android:horizontalGap="1%p" />
+  </Row>
+  
+  <Row>
+    <Key android:codes="25" android:keyLabel="sin" android:horizontalGap="1%p"/>
+    <Key android:codes="26" android:keyLabel="cos" android:horizontalGap="1%p"/>
+    <Key android:codes="27" android:keyLabel="tan" android:horizontalGap="1%p" />
+    <Key android:codes="28" android:keyLabel="ctg" android:horizontalGap="1%p" />
+    <Key android:codes="29" android:keyLabel="1" android:horizontalGap="1%p" />
+    <Key android:codes="30" android:keyLabel="2" android:horizontalGap="1%p" />
+    <Key android:codes="31" android:keyLabel="3" android:horizontalGap="1%p" />
+    <Key android:codes="32" android:keyLabel="=" android:horizontalGap="1%p" />
+  </Row>
+  
+  <Row>
+    <Key android:codes="33" android:keyLabel="ln" android:horizontalGap="1%p"/>
+    <Key android:codes="34" android:keyLabel="log" android:horizontalGap="1%p"/>
+    <Key android:codes="35" android:keyLabel="f" android:horizontalGap="1%p" />
+    <Key android:codes="0" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="37" android:keyLabel="0" android:horizontalGap="1%p" />
+    <Key android:codes="38" android:keyLabel="." android:horizontalGap="1%p" />
+    <Key android:codes="39" android:keyLabel="V" android:horizontalGap="2%p" android:keyWidth="24%p" />
+  </Row>
+</Keyboard>

@@ -41,6 +41,7 @@ namespace MathScripter
             Container = new UnityContainer();
 
             Container.RegisterType<INetworkDataLoader, NetworkDataLoader>();
+            Container.RegisterType<IEquationKeyResolver, EquationKeyResolver>();
 
             Container.RegisterType<IRecognizer, Recognizer>();
             Container.RegisterType<ICenterOfMassComputor, CenterOfMassComputor>();

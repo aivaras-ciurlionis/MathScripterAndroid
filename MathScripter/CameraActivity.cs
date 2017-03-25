@@ -62,8 +62,14 @@ namespace MathScripter
         {
             _camera = Camera.Open();
             var pr = _camera.GetParameters();
-            pr.FocusMode = Camera.Parameters.FocusModeContinuousPicture;
-            pr.FlashMode = Camera.Parameters.FlashModeTorch;
+            if (pr.SupportedFocusModes != null && pr.SupportedFocusModes.Contains(Camera.Parameters.FocusModeContinuousPicture))
+            {
+                pr.FocusMode = Camera.Parameters.FocusModeContinuousPicture;
+            }
+            if (pr.SupportedFlashModes != null)
+            {
+                pr.FlashMode = Camera.Parameters.FlashModeTorch;
+            }
             _camera.SetParameters(pr);
             var previewSize = _camera.GetParameters().PreviewSize;
             _textureView.LayoutParameters =
