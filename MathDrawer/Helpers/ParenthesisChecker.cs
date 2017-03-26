@@ -9,9 +9,14 @@ namespace MathDrawer.Helpers
         public bool NeedsParenthesis(IExpression expression)
         {
             var parentExpression = expression.ParentExpression;
+
+            if (parentExpression is ExponentExpression)
+            {
+                return parentExpression.Operands[0] == expression;
+            }
+
             if (parentExpression == null) return false;
             return !(parentExpression is DivisionExpression ||
-                   parentExpression is ExponentExpression ||
                    parentExpression is SqrRootExpression);
         }
     }

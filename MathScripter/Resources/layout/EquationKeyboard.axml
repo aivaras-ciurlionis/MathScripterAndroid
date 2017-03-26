@@ -4,18 +4,18 @@
   <Row>
     <Key android:codes="1" android:keyLabel="(" android:horizontalGap="1%p"/>
     <Key android:codes="2" android:keyLabel=")" android:horizontalGap="1%p"/>
-    <Key android:codes="3" android:keyLabel="" android:horizontalGap="1%p" />
-    <Key android:codes="4" android:keyLabel="" android:horizontalGap="1%p" />
-    <Key android:codes="-2" android:keyLabel="S" android:horizontalGap="1%p" />
+    <Key android:codes="3" android:keyIcon="@drawable/less" android:horizontalGap="1%p" />
+    <Key android:codes="4" android:keyIcon="@drawable/more" android:horizontalGap="1%p" />
+    <Key android:codes="-2" android:keyIcon="@drawable/clear" android:horizontalGap="1%p" />
     <Key android:codes="6" android:keyLabel="/" android:horizontalGap="1%p" />
     <Key android:codes="7" android:keyLabel="*" android:horizontalGap="1%p" />
-    <Key android:codes="-1" android:keyLabel="D" android:horizontalGap="1%p" />
+    <Key android:codes="-1" android:keyIcon="@drawable/delete"  android:isRepeatable="true" android:horizontalGap="1%p" />
   </Row>
   
   <Row>
-    <Key android:codes="9" android:keyLabel="^?" android:horizontalGap="1%p"/>
-    <Key android:codes="10" android:keyLabel="q" android:horizontalGap="1%p"/>
-    <Key android:codes="11" android:keyLabel="^2" android:horizontalGap="1%p" />
+    <Key android:codes="9" android:keyIcon="@drawable/power" android:horizontalGap="1%p"/>
+    <Key android:codes="11" android:keyIcon="@drawable/sqrpower" android:horizontalGap="1%p" />
+    <Key android:codes="10" android:keyIcon="@drawable/root" android:horizontalGap="1%p"/>
     <Key android:codes="12" android:keyLabel="" android:horizontalGap="1%p" />
     <Key android:codes="13" android:keyLabel="7" android:horizontalGap="1%p" />
     <Key android:codes="14" android:keyLabel="8" android:horizontalGap="1%p" />
@@ -49,9 +49,10 @@
     <Key android:codes="33" android:keyLabel="ln" android:horizontalGap="1%p"/>
     <Key android:codes="34" android:keyLabel="log" android:horizontalGap="1%p"/>
     <Key android:codes="35" android:keyLabel="f" android:horizontalGap="1%p" />
-    <Key android:codes="0" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="-3" android:keyLabel="" android:horizontalGap="1%p" />
     <Key android:codes="37" android:keyLabel="0" android:horizontalGap="1%p" />
     <Key android:codes="38" android:keyLabel="." android:horizontalGap="1%p" />
-    <Key android:codes="39" android:keyLabel="V" android:horizontalGap="2%p" android:keyWidth="24%p" />
+    <Key android:codes="-3" android:keyLabel="" android:horizontalGap="1%p" />
+    <Key android:codes="0" android:keyIcon="@drawable/ok" android:horizontalGap="1%p"/>
   </Row>
 </Keyboard>

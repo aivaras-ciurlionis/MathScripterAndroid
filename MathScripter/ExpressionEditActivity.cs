@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Android.App;
+using Android.Content;
 using Android.InputMethodServices;
 using Android.OS;
 using Android.Text;
@@ -53,6 +54,7 @@ namespace MathScripter
             _expressionKeyboardView = FindViewById<KeyboardView>(Resource.Id.keyboardview);
             _expressionKeyboardView.Keyboard = _expressionKeyboard;
             _expressionKeyboardView.OnKeyboardActionListener = this;
+            _expressionKeyboardView.PreviewEnabled = false;
         }
 
         public void OpenKeyboard(View v)
@@ -72,7 +74,6 @@ namespace MathScripter
             v.OnTouchEvent(e);
             var serv = GetSystemService(InputMethodService) as InputMethodManager;
             serv?.HideSoftInputFromWindow(v.WindowToken, 0);
-
             return true;
         }
 
@@ -93,17 +94,36 @@ namespace MathScripter
             text.Delete(Math.Max(start - 1, 0), end);
         }
 
+        private void ClearText()
+        {
+            _editText.EditableText.Clear();
+        }
+
+        public void ResolveExpression()
+        {
+            var result = new Intent(this, typeof(MainActivity));
+            result.PutExtra("expression", _expression);
+            SetResult(Result.Ok, result);
+            Finish();
+        }
+
         public void OnKey(Keycode primaryCode, Keycode[] keyCodes)
         {
-            Console.WriteLine(_editText.SelectionStart);
             var code = (int)primaryCode;
-            if (code > 0)
+            switch (code)
             {
-                AddText(code);
-            }
-            if (code == -1)
-            {
-                RemoveChar();
+                case 0:
+                    ResolveExpression();
+                    break;
+                case -1:
+                    RemoveChar();
+                    break;
+                case -2:
+                    ClearText();
+                    break;
+                default:
+                    AddText(code);
+                    break;
             }
         }
 
