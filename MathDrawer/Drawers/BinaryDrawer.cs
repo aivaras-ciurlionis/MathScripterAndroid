@@ -10,6 +10,9 @@ namespace MathDrawer.Drawers
 {
     public class BinaryDrawer : IDrawer
     {
+        private const int Padding = 15;
+
+
         private readonly IBoundsMeasurer _boundsMeasurer;
         private readonly IDrawerFactory _drawerFactory;
         private readonly ITextMeasurer _textMeasurer;
@@ -38,7 +41,7 @@ namespace MathDrawer.Drawers
             {
                 Type = DrawableType.Symbolic,
                 Text = expressionName,
-                X = drawX,
+                X = drawX + Padding,
                 Y = centerPosition > 0 ? drawY - centerPosition + _textMeasurer.GetGenericTextHeight(p) / 2 : drawY,
                 Size = p.Size
             };
@@ -48,7 +51,7 @@ namespace MathDrawer.Drawers
             leftBounds.Y = (int)(bounds.Y - leftD + (leftD == centerPosition && centerPosition > 0 ? _textMeasurer.GetGenericTextHeight(p) / 2 : 0));
             leftBounds.X = drawX - leftBounds.Width;
             rightBounds.Y = (int)(bounds.Y - rightD + (rightD == centerPosition && centerPosition > 0 ? _textMeasurer.GetGenericTextHeight(p) / 2 : 0));
-            rightBounds.X = drawX + realBounds.Width();
+            rightBounds.X = drawX + realBounds.Width() + Padding * 2;
             var leftDrawables = _drawerFactory.GetDrawer(leftOperand).DrawExpression(leftOperand, p, leftBounds);
             var rightDrawables = _drawerFactory.GetDrawer(rightOperand).DrawExpression(rightOperand, p, rightBounds);
             var drawableExpressions = new List<DrawableExpression>();
@@ -69,7 +72,7 @@ namespace MathDrawer.Drawers
             return new EquationBounds
             {
                 Height = Math.Max(leftBounds.Height, rightBounds.Height),
-                Width = exprBounds.Width() + leftBounds.Width + rightBounds.Width,
+                Width = exprBounds.Width() + leftBounds.Width + rightBounds.Width + Padding * 2,
                 CenterOffset = Math.Max(leftBounds.CenterOffset, rightBounds.CenterOffset)
             };
         }
