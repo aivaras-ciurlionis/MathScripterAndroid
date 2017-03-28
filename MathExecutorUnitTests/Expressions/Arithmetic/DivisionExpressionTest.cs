@@ -47,7 +47,7 @@ namespace MathExecutorUnitTests.Expressions.Arithmetic
             var top = new Monomial(60);
             var bot = new Monomial(0);
             var division = new DivisionExpression(top, bot);
-            Assert.Throws<ArgumentException>(() => division.Execute());
+            Assert.Throws<ArithmeticException>(() => division.Execute());
         }
 
         [Test]
