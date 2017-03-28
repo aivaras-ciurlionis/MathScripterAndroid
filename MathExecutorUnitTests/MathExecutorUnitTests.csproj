@@ -61,6 +61,7 @@
     <Compile Include="Expressions\Arithmetic\DivisionExpressionTest.cs" />
     <Compile Include="Expressions\Arithmetic\MultiplyExpressionTest.cs" />
     <Compile Include="Helpers\ExpressionFlatenerTests.cs" />
+    <Compile Include="Helpers\MonomialsComparerTests.cs" />
     <Compile Include="Models\Monomial\MonomialComparison.cs" />
     <Compile Include="Models\Monomial\MonomialVariableReplacementTest.cs" />
     <Compile Include="Models\Variable\VariableEvaluationTest.cs" />

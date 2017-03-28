@@ -16,7 +16,8 @@ namespace MathExecutor.Rules
             }
             return (
                 from operand in expression.Operands ?? new List<IExpression>()
-                select ApplyRuleRecursive(operand))
+                select ApplyRuleRecursive(operand)
+                )
                 .FirstOrDefault(operandResult => operandResult != null);
         }
 

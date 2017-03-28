@@ -66,6 +66,7 @@
     <Compile Include="Expressions\Trigonomethric\CosExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
     <Compile Include="Helpers\ExpressionFlatener.cs" />
+    <Compile Include="Helpers\MonomialsComparer.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />
     <Compile Include="Interfaces\AbstractExpression.cs" />
     <Compile Include="Interfaces\AbstractNullaryExpression.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Parser\TokenParser.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\AbstractRecursiveRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -114,9 +116,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rules\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
