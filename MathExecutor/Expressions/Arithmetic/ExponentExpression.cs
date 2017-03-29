@@ -35,7 +35,7 @@ namespace MathExecutor.Expressions.Arithmetic
                 newVariables.Add(new Variable {Name = variable.Name, Exponent = variable.Exponent*exponent});
             }
 
-            return new Monomial(Math.Pow(left.Coefficient, exponent), newVariables);
+            return new Monomial(Math.Pow(left.Coefficient, exponent), newVariables, ParentExpression);
         }
 
         public override int Order => 1;

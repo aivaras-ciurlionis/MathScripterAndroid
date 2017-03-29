@@ -6,6 +6,7 @@ namespace MathExecutor.Interfaces
     {
         bool CanBeParsed(string expression);
         Solution FindSolution(string expression);
+        Solution FindSolution(IExpression expression);
         IExpression GetExpression(string expression);
     }
 }

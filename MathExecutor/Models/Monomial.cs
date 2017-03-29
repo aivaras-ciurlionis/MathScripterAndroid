@@ -16,10 +16,23 @@ namespace MathExecutor.Models
             Coefficient = coefficient;
         }
 
+        public Monomial(double coefficient, IExpression parent)
+        {
+            Coefficient = coefficient;
+            ParentExpression = parent;
+        }
+
         public Monomial(double coefficient, IEnumerable<IVariable> variables)
         {
             Coefficient = coefficient;
             Variables = variables;
+        }
+
+        public Monomial(double coefficient, IEnumerable<IVariable> variables, IExpression parent)
+        {
+            Coefficient = coefficient;
+            Variables = variables;
+            ParentExpression = parent;
         }
 
         public IExpression Execute()

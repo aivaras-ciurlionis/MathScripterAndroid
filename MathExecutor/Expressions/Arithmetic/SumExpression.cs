@@ -13,7 +13,8 @@ namespace MathExecutor.Expressions.Arithmetic
         {
             var left = Operands[0] as Monomial;
             var right = Operands[1] as Monomial;
-            return new Monomial(left.Coefficient + right.Coefficient, left.Variables);
+            var monomial = new Monomial(left.Coefficient + right.Coefficient, left.Variables, ParentExpression);
+            return monomial;
         }
 
         public override int Order => 3;

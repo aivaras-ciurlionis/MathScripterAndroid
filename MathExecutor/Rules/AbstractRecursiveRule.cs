@@ -9,7 +9,7 @@ namespace MathExecutor.Rules
     {
         private IExpression ApplyRuleRecursive(IExpression expression)
         {
-            var result = ApplyRuleInner(expression);
+            var result = CanBeApplied(expression) ? ApplyRuleInner(expression) : null;
             if (result != null)
             {
                 return result;
@@ -33,7 +33,8 @@ namespace MathExecutor.Rules
         }
 
         protected abstract IExpression ApplyRuleInner(IExpression expression);
+        protected abstract bool CanBeApplied(IExpression expression);
 
-        public abstract string Description { get; set; }
+        public abstract string Description { get; }
     }
 }

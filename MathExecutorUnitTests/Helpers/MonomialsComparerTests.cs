@@ -24,7 +24,7 @@ namespace MathExecutorUnitTests.Helpers
         {
             var m1 = new Monomial(5, new List<IVariable> { new Variable { Exponent = 1, Name = "X" } });
             var m2 = new Monomial(-498);
-            Assert.AreEqual(1, _monomialsComparer.Compare(m1, m2));
+            Assert.AreEqual(-1, _monomialsComparer.Compare(m1, m2));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace MathExecutorUnitTests.Helpers
             {
                 new Variable { Exponent = 1, Name = "x" }
             });
-            Assert.AreEqual(-1, _monomialsComparer.Compare(m2, m1));
+            Assert.AreEqual(1, _monomialsComparer.Compare(m2, m1));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace MathExecutorUnitTests.Helpers
         {
             var m1 = new Monomial(5, new List<IVariable> { new Variable { Exponent = 2, Name = "x" } });
             var m2 = new Monomial(5, new List<IVariable> { new Variable { Exponent = 1, Name = "x" } });
-            Assert.AreEqual(1, _monomialsComparer.Compare(m1, m2));
+            Assert.AreEqual(-1, _monomialsComparer.Compare(m1, m2));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace MathExecutorUnitTests.Helpers
         {
             var m1 = new Monomial(5, new List<IVariable> { new Variable { Exponent = 2, Name = "x" } });
             var m2 = new Monomial(5, new List<IVariable> { new Variable { Exponent = 2, Name = "y" } });
-            Assert.AreEqual(1, _monomialsComparer.Compare(m1, m2));
+            Assert.AreEqual(-1, _monomialsComparer.Compare(m1, m2));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace MathExecutorUnitTests.Helpers
                 new Variable { Exponent = 2, Name = "x" },
                 new Variable { Exponent = 4, Name = "y" }
             });
-            Assert.AreEqual(-1, _monomialsComparer.Compare(m1, m2));
+            Assert.AreEqual(1, _monomialsComparer.Compare(m1, m2));
         }
 
     }

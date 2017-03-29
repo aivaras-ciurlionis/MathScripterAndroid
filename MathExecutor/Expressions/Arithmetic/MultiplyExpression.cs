@@ -33,7 +33,7 @@ namespace MathExecutor.Expressions.Arithmetic
                 variables.Add(new Variable {Name = variable.Name, Exponent = variable.Exponent + rightExponent });
             }
             variables.AddRange(rightVariables);
-            return new Monomial(left.Coefficient * right.Coefficient, variables);
+            return new Monomial(left.Coefficient * right.Coefficient, variables, ParentExpression);
         }
 
         public override string ToString()

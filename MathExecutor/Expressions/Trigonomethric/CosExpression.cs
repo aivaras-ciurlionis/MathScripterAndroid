@@ -22,7 +22,7 @@ namespace MathExecutor.Expressions.Trigonomethric
             {
                 return this;
             }
-            return new Monomial(Math.Cos(op.Coefficient));
+            return new Monomial(Math.Cos(op.Coefficient), ParentExpression);
         }
 
         public override ExpressionType Type => ExpressionType.Trigonometric;

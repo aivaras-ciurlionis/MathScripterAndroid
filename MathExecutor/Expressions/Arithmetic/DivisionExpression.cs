@@ -56,11 +56,11 @@ namespace MathExecutor.Expressions.Arithmetic
 
             if (botVariables.Count < 1)
             {
-                return new Monomial(left.Coefficient / right.Coefficient, topVariables);
+                return new Monomial(left.Coefficient / right.Coefficient, topVariables, ParentExpression);
             }
 
-            return new DivisionExpression(new Monomial(left.Coefficient / right.Coefficient, topVariables),
-                new Monomial(1, botVariables));
+            return new DivisionExpression(new Monomial(left.Coefficient / right.Coefficient, topVariables, ParentExpression),
+                new Monomial(1, botVariables, ParentExpression));
         }
 
         public override int Order => 2;

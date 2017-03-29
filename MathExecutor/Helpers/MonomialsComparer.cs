@@ -7,7 +7,7 @@ namespace MathExecutor.Helpers
 {
     public class MonomialsComparer : IComparer<Monomial>
     {
-        public int Compare(Monomial x, Monomial y)
+        public int Compare(Monomial y, Monomial x)
         {
             var xCount = x.Variables?.Count() ?? 0;
             var yCount = y.Variables?.Count() ?? 0;

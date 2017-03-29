@@ -19,7 +19,7 @@ namespace MathExecutor.Expressions.Logarithmic
             {
                 return this;
             }
-            return new Monomial(Math.Log(left.Coefficient, right.Coefficient));
+            return new Monomial(Math.Log(left.Coefficient, right.Coefficient), ParentExpression);
         }
 
         public override int Order => 3;

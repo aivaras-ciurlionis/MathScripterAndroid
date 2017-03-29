@@ -20,7 +20,8 @@ namespace MathExecutor.Expressions.Arithmetic
             return new Monomial
             (
                 -1 * operand.Coefficient,
-                operand.Variables
+                operand.Variables,
+                ParentExpression
             );
         }
 

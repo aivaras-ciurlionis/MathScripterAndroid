@@ -43,5 +43,13 @@ namespace MathExecutor.Interpreter
             var parsedExpression = _parser.Parse(expression);
             return new RootExpression(parsedExpression, new Solution());
         }
+
+        public Solution FindSolution(IExpression expression)
+        {
+            var root = new RootExpression(expression, new Solution());
+            var solution = root.FindSolution();
+            solution.Steps.Add(new Step { FullExpression = solution.Result });
+            return solution;
+        }
     }
 }

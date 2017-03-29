@@ -22,7 +22,7 @@ namespace MathExecutor.Expressions.Arithmetic
             {
                 return this;
             }
-            return new Monomial(Math.Sqrt(op.Coefficient));
+            return new Monomial(Math.Sqrt(op.Coefficient), ParentExpression);
         }
 
         public override ExpressionType Type => ExpressionType.Root;

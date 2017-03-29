@@ -17,7 +17,9 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override IExpression InnerExecute()
         {
-            return Operands.First();
+            var result = Operands.First();
+            result.ParentExpression = ParentExpression;
+            return result;
         }
 
         public override string ToString()

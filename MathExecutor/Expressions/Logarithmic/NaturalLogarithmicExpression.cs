@@ -22,7 +22,7 @@ namespace MathExecutor.Expressions.Logarithmic
             {
                 return this;
             }
-            return new Monomial(Math.Log(Math.E, op.Coefficient));
+            return new Monomial(Math.Log(Math.E, op.Coefficient), ParentExpression);
         }
 
         public override ExpressionType Type => ExpressionType.Logarithmic;
