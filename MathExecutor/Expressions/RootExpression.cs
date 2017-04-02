@@ -79,5 +79,9 @@ namespace MathExecutor.Expressions
         }
 
         public IList<IExpression> Operands { get; }
+        public bool IsEqualTo(IExpression other)
+        {
+            return other.Operands.Count > 0 && Operands[0].IsEqualTo(other.Operands[0]);
+        }
     }
 }

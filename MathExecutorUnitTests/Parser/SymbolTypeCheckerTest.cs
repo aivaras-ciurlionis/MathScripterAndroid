@@ -37,7 +37,9 @@ namespace MathExecutorUnitTests.Parser
         {
             Assert.AreEqual(SymbolType.Symbol, _typeChecker.GetSymbolType('+'));
             Assert.AreEqual(SymbolType.Other, _typeChecker.GetSymbolType('a'));
-            Assert.AreEqual(SymbolType.Symbol, _typeChecker.GetSymbolType('='));
+            Assert.AreEqual(SymbolType.Equality, _typeChecker.GetSymbolType('='));
+            Assert.AreEqual(SymbolType.Equality, _typeChecker.GetSymbolType('<'));
+            Assert.AreEqual(SymbolType.Equality, _typeChecker.GetSymbolType('>'));
             Assert.AreEqual(SymbolType.Symbol, _typeChecker.GetSymbolType('*'));
             Assert.AreEqual(SymbolType.Symbol, _typeChecker.GetSymbolType('!'));
             Assert.AreEqual(SymbolType.Other, _typeChecker.GetSymbolType('☺'));

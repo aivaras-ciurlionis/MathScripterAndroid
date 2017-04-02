@@ -67,6 +67,7 @@
     <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
     <Compile Include="Helpers\ExpressionFlatener.cs" />
     <Compile Include="Helpers\MonomialsComparer.cs" />
+    <Compile Include="Helpers\OhterExpressionAdder.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />
     <Compile Include="Interfaces\AbstractExpression.cs" />
     <Compile Include="Interfaces\AbstractNullaryExpression.cs" />
@@ -78,15 +79,18 @@
     <Compile Include="Interfaces\IExpressionSolver.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
     <Compile Include="Interfaces\IMinOperationFinder.cs" />
+    <Compile Include="Interfaces\IOtherExpressionAdder.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IRule.cs" />
     <Compile Include="Interfaces\IRulesApplier.cs" />
+    <Compile Include="Interfaces\ISequentialRuleMatcher.cs" />
     <Compile Include="Interfaces\ISymbolTypeChecker.cs" />
     <Compile Include="Interfaces\ITokenCreator.cs" />
     <Compile Include="Interfaces\ITokenFixer.cs" />
     <Compile Include="Interfaces\ITokenParser.cs" />
     <Compile Include="Interfaces\IMonomialResolver.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
+    <Compile Include="Models\ExpressionSide.cs" />
     <Compile Include="Models\ExpressionType.cs" />
     <Compile Include="Interfaces\IVariable.cs" />
     <Compile Include="Models\FlatExpressionResult.cs" />
@@ -108,8 +112,11 @@
     <Compile Include="Parser\TokenParser.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleBinders\SequentialRuleMatcher.cs" />
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
+    <Compile Include="Rules\EqualityReorderRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
+    <Compile Include="Rules\SignMergeRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

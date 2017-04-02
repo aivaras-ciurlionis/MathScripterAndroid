@@ -59,7 +59,8 @@ namespace MathExecutor.Models
                 return false;
             }
 
-            return other.Variables.All(o => Variables.Any(v => v.IsEqualTo(o)));
+            return other.Variables.Count() == Variables.Count() &&
+                other.Variables.All(o => Variables.Any(v => v.IsEqualTo(o)));
         }
 
         public bool IsEqual(Monomial other)
@@ -82,6 +83,12 @@ namespace MathExecutor.Models
 
         private string GetCoefficientString()
         {
+            if (Coefficient < 0)
+            {
+                return Math.Abs(Coefficient + 1) < 0.001 && !IsNumeral()
+                    ? "-"
+                    : Coefficient.ToString(CultureInfo.InvariantCulture);
+            }
             return Math.Abs(Coefficient - 1) < 0.001 && !IsNumeral() ? "" : 
                 Coefficient.ToString(CultureInfo.InvariantCulture);
         }
@@ -100,5 +107,11 @@ namespace MathExecutor.Models
 
         public IList<IExpression> Operands => null;
         public string Name => "MONOMIAL";
+
+        public bool IsEqualTo(IExpression other)
+        {
+            var otherMonomial = other as Monomial;
+            return otherMonomial != null && IsEqual(otherMonomial);
+        }
     }
 }

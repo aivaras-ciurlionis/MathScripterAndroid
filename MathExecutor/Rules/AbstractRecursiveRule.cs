@@ -14,11 +14,17 @@ namespace MathExecutor.Rules
             {
                 return result;
             }
-            return (
-                from operand in expression.Operands ?? new List<IExpression>()
-                select ApplyRuleRecursive(operand)
-                )
-                .FirstOrDefault(operandResult => operandResult != null);
+            var operands = expression.Operands ?? new List<IExpression>();
+            for (var i = 0; i < operands.Count; i++)
+            {
+                var operandResult = ApplyRuleRecursive(operands[i]);
+                if (operandResult != null)
+                {
+                    operands[i] = operandResult;
+                    return expression;
+                };
+            }
+            return null;
         }
 
         public RuleApplyResult ApplyRule(IExpression expression)

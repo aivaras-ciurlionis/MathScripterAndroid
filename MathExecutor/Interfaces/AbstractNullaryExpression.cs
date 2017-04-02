@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MathExecutor.Models;
 
@@ -29,5 +30,10 @@ namespace MathExecutor.Interfaces
 
         public IList<IExpression> Operands => null;
         public abstract string Name { get; }
+        public bool IsEqualTo(IExpression other)
+        {
+            var otherE = other as AbstractNullaryExpression;
+            return otherE != null && Math.Abs(otherE.Value - Value) < 0.001;
+        }
     }
 }

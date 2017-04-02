@@ -56,5 +56,23 @@ namespace MathExecutor.Interfaces
         public abstract IExpression InnerExecute();
         public abstract override string ToString();
         public abstract string Name { get; }
+        public bool IsEqualTo(IExpression other)
+        {
+            if (other.Name != Name ||
+                other.Arity != Arity)
+            {
+                return false;
+            }
+
+
+            for (var i = 0; i < Operands.Count; i++)
+            {
+                if (!Operands[i].IsEqualTo(other.Operands[i]))
+                {
+                    return false;
+                };
+            }
+            return true;
+        }
     }
 }

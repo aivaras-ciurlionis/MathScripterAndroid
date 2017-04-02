@@ -17,6 +17,7 @@ namespace MathExecutor.Models
         Numeric = 0,
         Parenthesis = 1,
         Symbol = 2,
-        Other = 3
+        Other = 3,
+        Equality = 4
     }
 }

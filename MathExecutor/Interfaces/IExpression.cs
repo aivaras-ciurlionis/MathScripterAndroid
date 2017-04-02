@@ -13,6 +13,7 @@ namespace MathExecutor.Interfaces
         int Arity { get; }
         int Order { get; }
         bool CanBeExecuted();
+        bool IsEqualTo (IExpression other);
         string Name { get; }
         void AddStep(IExpression expressionBefore, IExpression expressionAfter);
         IExpression ReplaceVariables(Dictionary<string, double> values);

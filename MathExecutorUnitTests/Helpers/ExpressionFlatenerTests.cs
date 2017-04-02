@@ -46,7 +46,7 @@ namespace MathExecutorUnitTests.Helpers
             var expression = _parser.Parse("2(2+6)-(4+3)+x+3");
             var flat = _expressionFlatener.FlattenExpression(expression).ToList();
             Assert.AreEqual("+", flat[0].Expression.Name);
-            Assert.AreEqual(1, flat[0].Level);
+            Assert.AreEqual(2, flat[0].Level);
 
             Assert.AreEqual("()", flat[1].Expression.Name);
             Assert.AreEqual(1, flat[1].Level);
@@ -58,7 +58,7 @@ namespace MathExecutorUnitTests.Helpers
             Assert.AreEqual(1, flat[3].Level);
 
             Assert.AreEqual("()", flat[4].Expression.Name);
-            Assert.AreEqual(1, flat[4].Level);
+            Assert.AreEqual(0, flat[4].Level);
 
             Assert.AreEqual("-", flat[5].Expression.Name);
             Assert.AreEqual(0, flat[5].Level);
@@ -71,9 +71,12 @@ namespace MathExecutorUnitTests.Helpers
             var flat = _expressionFlatener.FlattenExpression(expression, true).ToList();
 
             Assert.AreEqual("+", flat[0].Expression.Name);
-            Assert.AreEqual("+", flat[1].Expression.Name);
+            Assert.AreEqual("()", flat[1].Expression.Name);
             Assert.AreEqual("+", flat[2].Expression.Name);
-            Assert.AreEqual("-", flat[3].Expression.Name);
+            Assert.AreEqual("()", flat[3].Expression.Name);
+            Assert.AreEqual("+", flat[4].Expression.Name);
+            Assert.AreEqual("/", flat[5].Expression.Name);
+            Assert.AreEqual("-", flat[6].Expression.Name);
             Assert.AreEqual(true, flat.All(e => e.Level < 1));
         }
 

@@ -7,13 +7,21 @@ using MathExecutor.Models;
 
 namespace MathExecutor.Rules
 {
-    public class ReorderRule : IRule
+    public class ReorderRule : AbstractRecursiveRule
     {
         private readonly IExpressionFlatener _flatener;
+        private readonly IOtherExpressionAdder _expressionAdder;
 
-        public ReorderRule(IExpressionFlatener flatener)
+        private IList<FlatExpressionResult> _flatExpressionResults;
+        private IList<IExpression> _orderedMonomials;
+        private IList<IExpression> _reorderableExpressions;
+
+
+        public ReorderRule(IExpressionFlatener flatener,
+            IOtherExpressionAdder expressionAdder)
         {
             _flatener = flatener;
+            _expressionAdder = expressionAdder;
         }
 
         private IExpression GetLeftParentExpression(IExpression expression)
@@ -23,75 +31,85 @@ namespace MathExecutor.Rules
                 return expression.ParentExpression;
             }
             var e = expression as Monomial;
-            if (e.Coefficient < 0)
-            {
-                return new SubtractExpression(null, e);
-            }
             return new SumExpression(null, e);
         }
 
-        public RuleApplyResult ApplyRule(IExpression expression)
+        private bool SetReorderVariables(IEnumerable<FlatExpressionResult> flatExpression)
         {
-            var elements = _flatener.FlattenExpression(expression, true, true);
-            var flatExpressionResults = elements as IList<FlatExpressionResult> ?? elements.ToList();
-
-            var topExpression = flatExpressionResults.Last();
-            var topExpressionValue = topExpression.Expression.ToString();
-            var topParent = topExpression.Expression.ParentExpression;
-
-            var monomials = flatExpressionResults
+            _flatExpressionResults = flatExpression as IList<FlatExpressionResult> ?? flatExpression.ToList();
+            var monomials = _flatExpressionResults
                 .Where(e => e.Expression is Monomial &&
                             (e.Expression.ParentExpression is SumExpression ||
-                            e.Expression.ParentExpression is SubtractExpression));
+                             e.Expression.ParentExpression is SubtractExpression));
 
-            var reorderableExpressions = flatExpressionResults
-                .Where(r => r.Expression is SumExpression || r.Expression is SubtractExpression)
-                .Select(r => r.Expression)
-                .ToList();
+            _reorderableExpressions = _flatExpressionResults
+               .Where(r => !(r.Expression is Monomial ||
+                           r.Expression is SumExpression ||
+                           r.Expression is SubtractExpression))
+               .Select(r => r.Expression)
+               .ToList();
 
-            var orderedMonomials = monomials.OrderBy(m => m.Expression as Monomial, new MonomialsComparer())
-                .Select(m => m.Expression);
+            _orderedMonomials = monomials.OrderBy(m => m.Expression as Monomial, new MonomialsComparer())
+                 .Select(m => m.Expression).ToList();
 
-            var expressions = orderedMonomials as IList<IExpression> ?? orderedMonomials.ToList();
+            return _orderedMonomials.Count > 0;
+        }
+
+        private IExpression GetNextGroup()
+        {
+            IExpression currentGroup = null;
             Monomial nextExpression = null;
+            var expressions = _orderedMonomials;
+            while (expressions.Any())
+            {
+                var lastMonomial = nextExpression;
+                nextExpression = expressions.First() as Monomial;
+                if (lastMonomial != null &&
+                    !lastMonomial.AreVariablesEqual(nextExpression))
+                {
+                    break;
+                }
+                if (currentGroup == null)
+                {
+                    currentGroup = nextExpression;
+                    var firstMonomialParent = GetLeftParentExpression(nextExpression);
+                    if (firstMonomialParent is SubtractExpression)
+                    {
+                        nextExpression.Coefficient = -nextExpression.Coefficient;
+                    }
+                    expressions.Remove(nextExpression);
+                    _reorderableExpressions.Remove(firstMonomialParent);
+                }
+                else
+                {
+                    var nextParent = GetLeftParentExpression(nextExpression);
+                    nextParent.Operands[0] = currentGroup;
+                    currentGroup.ParentExpression = nextParent;
+                    currentGroup = nextParent;
+                    expressions.Remove(nextExpression);
+                    _reorderableExpressions.Remove(nextParent);
+                }
+            }
+            return currentGroup;
+        }
+
+        protected override IExpression ApplyRuleInner(IExpression expression)
+        {
+            var elements = _flatener.FlattenExpression(expression, true, true);
+            var hasExpressions = SetReorderVariables(elements);
+            if (!hasExpressions)
+            {
+                return null;
+            }
+            var topExpression = _flatExpressionResults.Last();
+            var topExpressionValue = topExpression.Expression.Clone();
+            var topParent = topExpression.Expression.ParentExpression;
+            var expressions = _orderedMonomials;
             IExpression lastGroup = null;
             while (expressions.Any())
             {
-                IExpression currentGroup = null;
-
-                while (expressions.Any())
-                {
-                    var lastMonomial = nextExpression;
-                    nextExpression = expressions.First() as Monomial;
-                    if (lastMonomial != null &&
-                        !lastMonomial.AreVariablesEqual(nextExpression))
-                    {
-                        break;
-                    }
-                    if (currentGroup == null)
-                    {
-                        currentGroup = nextExpression;
-                        var firstMonomialParent = GetLeftParentExpression(nextExpression);
-                        if (firstMonomialParent is SubtractExpression)
-                        {
-                            nextExpression.Coefficient = -nextExpression.Coefficient;
-                        }
-                        expressions.Remove(nextExpression);
-                        reorderableExpressions.Remove(firstMonomialParent);
-                    }
-                    else
-                    {
-                        var nextParent = GetLeftParentExpression(nextExpression);
-                        nextParent.Operands[0] = currentGroup;
-                        currentGroup.ParentExpression = nextParent;
-                        currentGroup = nextParent;
-                        expressions.Remove(nextExpression);
-                        reorderableExpressions.Remove(nextParent);
-                    }
-                }
-
+                var currentGroup = GetNextGroup();
                 var firstParent = currentGroup;
-
                 if (lastGroup != null)
                 {
                     firstParent = new SumExpression(lastGroup, currentGroup);
@@ -100,25 +118,25 @@ namespace MathExecutor.Rules
                 }
                 lastGroup = firstParent;
             }
-
-            foreach (var reorderableExpression in reorderableExpressions)
-            {
-                reorderableExpression.Operands[0] = lastGroup;
-                lastGroup.ParentExpression = reorderableExpression;
-                lastGroup = reorderableExpression;
-            }
-
+            lastGroup = _expressionAdder.AddExpressions(lastGroup, _reorderableExpressions, false);
             topExpression.Expression = lastGroup;
             topExpression.Expression.ParentExpression = topParent;
-
-            return new RuleApplyResult
-            {
-                Applied = topExpressionValue != topExpression.Expression.ToString(),
-                Expression = topExpression.Expression,
-                RuleDescription = Description
-            };
+            var applied = !topExpressionValue.IsEqualTo(topExpression.Expression);
+            return applied ? topExpression.Expression : null;
         }
 
-        public string Description => "Variables reorder";
+        public override string Description => "Variables reorder";
+
+        protected override bool CanBeApplied(IExpression expression)
+        {
+            var r = expression != null &&
+                   !(
+                       expression is Monomial ||
+                       expression.ParentExpression is SumExpression ||
+                       expression.ParentExpression is SubtractExpression ||
+                       expression.ParentExpression is NegationExpression
+                   );
+            return r;
+        }
     }
 }

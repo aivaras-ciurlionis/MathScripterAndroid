@@ -8,7 +8,7 @@ namespace MathExecutor.Helpers
 {
     public class ExpressionFlatener : IExpressionFlatener
     {
-        private int _number = 0;
+        private int _number;
 
         public IEnumerable<FlatExpressionResult> FlattenExpression(IExpression expression,
             bool onlyFirstLevel = false, 
@@ -31,15 +31,17 @@ namespace MathExecutor.Helpers
         {
             var expressions = new List<FlatExpressionResult>();
 
-            if (IsDeeperLevel(expression))
+            var deeperLevel = IsDeeperLevel(expression);
+
+
+            if (deeperLevel)
             {
-                level += 1;
                 _number += 1;
             }
 
             foreach (var operand in expression.Operands ?? new List<IExpression>())
             {
-                expressions.AddRange(FlattenRecursive(operand, level));
+                expressions.AddRange(FlattenRecursive(operand, level + (deeperLevel ? 1 : 0)));
             }
             expressions.Add(new FlatExpressionResult
             {
@@ -54,7 +56,6 @@ namespace MathExecutor.Helpers
         {
             return !(expression is SumExpression || 
                 expression is SubtractExpression || 
-                expression is MultiplyExpression || 
                 expression is Monomial);
         }
 

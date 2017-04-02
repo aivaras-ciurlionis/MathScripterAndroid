@@ -14,9 +14,14 @@ namespace MathExecutor.Parser
                 return SymbolType.Parenthesis;
             }
 
-            if ("+-*/^@=<>%$&!:'".Contains(symbol))
+            if ("+-*/^@%$&!:'".Contains(symbol))
             {
                 return SymbolType.Symbol;
+            }
+
+            if ("=<>'".Contains(symbol))
+            {
+                return SymbolType.Equality;
             }
 
             return "1234567890.,".Contains(symbol) ? SymbolType.Numeric : SymbolType.Other;
