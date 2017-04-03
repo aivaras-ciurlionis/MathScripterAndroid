@@ -81,6 +81,10 @@ namespace MathExecutor.Expressions
         public IList<IExpression> Operands { get; }
         public bool IsEqualTo(IExpression other)
         {
+            if (!(other is RootExpression))
+            {
+                return false;
+            }
             return other.Operands.Count > 0 && Operands[0].IsEqualTo(other.Operands[0]);
         }
     }

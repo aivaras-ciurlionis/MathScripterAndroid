@@ -3,6 +3,7 @@ using System.Linq;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 using MathExecutor.Rules;
+using MathExecutor.Rules.FinalRules;
 
 namespace MathExecutor.RuleBinders
 {
@@ -11,6 +12,7 @@ namespace MathExecutor.RuleBinders
         private readonly IRule _signMergeRule;
         private readonly IRule _reorderRule;
         private readonly IRule _equalityReorderRule;
+        private readonly IRule _linearEquationRule;
 
         private List<Step> _steps;
 
@@ -18,7 +20,7 @@ namespace MathExecutor.RuleBinders
 
         private void AddStep(Step step)
         {
-            if (!_steps.Any() || _steps.Last().FullExpression.ToString() != step.ToString())
+            if (!_steps.Any() || !_steps.Any(s => s.FullExpression.IsEqualTo(step.FullExpression)))
             {
                 _steps.Add(step);
             }
@@ -32,7 +34,7 @@ namespace MathExecutor.RuleBinders
             }
         }
 
-        private IEnumerable<Step> ApplyAndInterpret(IExpression expression, IRule rule)
+        private IEnumerable<Step> ApplyAndInterpret(IExpression expression, IRule rule, IRule fixingRule = null)
         {
             var steps = new List<Step>();
             if (rule != null)
@@ -40,6 +42,11 @@ namespace MathExecutor.RuleBinders
                 var ruleResult = rule.ApplyRule(expression);
                 if (ruleResult.Applied)
                 {
+                    if (fixingRule != null)
+                    {
+                        var fixedResult = fixingRule.ApplyRule(ruleResult.Expression.Clone());
+                        ruleResult = fixedResult.Applied ? fixedResult : ruleResult;
+                    }
                     steps.Add(
                         new Step
                         {
@@ -62,6 +69,7 @@ namespace MathExecutor.RuleBinders
             _signMergeRule = new SignMergeRule();
             _reorderRule = new ReorderRule(expressionFlatener, expressionAdder);
             _equalityReorderRule = new EqualityReorderRule(expressionFlatener, expressionAdder);
+            _linearEquationRule = new LinearEquationRule();
             _interpreter = interpreter;
             _steps = new List<Step>();
         }
@@ -77,13 +85,16 @@ namespace MathExecutor.RuleBinders
                 AddSteps(ApplyAndInterpret(expression, null));
                 expression = _steps.Last().FullExpression.Clone();
 
-                AddSteps(ApplyAndInterpret(expression, _equalityReorderRule));
+                AddSteps(ApplyAndInterpret(expression, _equalityReorderRule, _signMergeRule));
                 expression = _steps.Last().FullExpression.Clone();
 
-                AddSteps(ApplyAndInterpret(expression, _reorderRule));
+                AddSteps(ApplyAndInterpret(expression, _reorderRule, _signMergeRule));
                 expression = _steps.Last().FullExpression.Clone();
 
                 AddSteps(ApplyAndInterpret(expression, _signMergeRule));
+                expression = _steps.Last().FullExpression.Clone();
+
+                AddSteps(ApplyAndInterpret(expression, _linearEquationRule));
                 expression = _steps.Last().FullExpression.Clone();
 
             } while (!startingExpression.IsEqualTo(expression));

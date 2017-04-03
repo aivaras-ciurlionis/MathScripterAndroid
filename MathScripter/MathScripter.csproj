@@ -99,6 +99,7 @@
     <Compile Include="Interfaces\IEquationKeyResolver.cs" />
     <Compile Include="Interfaces\INetworkDataLoader.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Models\ExpressionViewMode.cs" />
     <Compile Include="Providers\EquationKeyResolver.cs" />
     <Compile Include="Providers\NetworkDataLoader.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

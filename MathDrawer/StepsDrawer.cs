@@ -21,33 +21,35 @@ namespace MathDrawer
             _elementsDrawer = elementsDrawer;
         }
 
-        public void DrawSteps(IEnumerable<Step> steps, Paint p, Canvas canvas)
+        public void DrawSteps(IEnumerable<Step> steps, Paint p, 
+            Canvas canvas, int totalHeight, int totalWidth)
         {
             var parameters = new TextParameters
             {
-                Size = p.TextSize,
+                Size = 60,
                 Typeface = p.Typeface
             };
-
-            const int offset = 200;
-
+            
             var enumerable = steps as Step[] ?? steps.ToArray();
 
-            var height = (canvas.Height - offset) / enumerable.Length;
+            const int offset = 250;
+            var height = 200;
+            var computedHeight = (totalHeight-offset) / enumerable.Length;
+            height = Math.Min(height, computedHeight);
 
             var i = 0;
-
             foreach (var step in enumerable)
             {
+                p.TextSize = 60;
                 var r = new RootExpression(step.FullExpression, new Solution());
                 var drawableExpressions = _baseDrawer.DrawExpression(r, parameters, new EquationBounds
                 {
-                    X = canvas.Width / 2,
+                    X = totalWidth / 2,
                     Y = offset + i * height,
-                    Width = (int)(canvas.Width * 0.8),
-                    Height = (int)(height - 0.1 * height)
-                });
-                _elementsDrawer.DrawExpressions(drawableExpressions, p, canvas);
+                    Width = (int)(totalWidth * 0.8),
+                    Height = (int)(height - 0.2 * height),
+                }, 100);
+                _elementsDrawer.DrawExpressions(drawableExpressions, p, canvas, 0);
                 i++;
             }
         }

@@ -205,10 +205,17 @@ namespace MathExecutor.Rules
             }
             var rightSide = GetExpressionSide(_orderedNumerics, ExpressionSide.Right, false);
             var leftSide = GetExpressionSide(_orderedMonomials, ExpressionSide.Left, true);
-            expression.Operands[0] = leftSide;
-            expression.Operands[1] = rightSide;
-            leftSide.ParentExpression = expression;
-            rightSide.ParentExpression = expression;
+            var zero = new Monomial(0) {ParentExpression = expression};
+            expression.Operands[0] = leftSide ?? zero;
+            expression.Operands[1] = rightSide ?? zero;
+            if (leftSide != null)
+            {
+                leftSide.ParentExpression = expression;
+            }
+            if (rightSide != null)
+            {
+                rightSide.ParentExpression = expression;
+            }
             return expression;
         }
 

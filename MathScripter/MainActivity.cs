@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Widget;
 using Android.OS;
 using MathScripter.Interfaces;
+using MathScripter.Models;
 using MathScripter.Providers;
 using MathScripter.Views;
 
@@ -15,7 +16,7 @@ namespace MathScripter
         private Button _cameraButton;
         private Button _editButton;
         private ExpressionView _expressionView;
-        private string _expression = "sqrt(611/2)/8+3-x^x";
+        private string _expression = "2+2";
 
         private readonly INetworkDataLoader _networkDataLoader =
             App.Container.Resolve(typeof(NetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
@@ -31,6 +32,13 @@ namespace MathScripter
             _cameraButton.Click += _openCamera;
             _editButton.Click += _openEdit;
             _expressionView.SetExpression(_expression);
+            _expressionView.SetMode(ExpressionViewMode.Steps);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            _expressionView?.Clear();
         }
 
         private void _openCamera(object sender, EventArgs args)

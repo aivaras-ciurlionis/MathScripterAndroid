@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using MathExecutor.Helpers;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;

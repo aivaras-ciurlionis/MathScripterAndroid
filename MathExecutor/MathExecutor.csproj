@@ -115,6 +115,7 @@
     <Compile Include="RuleBinders\SequentialRuleMatcher.cs" />
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
     <Compile Include="Rules\EqualityReorderRule.cs" />
+    <Compile Include="Rules\FinalRules\LinearEquationRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
     <Compile Include="Rules\SignMergeRule.cs" />
   </ItemGroup>

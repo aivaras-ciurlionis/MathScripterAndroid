@@ -10,6 +10,7 @@ using Android.Views.InputMethods;
 using Android.Widget;
 using Java.Lang;
 using MathScripter.Interfaces;
+using MathScripter.Models;
 using MathScripter.Providers;
 using MathScripter.Views;
 using Keycode = Android.Views.Keycode;
@@ -47,6 +48,7 @@ namespace MathScripter
             _expressionView = FindViewById<ExpressionView>(Resource.Id.expressionView);
             _editText = FindViewById<EditText>(Resource.Id.expressionEdit);
             _expressionView.SetExpression(_expression);
+            _expressionView.SetMode(ExpressionViewMode.Expression);
             _editText.Text = _expression;
             _editText.TextChanged += _onExpressionChanged;
             _editText.SetOnTouchListener(this);
@@ -55,6 +57,12 @@ namespace MathScripter
             _expressionKeyboardView.Keyboard = _expressionKeyboard;
             _expressionKeyboardView.OnKeyboardActionListener = this;
             _expressionKeyboardView.PreviewEnabled = false;
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            _expressionView?.Clear();
         }
 
         public void OpenKeyboard(View v)

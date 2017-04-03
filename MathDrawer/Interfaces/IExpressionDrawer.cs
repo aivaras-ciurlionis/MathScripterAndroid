@@ -5,6 +5,6 @@ namespace MathDrawer.Interfaces
 {
     public interface IExpressionDrawer
     {
-        void Draw(IExpression expression , Paint p, Canvas c);
+        void Draw(IExpression expression , Paint p, Canvas c, int width, int  height);
     }
 }

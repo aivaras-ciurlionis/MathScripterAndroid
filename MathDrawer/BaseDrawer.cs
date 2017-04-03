@@ -16,7 +16,11 @@ namespace MathDrawer
             _drawerFactory = drawerFactory;
         }
 
-        public IList<DrawableExpression> DrawExpression(IExpression expression, TextParameters p, EquationBounds bounds)
+        public IList<DrawableExpression> DrawExpression(
+            IExpression expression,
+            TextParameters p,
+            EquationBounds bounds,
+            int minHeight)
         {
             var innerExpression = expression.Operands.First();
             var drawer = _drawerFactory.GetDrawer(innerExpression);

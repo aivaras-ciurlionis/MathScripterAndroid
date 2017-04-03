@@ -41,7 +41,7 @@ namespace MathExecutor.Interpreter
         public IExpression GetExpression(string expression)
         {
             var parsedExpression = _parser.Parse(expression);
-            return new RootExpression(parsedExpression, new Solution());
+            return parsedExpression; //new RootExpression(parsedExpression, new Solution());
         }
 
         public Solution FindSolution(IExpression expression)

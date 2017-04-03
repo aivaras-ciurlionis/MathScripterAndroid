@@ -7,5 +7,6 @@ namespace MathDrawer.Interfaces
     public interface IElementsDrawer
     {
         void DrawExpressions(IList<DrawableExpression> expressions, Paint p, Canvas c);
+        void DrawExpressions(IList<DrawableExpression> expressions, Paint p, Canvas c, float offsetY);
     }
 }
