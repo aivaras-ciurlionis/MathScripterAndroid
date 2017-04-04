@@ -68,6 +68,7 @@
     <Compile Include="Models\Variable\VariableString.cs" />
     <Compile Include="ModuleIntegrationTests\NumeralArithmeticIntegrationTests.cs" />
     <Compile Include="ModuleIntegrationTests\ParserTests.cs" />
+    <Compile Include="ModuleIntegrationTests\RecursiveRuleMatcherTests.cs" />
     <Compile Include="ModuleIntegrationTests\SimpleExpressions.cs" />
     <Compile Include="Parser\MinOperationFinderTests.cs" />
     <Compile Include="Parser\MonomialResolverTests.cs" />

@@ -66,6 +66,7 @@
     <Compile Include="Expressions\Trigonomethric\CosExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
     <Compile Include="Helpers\ExpressionFlatener.cs" />
+    <Compile Include="Helpers\FinalResultChecker.cs" />
     <Compile Include="Helpers\MonomialsComparer.cs" />
     <Compile Include="Helpers\OhterExpressionAdder.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />
@@ -77,10 +78,13 @@
     <Compile Include="Interfaces\IExpressionFactory.cs" />
     <Compile Include="Interfaces\IExpressionFlatener.cs" />
     <Compile Include="Interfaces\IExpressionSolver.cs" />
+    <Compile Include="Interfaces\IFinalResultChecker.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
     <Compile Include="Interfaces\IMinOperationFinder.cs" />
+    <Compile Include="Interfaces\IMultiRuleChecker.cs" />
     <Compile Include="Interfaces\IOtherExpressionAdder.cs" />
     <Compile Include="Interfaces\IParser.cs" />
+    <Compile Include="Interfaces\IRecursiveRuleMathcer.cs" />
     <Compile Include="Interfaces\IRule.cs" />
     <Compile Include="Interfaces\IRulesApplier.cs" />
     <Compile Include="Interfaces\ISequentialRuleMatcher.cs" />
@@ -112,6 +116,8 @@
     <Compile Include="Parser\TokenParser.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleBinders\MultiRuleChecher.cs" />
+    <Compile Include="RuleBinders\RecursiveRuleMatcher.cs" />
     <Compile Include="RuleBinders\SequentialRuleMatcher.cs" />
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
     <Compile Include="Rules\EqualityReorderRule.cs" />

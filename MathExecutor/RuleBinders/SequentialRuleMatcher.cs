@@ -94,9 +94,6 @@ namespace MathExecutor.RuleBinders
                 AddSteps(ApplyAndInterpret(expression, _signMergeRule));
                 expression = _steps.Last().FullExpression.Clone();
 
-                AddSteps(ApplyAndInterpret(expression, _linearEquationRule));
-                expression = _steps.Last().FullExpression.Clone();
-
             } while (!startingExpression.IsEqualTo(expression));
             return _steps;
         }
