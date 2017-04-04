@@ -192,7 +192,7 @@ namespace MathExecutor.Rules
             return _orderedMonomials.Count > 0 || _orderedNumerics.Count > 0;
         }
 
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var leftTop = expression.Operands[0];
             var rightTop = expression.Operands[1];
@@ -216,7 +216,7 @@ namespace MathExecutor.Rules
             {
                 rightSide.ParentExpression = expression;
             }
-            return expression;
+            return new InnerRuleResult(expression);
         }
 
         protected override bool CanBeApplied(IExpression expression)

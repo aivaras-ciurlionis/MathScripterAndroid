@@ -31,6 +31,24 @@ namespace MathExecutorUnitTests.Rules
         }
 
         [Test]
+        public void ItShouldMultiplyAndRemoveParenthesisForNegativeMultiplication()
+        {
+            var expression = _parser.Parse("x-2*(2-6+3)");
+            var result = _parenthesisRule.ApplyRule(expression);
+            Assert.AreEqual("x + -2 * 2 - -2 * 6 + -2 * 3", result.Expression.ToString());
+            var interpreted = _interpreter.FindSolution(result.Expression);
+            Assert.AreEqual("x + 2",interpreted.Result.ToString());
+        }
+
+        [Test]
+        public void ItShouldNotApplyRuleForNegation()
+        {
+            var expression = _parser.Parse("-2*(x+y)");
+            var result = _parenthesisRule.ApplyRule(expression);
+            Assert.IsNull(result.Expression);
+        }
+
+        [Test]
         public void ItShouldMultiplyAndRemoveParenthesisForExpressionWithOtherInside()
         {
             var expression = _parser.Parse("2*(-2-6+3*sin(x)-cos(x)+(2-6))");

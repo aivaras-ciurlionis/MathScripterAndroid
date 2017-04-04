@@ -100,6 +100,7 @@
     <Compile Include="Models\ExpressionType.cs" />
     <Compile Include="Interfaces\IVariable.cs" />
     <Compile Include="Models\FlatExpressionResult.cs" />
+    <Compile Include="Models\InnerRuleResult.cs" />
     <Compile Include="Models\Monomial.cs" />
     <Compile Include="Models\RuleApplyResult.cs" />
     <Compile Include="Models\Solution.cs" />

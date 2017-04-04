@@ -6,7 +6,7 @@ namespace MathExecutor.Rules
 {
     public class SignMergeRule : AbstractRecursiveRule
     {
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var rightOperand = expression.Operands[1];
             var monomial = rightOperand as Monomial;
@@ -23,9 +23,9 @@ namespace MathExecutor.Rules
 
             if (expression is SumExpression)
             {
-                return new SubtractExpression(expression.Operands[0], rightOperand);
+                return new InnerRuleResult(new SubtractExpression(expression.Operands[0], rightOperand));
             }
-            return new SumExpression(expression.Operands[0], expression.Operands[1]);
+            return new InnerRuleResult(new SumExpression(expression.Operands[0], expression.Operands[1])); 
         }
 
         protected override bool CanBeApplied(IExpression expression)

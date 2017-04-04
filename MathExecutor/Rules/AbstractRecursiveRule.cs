@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -7,7 +7,7 @@ namespace MathExecutor.Rules
 {
     public abstract class AbstractRecursiveRule : IRule
     {
-        private IExpression ApplyRuleRecursive(IExpression expression)
+        private InnerRuleResult ApplyRuleRecursive(IExpression expression)
         {
             var result = CanBeApplied(expression) ? ApplyRuleInner(expression) : null;
             if (result != null)
@@ -20,9 +20,13 @@ namespace MathExecutor.Rules
                 var operandResult = ApplyRuleRecursive(operands[i]);
                 if (operandResult != null)
                 {
-                    operands[i] = operandResult;
-                    return expression;
-                };
+                    operands[i] = operandResult.Expression;
+                    if (operandResult.ConsumeParent)
+                    {
+                        expression = new SumExpression(operands[0], operandResult.Expression);
+                    }
+                    return new InnerRuleResult (expression);
+                }
             }
             return null;
         }
@@ -33,12 +37,12 @@ namespace MathExecutor.Rules
             return new RuleApplyResult
             {
                 Applied = result != null,
-                Expression = result,
+                Expression = result?.Expression,
                 RuleDescription = Description
             };
         }
 
-        protected abstract IExpression ApplyRuleInner(IExpression expression);
+        protected abstract InnerRuleResult ApplyRuleInner(IExpression expression);
         protected abstract bool CanBeApplied(IExpression expression);
 
         public abstract string Description { get; }

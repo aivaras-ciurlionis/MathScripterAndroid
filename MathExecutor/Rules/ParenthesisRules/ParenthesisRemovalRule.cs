@@ -1,6 +1,7 @@
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
+using MathExecutor.Models;
 
 namespace MathExecutor.Rules.ParenthesisRules
 {
@@ -16,7 +17,7 @@ namespace MathExecutor.Rules.ParenthesisRules
             _elementsChanger = elementsChanger;
         }
 
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var workingExpression = expression;
             var insideParenthesis = expression.Operands.Last().Operands[0];
@@ -39,17 +40,18 @@ namespace MathExecutor.Rules.ParenthesisRules
             if (workingExpression.Arity == 1)
             {
                 insideParenthesis.ParentExpression = workingExpression.ParentExpression;
-                return insideParenthesis;
+                return new InnerRuleResult(insideParenthesis);
             }
             if (workingExpression is SubtractExpression)
             {
-                return new SumExpression(workingExpression.Operands[0], insideParenthesis)
+                var sum = new SumExpression(workingExpression.Operands[0], insideParenthesis)
                 {
                     ParentExpression = workingExpression.ParentExpression
                 };
+                return new InnerRuleResult(sum);
             }
             _elementsChanger.ChangeElement(workingExpression.Operands[1], insideParenthesis);
-            return workingExpression;
+            return new InnerRuleResult(workingExpression);
         }
 
         protected override bool CanBeApplied(IExpression expression)

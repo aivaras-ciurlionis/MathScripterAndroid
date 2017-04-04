@@ -93,7 +93,7 @@ namespace MathExecutor.Rules
             return currentGroup;
         }
 
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var elements = _flatener.FlattenExpression(expression, true, true);
             var hasExpressions = SetReorderVariables(elements);
@@ -122,7 +122,7 @@ namespace MathExecutor.Rules
             topExpression.Expression = lastGroup;
             topExpression.Expression.ParentExpression = topParent;
             var applied = !topExpressionValue.IsEqualTo(topExpression.Expression);
-            return applied ? topExpression.Expression : null;
+            return applied ? new InnerRuleResult(topExpression.Expression) : null;
         }
 
         public override string Description => "Variables reorder";

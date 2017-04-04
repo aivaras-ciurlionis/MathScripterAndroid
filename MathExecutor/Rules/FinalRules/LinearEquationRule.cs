@@ -10,7 +10,7 @@ namespace MathExecutor.Rules.FinalRules
 {
     public class LinearEquationRule : AbstractRecursiveRule
     {
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var left = expression.Operands[0] as Monomial;
             var right = expression.Operands[1] as Monomial;
@@ -26,7 +26,7 @@ namespace MathExecutor.Rules.FinalRules
 
             x.ParentExpression = expression;
             division.ParentExpression = expression;
-            return expression;
+            return new InnerRuleResult(expression);
         }
 
         protected override bool CanBeApplied(IExpression expression)

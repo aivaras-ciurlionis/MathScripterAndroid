@@ -18,15 +18,20 @@ namespace MathExecutor.Rules.ParenthesisRules
             _elementsChanger = elementsChanger;
         }
 
-        protected override IExpression ApplyRuleInner(IExpression expression)
+        protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var workingExpression = expression;
-            var workingOperand = expression.Operands.First();
+            var workingOperand = expression.Operands.First() as Monomial;
             var insideParenthesis = expression.Operands.Last().Operands[0];
-            if (insideParenthesis == null)
+            if (insideParenthesis == null || workingOperand == null)
             {
                 return null;
-            };
+            }
+            var isNegative = expression.ParentExpression is SubtractExpression;
+            if (isNegative)
+            {
+                workingOperand.Coefficient *= -1;
+            }
             var insideElements = _expressionFlatener.FlattenExpression(insideParenthesis, true, true);
             var replacableElements = insideElements.Where(e => !(e.Expression is SumExpression ||
                                                                e.Expression is SubtractExpression));
@@ -36,7 +41,7 @@ namespace MathExecutor.Rules.ParenthesisRules
                 _elementsChanger.ChangeElement(element.Expression, replacement);
             }
             _elementsChanger.ChangeElement(workingExpression, insideParenthesis);
-            return insideParenthesis;
+            return new InnerRuleResult(insideParenthesis, isNegative);
         }
 
         protected override bool CanBeApplied(IExpression expression)
