@@ -65,6 +65,7 @@
     <Compile Include="Expressions\Trigonomethric\TanExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\CosExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
+    <Compile Include="Helpers\ElementsChanger.cs" />
     <Compile Include="Helpers\ExpressionFlatener.cs" />
     <Compile Include="Helpers\FinalResultChecker.cs" />
     <Compile Include="Helpers\MonomialsComparer.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Interfaces\AbstractExpression.cs" />
     <Compile Include="Interfaces\AbstractNullaryExpression.cs" />
     <Compile Include="Interfaces\AbstractUnaryExpression.cs" />
+    <Compile Include="Interfaces\IElementsChanger.cs" />
     <Compile Include="Interfaces\IExpression.cs" />
     <Compile Include="Interfaces\IExpressionCreator.cs" />
     <Compile Include="Interfaces\IExpressionFactory.cs" />
@@ -122,6 +124,8 @@
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
     <Compile Include="Rules\EqualityReorderRule.cs" />
     <Compile Include="Rules\FinalRules\LinearEquationRule.cs" />
+    <Compile Include="Rules\ParenthesisRules\ParenthesisMonomialMultRule.cs" />
+    <Compile Include="Rules\ParenthesisRules\ParenthesisRemovalRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
     <Compile Include="Rules\SignMergeRule.cs" />
   </ItemGroup>

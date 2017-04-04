@@ -2,15 +2,25 @@ using System.Collections.Generic;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 using MathExecutor.Rules.FinalRules;
+using MathExecutor.Rules.ParenthesisRules;
 
 namespace MathExecutor.RuleBinders
 {
     public class MultiRuleChecher : IMultiRuleChecker
     {
-        private readonly IList<IRule> _rules = new List<IRule>
+        private readonly IList<IRule> _rules;
+
+        public MultiRuleChecher(
+            IExpressionFlatener expressionFlatener,
+            IElementsChanger elementsChanger
+            )
         {
-            new LinearEquationRule()
-        };
+            _rules = new List<IRule>
+            {
+                new LinearEquationRule(),
+                new ParenthesisRemovalRule(expressionFlatener, elementsChanger)
+            };
+        }
 
         public IList<Step> ApplyRules(IExpression expression)
         {

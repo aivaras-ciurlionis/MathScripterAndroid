@@ -80,6 +80,8 @@
     <Compile Include="Models\Variable\VariableEqualityTest.cs" />
     <Compile Include="RuleBinders\SequentialRuleMatcherTest.cs" />
     <Compile Include="Rules\EqualityReorderRuleTests.cs" />
+    <Compile Include="Rules\ParenthesisMonomialMultRuleTests.cs" />
+    <Compile Include="Rules\ParenthesisRemovalRuleTests.cs" />
     <Compile Include="Rules\ReorderRuleTests - Copy.cs" />
     <Compile Include="Rules\ReorderRuleTests.cs" />
     <Compile Include="TestHelpers\ClassResolver.cs" />

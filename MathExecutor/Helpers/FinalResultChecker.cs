@@ -23,7 +23,9 @@ namespace MathExecutor.Helpers
             }
             var expressions = _expressionFlatener.FlattenExpression(expression);
             var equations = expressions.Where(e => e.Expression.Type == ExpressionType.Equation);
-            return equations.All(
+            return 
+                equations.Any() &&
+                equations.All(
                 e => 
                 e.Expression != null &&
                 e.Expression.Operands.Count == 2 &&

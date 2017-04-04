@@ -39,7 +39,7 @@ namespace MathExecutor.Rules
             var operandIsMonomial = (operand != null &&
                                      operand.Coefficient < 0);
             var operandIsNegation = expression.Operands[1] is NegationExpression;
-            return expressionIs && (operandIsMonomial || operandIsNegation);
+            return operandIsMonomial || operandIsNegation;
         }
 
         public override string Description => "Merging signs";

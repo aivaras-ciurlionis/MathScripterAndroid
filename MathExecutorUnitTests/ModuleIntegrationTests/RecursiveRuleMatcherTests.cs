@@ -24,9 +24,9 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             _parser = ClassResolver.GetParser();
             var interpreter = new Interpreter(_parser);
             var adder = new OhterExpressionAdder();
-
-            _multiRuleChecker = new MultiRuleChecher();
+            var elementsChanger = new ElementsChanger();
             _expressionFlatener = new ExpressionFlatener();
+            _multiRuleChecker = new MultiRuleChecher(_expressionFlatener, elementsChanger);
             _finalResultChecker = new FinalResultChecker(_expressionFlatener);
             _sequentialRuleMatcher = new SequentialRuleMatcher(interpreter, _expressionFlatener, adder);
             _recursiveRuleMathcer = new RecursiveRuleMatcher(_sequentialRuleMatcher, _multiRuleChecker, _finalResultChecker);
@@ -78,6 +78,14 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             var expression = _parser.Parse("a-12=-a-6+b");
             var steps = _recursiveRuleMathcer.SolveExpression(expression);
             Assert.AreEqual("2a - b = 6", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItSimplifyWithParenthesisRemoval()
+        {
+            var expression = _parser.Parse("17-(-1+4+3-y)");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("y + 11", steps.Last().FullExpression.ToString());
         }
 
     }
