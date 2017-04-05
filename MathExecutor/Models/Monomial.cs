@@ -81,6 +81,17 @@ namespace MathExecutor.Models
             return new Monomial(product);
         }
 
+        public bool HasSingleVariableWithExponent(double exponent, string name="")
+        {
+            var single = Variables != null && Variables.Count() == 1;
+            if (!single)
+            {
+                return false;
+            }
+            return Math.Abs(Variables.First().Exponent - exponent) < 0.001 && 
+                   string.IsNullOrWhiteSpace(name) || Variables.First().Name == name;
+        }
+
         private string GetCoefficientString()
         {
             if (Coefficient < 0)

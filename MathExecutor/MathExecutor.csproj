@@ -70,6 +70,7 @@
     <Compile Include="Helpers\FinalResultChecker.cs" />
     <Compile Include="Helpers\MonomialsComparer.cs" />
     <Compile Include="Helpers\OhterExpressionAdder.cs" />
+    <Compile Include="Helpers\ParentChecker.cs" />
     <Compile Include="Interfaces\AbstractBinaryExpression.cs" />
     <Compile Include="Interfaces\AbstractExpression.cs" />
     <Compile Include="Interfaces\AbstractNullaryExpression.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Interfaces\IMinOperationFinder.cs" />
     <Compile Include="Interfaces\IMultiRuleChecker.cs" />
     <Compile Include="Interfaces\IOtherExpressionAdder.cs" />
+    <Compile Include="Interfaces\IParentChecker.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IRecursiveRuleMathcer.cs" />
     <Compile Include="Interfaces\IRule.cs" />
@@ -127,6 +129,8 @@
     <Compile Include="Rules\FinalRules\LinearEquationRule.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisMonomialMultRule.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisRemovalRule.cs" />
+    <Compile Include="Rules\QuadraticRules\BiquadraticRule.cs" />
+    <Compile Include="Rules\QuadraticRules\QuadratDifferenceRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
     <Compile Include="Rules\SignMergeRule.cs" />
   </ItemGroup>
