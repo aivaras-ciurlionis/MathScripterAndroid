@@ -12,10 +12,11 @@ namespace MathExecutor.Helpers
 
         public IEnumerable<FlatExpressionResult> FlattenExpression(IExpression expression,
             bool onlyFirstLevel = false, 
-            bool includeMonomial = false)
+            bool includeMonomial = false,
+            bool includeMult = false)
         {
             _number = 0;
-            var expressions = FlattenRecursive(expression, 0);
+            var expressions = FlattenRecursive(expression, 0, includeMult);
             if (!includeMonomial)
             {
                 expressions = expressions.Where(e => !(e.Expression is Monomial));
@@ -27,11 +28,11 @@ namespace MathExecutor.Helpers
             return expressions;
         }
 
-        private IEnumerable<FlatExpressionResult> FlattenRecursive(IExpression expression, int level)
+        private IEnumerable<FlatExpressionResult> FlattenRecursive(IExpression expression, int level, bool includeMult)
         {
             var expressions = new List<FlatExpressionResult>();
 
-            var deeperLevel = IsDeeperLevel(expression);
+            var deeperLevel = IsDeeperLevel(expression, includeMult);
 
 
             if (deeperLevel)
@@ -41,7 +42,7 @@ namespace MathExecutor.Helpers
 
             foreach (var operand in expression.Operands ?? new List<IExpression>())
             {
-                expressions.AddRange(FlattenRecursive(operand, level + (deeperLevel ? 1 : 0)));
+                expressions.AddRange(FlattenRecursive(operand, level + (deeperLevel ? 1 : 0), includeMult));
             }
             expressions.Add(new FlatExpressionResult
             {
@@ -52,11 +53,12 @@ namespace MathExecutor.Helpers
             return expressions;
         }
 
-        private static bool IsDeeperLevel(IExpression expression)
+        private static bool IsDeeperLevel(IExpression expression, bool includeMult)
         {
             return !(expression is SumExpression || 
                 expression is SubtractExpression || 
-                expression is Monomial);
+                expression is Monomial ||
+                (includeMult && expression is MultiplyExpression));
         }
 
     }

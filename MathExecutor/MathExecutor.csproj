@@ -61,6 +61,7 @@
     <Compile Include="Expressions\Logarithmic\LogarithmicExpression.cs" />
     <Compile Include="Expressions\Logarithmic\NaturalLogarithmicExpression.cs" />
     <Compile Include="Expressions\RootExpression.cs" />
+    <Compile Include="Expressions\SeparationExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\CtgExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\TanExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\CosExpression.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Rules\ParenthesisRules\ParenthesisRemovalRule.cs" />
     <Compile Include="Rules\QuadraticRules\BiquadraticRule.cs" />
     <Compile Include="Rules\QuadraticRules\QuadratDifferenceRule.cs" />
+    <Compile Include="Rules\QuadraticRules\QuadraticEquationRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
     <Compile Include="Rules\SignMergeRule.cs" />
   </ItemGroup>

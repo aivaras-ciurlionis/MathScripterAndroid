@@ -20,5 +20,14 @@ namespace MathExecutor.Helpers
             }
             return !(parent is SubtractExpression) && !(parent is NegationExpression);
         }
+
+        public IExpression GetUnderParenthesis(IExpression expression)
+        {
+            if (expression is ParenthesisExpression)
+            {
+                return expression.Operands[0];
+            }
+            return expression;
+        }
     }
 }
