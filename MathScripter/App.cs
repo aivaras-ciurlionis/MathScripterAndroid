@@ -8,6 +8,7 @@ using MathExecutor.Helpers;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
 using MathExecutor.Parser;
+using MathExecutor.RuleBinders;
 using MathRecognizer;
 using MathRecognizer.EquationBuilding;
 using MathRecognizer.ImageDecoding;
@@ -80,6 +81,12 @@ namespace MathScripter
             Container.RegisterType<IInterpreter, Interpreter>();
             Container.RegisterType<IExpressionFlatener, ExpressionFlatener>();
             Container.RegisterType<IOtherExpressionAdder, OhterExpressionAdder>();
+            Container.RegisterType<IElementsChanger, ElementsChanger>();
+            Container.RegisterType<IFinalResultChecker, FinalResultChecker>();
+            Container.RegisterType<IRecursiveRuleMathcer, RecursiveRuleMatcher>();
+            Container.RegisterType<IMultiRuleChecker, MultiRuleChecher>();
+            Container.RegisterType<IParentChecker, ParentChecker>();
+            Container.RegisterType<ISequentialRuleMatcher, SequentialRuleMatcher>();
 
             Container.RegisterType<IBaseDrawer, BaseDrawer>();
             Container.RegisterType<IDrawerFactory, DrawerFactory>();

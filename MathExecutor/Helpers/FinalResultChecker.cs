@@ -17,16 +17,16 @@ namespace MathExecutor.Helpers
         public bool IsFinalResult(IExpression expression)
         {
             var monomial = expression as Monomial;
-            if (monomial != null)
+            if (monomial != null && !(Math.Abs(monomial.Coefficient - 0) < 0.001 && !monomial.IsNumeral()))
             {
                 return true;
             }
             var expressions = _expressionFlatener.FlattenExpression(expression);
             var equations = expressions.Where(e => e.Expression.Type == ExpressionType.Equation);
-            return 
+            return
                 equations.Any() &&
                 equations.All(
-                e => 
+                e =>
                 e.Expression != null &&
                 e.Expression.Operands.Count == 2 &&
                 e.Expression.Operands[0] is Monomial &&
@@ -43,6 +43,7 @@ namespace MathExecutor.Helpers
                    Math.Abs(monomial.Coefficient - 1) < 0.001 &&
                    monomial.Variables.Count() == 1 &&
                    Math.Abs(monomial.Variables.First().Exponent - 1) < 0.001;
+
         }
 
         public bool IsNumericMonomial(IExpression m)

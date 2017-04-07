@@ -35,7 +35,7 @@ namespace MathExecutor.Rules.QuadraticRules
      
         protected override bool CanBeApplied(IExpression expression)
         {
-            if (!(expression is SubtractExpression) && expression.Arity == 2)
+            if (!(expression is SubtractExpression) || expression.Arity != 2)
             {
                 return false;
             }

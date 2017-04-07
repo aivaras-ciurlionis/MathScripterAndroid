@@ -23,8 +23,8 @@ namespace MathScripter.Views
            App.Container.Resolve(typeof(ExpressionDrawer), "expressionDrawer") as IExpressionDrawer;
         private readonly IStepsDrawer _stepsDrawer =
            App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
-        private readonly ISequentialRuleMatcher _ruleMatcher =
-            App.Container.Resolve(typeof(SequentialRuleMatcher), "sequentialRuleMatcher") as ISequentialRuleMatcher;
+        private readonly IRecursiveRuleMathcer _ruleMatcher =
+            App.Container.Resolve(typeof(RecursiveRuleMatcher), "recursiveRuleMatcher") as IRecursiveRuleMathcer;
 
         private string _expression = "";
         private IExpression _expressionModel;
@@ -92,7 +92,7 @@ namespace MathScripter.Views
             if (string.IsNullOrWhiteSpace(_expression)
                 || !_interpreter.CanBeParsed(_expression)) return;
             _expressionModel = _interpreter.GetExpression(_expression);
-            _steps = _ruleMatcher.GetSequentialRuleSteps(_expressionModel);
+            _steps = _ruleMatcher.SolveExpression(_expressionModel);
         }
 
         public void SetExpression(string expression)

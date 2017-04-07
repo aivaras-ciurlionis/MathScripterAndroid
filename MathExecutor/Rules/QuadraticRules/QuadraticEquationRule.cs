@@ -30,7 +30,6 @@ namespace MathExecutor.Rules.QuadraticRules
             {
                 return null;
             }
-            right.Coefficient *= -1;
             var a = a1.Coefficient;
             b1.Coefficient *= left is SumExpression ? 1 : -1;
             var b = b1.Coefficient;

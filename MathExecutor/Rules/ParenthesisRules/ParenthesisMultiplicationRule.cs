@@ -20,8 +20,8 @@ namespace MathExecutor.Rules.ParenthesisRules
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var parent = expression.ParentExpression;
-            var left = expression.Operands[0];
-            var right = expression.Operands[1];
+            var left = expression.Operands[0].Operands[0];
+            var right = expression.Operands[1].Operands[0];
             var leftElements = _expressionFlatener.FlattenExpression(left, true, true);
             var rightElements = _expressionFlatener.FlattenExpression(right, true, true);
             var replacableLeft = leftElements.Where(e => !(e.Expression is SumExpression ||
@@ -35,16 +35,17 @@ namespace MathExecutor.Rules.ParenthesisRules
             {
                 foreach (var elementY in replacableRight)
                 {
-                    IExpression mul = new MultiplyExpression(elementX.Expression, elementY.Expression);
-                    var isNegative = (!_parentChecker.LeftParentIsPositive(elementX.Expression) || 
-                                      !_parentChecker.LeftParentIsPositive(elementY.Expression)) &&
-                                      !(!_parentChecker.LeftParentIsPositive(elementX.Expression) &&
-                                      !_parentChecker.LeftParentIsPositive(elementY.Expression));
+                    var isNegative = (!_parentChecker.LeftParentIsPositive(elementX.Expression) ||
+                                     !_parentChecker.LeftParentIsPositive(elementY.Expression)) &&
+                                     !(!_parentChecker.LeftParentIsPositive(elementX.Expression) &&
+                                     !_parentChecker.LeftParentIsPositive(elementY.Expression));
+                    IExpression mul = new MultiplyExpression(elementX.Expression.Clone(),
+                                                             elementY.Expression.Clone());
                     if (isNegative)
                     {
                         mul = new NegationExpression(mul);
                     }
-                    newExpression = new SumExpression(newExpression, mul);
+                    newExpression = newExpression == null ? mul : new SumExpression(newExpression, mul);
                 }
             }
             if (newExpression == null)

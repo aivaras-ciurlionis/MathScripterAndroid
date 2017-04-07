@@ -20,6 +20,7 @@ namespace MathExecutor.Rules
                 var operandResult = ApplyRuleRecursive(operands[i]);
                 if (operandResult != null)
                 {
+                    operandResult.Expression.ParentExpression = expression;
                     operands[i] = operandResult.Expression;
                     if (operandResult.ConsumeParent)
                     {

@@ -57,7 +57,7 @@ namespace MathExecutor.Rules.FractionRules
             if (sameExpression != null)
             {
                 var sameBot = botElements.First(e => e.IsEqualTo(sameExpression));
-                _elementsChanger.ChangeElement(sameBot, new Monomial(1));
+                _elementsChanger.ChangeElement(sameExpression, new Monomial(1));
                 _elementsChanger.ChangeElement(sameBot, new Monomial(1));
                 return new InnerRuleResult(expression);
             }
@@ -71,7 +71,7 @@ namespace MathExecutor.Rules.FractionRules
                 var equalTop = topOperands.FirstOrDefault(e => ExpressionExists(e, botOperands));
                 if (equalTop == null) return null;
                 var equalBot = botOperands.First(e => e.IsEqualTo(equalTop));
-                var op1 = equalBot.Operands[1] as Monomial;
+                var op1 = equalTop.Operands[1] as Monomial;
                 var op2 = equalBot.Operands[1] as Monomial;
                 op1.Coefficient -= 1;
                 op2.Coefficient -= 1;

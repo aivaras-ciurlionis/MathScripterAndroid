@@ -9,13 +9,16 @@ namespace MathExecutor.Rules.ParenthesisRules
     {
         private readonly IExpressionFlatener _expressionFlatener;
         private readonly IElementsChanger _elementsChanger;
+        private readonly IParentChecker _parentChecker;
 
         public ParenthesisMonomialMultRule(
             IExpressionFlatener expressionFlatener,
-            IElementsChanger elementsChanger)
+            IElementsChanger elementsChanger,
+            IParentChecker parentChecker)
         {
             _expressionFlatener = expressionFlatener;
             _elementsChanger = elementsChanger;
+            _parentChecker = parentChecker;
         }
 
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
@@ -27,7 +30,7 @@ namespace MathExecutor.Rules.ParenthesisRules
             {
                 return null;
             }
-            var isNegative = expression.ParentExpression is SubtractExpression;
+            var isNegative = !_parentChecker.LeftParentIsPositive(expression);
             if (isNegative)
             {
                 workingOperand.Coefficient *= -1;

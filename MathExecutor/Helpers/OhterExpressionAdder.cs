@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
+using MathExecutor.Models;
 
 namespace MathExecutor.Helpers
 {
@@ -12,7 +13,8 @@ namespace MathExecutor.Helpers
 
             IExpression added;
 
-            if (source.ParentExpression is SubtractExpression && 
+
+            if (source.ParentExpression is SubtractExpression &&
                 source.ParentExpression.Operands[1] == source)
             {
                 added = new SubtractExpression(destination, source);
@@ -33,9 +35,12 @@ namespace MathExecutor.Helpers
                     added = new SumExpression(destination, source);
                 }
             }
-           
-            destination.ParentExpression = added;
-            source.ParentExpression = added;
+
+            if (destination == null)
+            {
+                return source;
+            }
+
             destination = added;
             return destination;
         }

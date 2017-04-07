@@ -128,7 +128,14 @@
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
     <Compile Include="Rules\EqualityReorderRule.cs" />
     <Compile Include="Rules\FinalRules\LinearEquationRule.cs" />
+    <Compile Include="Rules\FractionRules\FractionDivisionRule.cs" />
+    <Compile Include="Rules\FractionRules\FractionProductRule.cs" />
+    <Compile Include="Rules\FractionRules\FractionSimplifyRule.cs" />
+    <Compile Include="Rules\FractionRules\FractionSumRule.cs" />
+    <Compile Include="Rules\MonomialRules\MonomialRemovalRule.cs" />
+    <Compile Include="Rules\MonomialRules\MonomialZeroRole.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisMonomialMultRule.cs" />
+    <Compile Include="Rules\ParenthesisRules\ParenthesisMultiplicationRule.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisRemovalRule.cs" />
     <Compile Include="Rules\QuadraticRules\BiquadraticRule.cs" />
     <Compile Include="Rules\QuadraticRules\QuadratDifferenceRule.cs" />

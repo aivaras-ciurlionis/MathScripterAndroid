@@ -17,7 +17,7 @@ namespace MathExecutorUnitTests.Rules
         [SetUp]
         public void Init()
         {
-            _parenthesisRule = new ParenthesisMonomialMultRule(new ExpressionFlatener(), new ElementsChanger());
+            _parenthesisRule = new ParenthesisMonomialMultRule(new ExpressionFlatener(), new ElementsChanger(), new ParentChecker());
             _parser = ClassResolver.GetParser();
             _interpreter = new Interpreter(_parser);
         }
