@@ -4,6 +4,7 @@ using MathExecutor.Interfaces;
 using MathExecutor.Models;
 using MathExecutor.Rules;
 using MathExecutor.Rules.FinalRules;
+using MathExecutor.Rules.ParenthesisRules;
 
 namespace MathExecutor.RuleBinders
 {
@@ -12,7 +13,7 @@ namespace MathExecutor.RuleBinders
         private readonly IRule _signMergeRule;
         private readonly IRule _reorderRule;
         private readonly IRule _equalityReorderRule;
-        private readonly IRule _linearEquationRule;
+        private readonly IRule _finalParenthesisRule;
 
         private List<Step> _steps;
 
@@ -69,7 +70,7 @@ namespace MathExecutor.RuleBinders
             _signMergeRule = new SignMergeRule();
             _reorderRule = new ReorderRule(expressionFlatener, expressionAdder);
             _equalityReorderRule = new EqualityReorderRule(expressionFlatener, expressionAdder);
-            _linearEquationRule = new LinearEquationRule();
+            _finalParenthesisRule = new FinalParenthesisRule();
             _interpreter = interpreter;
             _steps = new List<Step>();
         }
@@ -92,6 +93,9 @@ namespace MathExecutor.RuleBinders
                 expression = _steps.Last().FullExpression.Clone();
 
                 AddSteps(ApplyAndInterpret(expression, _signMergeRule));
+                expression = _steps.Last().FullExpression.Clone();
+
+                AddSteps(ApplyAndInterpret(expression, _finalParenthesisRule));
                 expression = _steps.Last().FullExpression.Clone();
 
             } while (!startingExpression.IsEqualTo(expression));

@@ -1,4 +1,3 @@
-using MathExecutor.Expressions.Equality;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 

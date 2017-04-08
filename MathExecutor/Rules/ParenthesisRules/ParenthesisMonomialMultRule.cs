@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
@@ -38,7 +39,15 @@ namespace MathExecutor.Rules.ParenthesisRules
             var insideElements = _expressionFlatener.FlattenExpression(insideParenthesis, true, true);
             var replacableElements = insideElements.Where(e => !(e.Expression is SumExpression ||
                                                                e.Expression is SubtractExpression));
-            foreach (var element in replacableElements)
+
+            var flatExpressionResults = replacableElements as IList<FlatExpressionResult> ?? replacableElements.ToList();
+            if (flatExpressionResults.Count() == 1)
+            {
+                return new InnerRuleResult(new MultiplyExpression(workingOperand.Clone(), 
+                    flatExpressionResults.First().Expression.Clone()));
+            }
+
+            foreach (var element in flatExpressionResults)
             {
                 var replacement = new MultiplyExpression(workingOperand.Clone(), element.Expression.Clone());
                 _elementsChanger.ChangeElement(element.Expression, replacement);

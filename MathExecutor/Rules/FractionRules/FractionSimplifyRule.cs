@@ -38,16 +38,44 @@ namespace MathExecutor.Rules.FractionRules
             return expressions.Any(e => e.IsEqualTo(expression));
         }
 
+        private bool IsMultiplyElement(IExpression e)
+        {
+            return e.ParentExpression is MultiplyExpression ||
+                   e.ParentExpression is DivisionExpression ||
+                   e.ParentExpression is ParenthesisExpression;
+        }
+
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
             var top = _parentChecker.GetUnderParenthesis(expression.Operands[0]);
             var bot = _parentChecker.GetUnderParenthesis(expression.Operands[1]);
+
+            if (top is SumExpression || top is SubtractExpression)
+            {
+                var p = new ParenthesisExpression(top);
+                top = p;
+                p.ParentExpression = expression;
+                expression.Operands[0] = p;
+            }
+
+            if (bot is SumExpression || bot is SubtractExpression)
+            {
+                var p = new ParenthesisExpression(bot);
+                bot = p;
+                p.ParentExpression = expression;
+                expression.Operands[1] = p;
+            }
+
             var topElements = _expressionFlatener.FlattenExpression(top, true, true, true)
                 .Select(e => e.Expression)
                 .ToList();
             var botElements = _expressionFlatener.FlattenExpression(bot, true, true, true)
                 .Select(e => e.Expression)
                 .ToList();
+
+            topElements = topElements.Where(IsMultiplyElement).ToList();
+            botElements = botElements.Where(IsMultiplyElement).ToList();
+
             if (topElements.Any(HasPlusOrMinus) || botElements.Any(HasPlusOrMinus))
             {
                 return null;
@@ -63,7 +91,7 @@ namespace MathExecutor.Rules.FractionRules
             }
 
             var topExp = topElements.Where(IsNumericExponent).ToList();
-            var botExp = topElements.Where(IsNumericExponent).ToList();
+            var botExp = botElements.Where(IsNumericExponent).ToList();
             if (topExp.Count <= 0 || botExp.Count <= 0) return null;
             {
                 var topOperands = topExp.Select(e => e.Operands[0]);

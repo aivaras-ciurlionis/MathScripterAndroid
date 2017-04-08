@@ -35,14 +35,15 @@ namespace MathExecutor.Rules.QuadraticRules
             var b = b1.Coefficient;
             var c = right.Coefficient * -1;
             var d = b * b - 4 * a * c;
+            var x = new Monomial(1, new List<IVariable> { new Variable { Name = name, Exponent = 1 } });
             if (d < 0)
             {
-                return null;
+                return new InnerRuleResult(new MemberOfExpression(x, new Monomial(-1)));
             }
 
             IExpression result;
             var bottom = new MultiplyExpression(new Monomial(2), new Monomial(a));
-            var x = new Monomial(1, new List<IVariable> { new Variable { Name = name, Exponent = 1 } });
+          
             if (Math.Abs(d) < 0.001)
             {
                 result = new EqualityExpression(

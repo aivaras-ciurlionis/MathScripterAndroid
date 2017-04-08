@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
-using MathExecutor.Expressions.Equality;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 

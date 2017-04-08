@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
-using MathExecutor.Models;
 
 namespace MathExecutor.Helpers
 {

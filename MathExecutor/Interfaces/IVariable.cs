@@ -1,6 +1,4 @@
-﻿using MathExecutor.Models;
-
-namespace MathExecutor.Interfaces
+﻿namespace MathExecutor.Interfaces
 {
     public interface IVariable
     {

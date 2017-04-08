@@ -1,4 +1,3 @@
-using System;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 

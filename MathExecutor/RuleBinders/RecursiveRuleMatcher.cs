@@ -32,20 +32,30 @@ namespace MathExecutor.RuleBinders
         {
             var firstStep = new List<Step> { new Step { FullExpression = expression } };
             _shortestResultSteps = firstStep;
-            var result = SolveExpressionRecursive(new List<Step>(), expression);
+            var result = SolveExpressionRecursive(new List<Step>(), expression, 0);
             return result ?? _shortestResultSteps;
         }
 
-        private IEnumerable<Step> SolveExpressionRecursive(IEnumerable<Step> stepsBefore, IExpression expression)
+        private IEnumerable<Step> SolveExpressionRecursive(IEnumerable<Step> stepsBefore, IExpression expression, int height)
         {
-            var sequentialSteps = _sequentialRuleMatcher.GetSequentialRuleSteps(expression);
-            var steps = sequentialSteps as IList<Step> ?? sequentialSteps.ToList();
-            var lastStep = steps.Last();
-            var addedSteps = stepsBefore.Union(steps);
+            if (height > 30)
+            {
+                return null; 
+            }
+            var sequentialSteps = _sequentialRuleMatcher.GetSequentialRuleSteps(expression).ToList();
+            var lastStep = sequentialSteps.Last();
+            var enumerable = stepsBefore as IList<Step> ?? stepsBefore.ToList();
+            var addedSteps = enumerable.Union(sequentialSteps);
             if (_finalResultChecker.IsFinalResult(lastStep.FullExpression))
             {
                 return addedSteps;
             }
+
+            if(sequentialSteps.Any(s => StepExists(enumerable.Take(enumerable.Count() - 1), s.FullExpression)))
+            {
+                return null;
+            }
+
             var possibleRules = _multiRuleChecker.ApplyRules(lastStep.FullExpression.Clone());
             var ruleAddedSteps = addedSteps as IList<Step> ?? addedSteps.ToList();
             foreach (var possibleRule in possibleRules)
@@ -54,18 +64,31 @@ namespace MathExecutor.RuleBinders
                 {
                     continue;
                 }
-                var ruleResult = SolveExpressionRecursive(ruleAddedSteps, possibleRule.FullExpression.Clone());
+                var newSteps = ruleAddedSteps.Union(new List<Step> {possibleRule});
+                var ruleResult = SolveExpressionRecursive(newSteps, possibleRule.FullExpression.Clone(), height+1);
                 if (ruleResult != null)
                 {
                     return ruleResult;
                 }
             }
-            if (lastStep.FullExpression.ToString().Length <
-                _shortestResultSteps.Last().FullExpression.ToString().Length)
+            if (StepsAreBetter(ruleAddedSteps))
             {
                 _shortestResultSteps = ruleAddedSteps;
             }
             return null;
+        }
+
+        private bool StepsAreBetter(IEnumerable<Step> steps)
+        {
+            var enumerable = steps as IList<Step> ?? steps.ToList();
+            if (enumerable.Last().FullExpression.ToString().Length <
+                _shortestResultSteps.Last().FullExpression.ToString().Length)
+            {
+                return true;
+            }
+            return enumerable.Last().FullExpression.ToString().Length ==
+                   _shortestResultSteps.Last().FullExpression.ToString().Length &&
+                   enumerable.Count() <_shortestResultSteps.Count();
         }
 
     }

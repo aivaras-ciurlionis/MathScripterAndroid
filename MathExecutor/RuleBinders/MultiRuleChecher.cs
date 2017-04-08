@@ -6,6 +6,7 @@ using MathExecutor.Rules.FractionRules;
 using MathExecutor.Rules.MonomialRules;
 using MathExecutor.Rules.ParenthesisRules;
 using MathExecutor.Rules.QuadraticRules;
+using MathExecutor.Rules.TrivialRules;
 
 namespace MathExecutor.RuleBinders
 {
@@ -23,9 +24,15 @@ namespace MathExecutor.RuleBinders
             {
                 new LinearEquationRule(),
                 new QuadraticEquationRule(),
+                new SquareMonomialRule(),
+                new PartQuadraticEquationRule(parentChecker),
+                new QuadraticIdentityRule(parentChecker),
                 //----------------------------------------
                 new MonomialRemovalRule(),
                 new MonomialZeroRole(),
+                new OneBotDivRule(),
+                new OneMultiRule(),
+                new ZeroTopDivRule(),
                 //----------------------------------------
                 new ParenthesisRemovalRule(expressionFlatener, elementsChanger),
                 new ParenthesisMonomialMultRule(expressionFlatener, elementsChanger, parentChecker),
@@ -36,6 +43,7 @@ namespace MathExecutor.RuleBinders
                 new FractionSimplifyRule(expressionFlatener, elementsChanger, parentChecker),
                 new FractionDivisionRule(parentChecker, elementsChanger),
                 new FractionProductRule(parentChecker),
+                new CommonDenominatorSum(parentChecker),
                 new FractionSumRule(parentChecker),
                 new ParenthesisMultiplicationRule(expressionFlatener, parentChecker)
             };

@@ -52,6 +52,7 @@
     <Compile Include="Expressions\Arithmetic\SubtractExpression.cs" />
     <Compile Include="Expressions\Arithmetic\SumExpression.cs" />
     <Compile Include="Expressions\Equality\LessEqualExpression.cs" />
+    <Compile Include="Expressions\Equality\MemberOfExpression.cs" />
     <Compile Include="Expressions\Equality\MoreEqualExpression.cs" />
     <Compile Include="Expressions\Equality\UnequalityExpression.cs" />
     <Compile Include="Expressions\Equality\MoreExpression.cs" />
@@ -127,7 +128,9 @@
     <Compile Include="RuleBinders\SequentialRuleMatcher.cs" />
     <Compile Include="Rules\AbstractRecursiveRule.cs" />
     <Compile Include="Rules\EqualityReorderRule.cs" />
+    <Compile Include="Rules\FinalRules\SquareMonomialRule.cs" />
     <Compile Include="Rules\FinalRules\LinearEquationRule.cs" />
+    <Compile Include="Rules\FractionRules\CommonDenominatorSum.cs" />
     <Compile Include="Rules\FractionRules\FractionDivisionRule.cs" />
     <Compile Include="Rules\FractionRules\FractionProductRule.cs" />
     <Compile Include="Rules\FractionRules\FractionSimplifyRule.cs" />
@@ -136,12 +139,18 @@
     <Compile Include="Rules\MonomialRules\MonomialZeroRole.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisMonomialMultRule.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisMultiplicationRule.cs" />
+    <Compile Include="Rules\ParenthesisRules\FinalParenthesisRule.cs" />
     <Compile Include="Rules\ParenthesisRules\ParenthesisRemovalRule.cs" />
     <Compile Include="Rules\QuadraticRules\BiquadraticRule.cs" />
     <Compile Include="Rules\QuadraticRules\QuadratDifferenceRule.cs" />
+    <Compile Include="Rules\QuadraticRules\PartQuadraticEquationRule.cs" />
+    <Compile Include="Rules\QuadraticRules\QuadraticIdentityRule.cs" />
     <Compile Include="Rules\QuadraticRules\QuadraticEquationRule.cs" />
     <Compile Include="Rules\ReorderRule.cs" />
     <Compile Include="Rules\SignMergeRule.cs" />
+    <Compile Include="Rules\TrivialRules\OneBotDivRule.cs" />
+    <Compile Include="Rules\TrivialRules\ZeroTopDivRule.cs" />
+    <Compile Include="Rules\TrivialRules\OneMultiRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
