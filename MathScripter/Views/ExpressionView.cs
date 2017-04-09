@@ -29,6 +29,7 @@ namespace MathScripter.Views
         private string _expression = "";
         private IExpression _expressionModel;
         private IEnumerable<Step> _steps = new List<Step>();
+        private int _stepHeight = 0;
         private ExpressionViewMode _mode;
 
         private bool _needsRedraw = true;
@@ -62,7 +63,7 @@ namespace MathScripter.Views
             canvas.DrawColor(Color.White);
             if (string.IsNullOrWhiteSpace(_expression)
                 || !_interpreter.CanBeParsed(_expression)) return;
-            _stepsDrawer.DrawSteps(_steps, _p, canvas, 3000, original.Width);
+            _stepHeight = _stepsDrawer.DrawSteps(_steps, _p, canvas, 3000, original.Width);
             _needsRedraw = false;
         }
 
@@ -99,7 +100,7 @@ namespace MathScripter.Views
         {
             _currentOffsetY = 0;
             _expression = expression;
-           
+
             if (_mode != ExpressionViewMode.Expression)
             {
                 ComputeSolution();
@@ -153,9 +154,21 @@ namespace MathScripter.Views
         {
         }
 
+        private bool CanScrool(float distanceY)
+        {
+            var distDif = _currentOffsetY - distanceY;
+            return _mode == ExpressionViewMode.Steps &&
+                   distDif > -3000 &&
+                   distDif > -(_steps.Count() * _stepHeight) &&
+                   distDif < 0;
+        }
+
         public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
         {
-            _currentOffsetY -= distanceY;
+            if (CanScrool(distanceY))
+            {
+                _currentOffsetY -= distanceY;
+            }
             Invalidate();
             return true;
         }

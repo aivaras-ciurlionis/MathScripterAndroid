@@ -30,9 +30,10 @@ namespace MathExecutor.Helpers
                 e.Expression != null &&
                 e.Expression.Operands.Count == 2 &&
                 e.Expression.Operands[0] is Monomial &&
-                e.Expression.Operands[1] is Monomial &&
-                IsSingleVariable(e.Expression.Operands[0]) &&
-                IsNumericMonomial(e.Expression.Operands[1])
+                ((e.Expression.Operands[1] is Monomial && 
+                IsNumericMonomial(e.Expression.Operands[1])) ||
+                e.Expression.Operands[1].Type == ExpressionType.Set) &&
+                IsSingleVariable(e.Expression.Operands[0])
             );
         }
 

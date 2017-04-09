@@ -6,6 +6,6 @@ namespace MathDrawer.Interfaces
 {
     public interface IStepsDrawer
     {
-        void DrawSteps(IEnumerable<Step> steps, Paint p, Canvas c, int totalHeight, int totalWidth);
+        int DrawSteps(IEnumerable<Step> steps, Paint p, Canvas c, int totalHeight, int totalWidth);
     }
 }

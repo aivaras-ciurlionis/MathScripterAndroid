@@ -46,6 +46,7 @@ namespace MathDrawer
             {
                 case 2: return new BinaryDrawer(factory, measurer, textMeasurer);
                 case 1: return new UnaryDrawer(measurer, factory, textMeasurer);
+                case 0: return new NularyDrawer(textMeasurer);
                 default: return new BinaryDrawer(factory, measurer, textMeasurer);
             }
 

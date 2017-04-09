@@ -87,6 +87,7 @@ namespace MathScripter
             Container.RegisterType<IMultiRuleChecker, MultiRuleChecher>();
             Container.RegisterType<IParentChecker, ParentChecker>();
             Container.RegisterType<ISequentialRuleMatcher, SequentialRuleMatcher>();
+            Container.RegisterType<IStepsReducer, StepsReucer>();
 
             Container.RegisterType<IBaseDrawer, BaseDrawer>();
             Container.RegisterType<IDrawerFactory, DrawerFactory>();

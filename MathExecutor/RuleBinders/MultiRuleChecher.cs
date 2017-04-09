@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 using MathExecutor.Rules.FinalRules;
@@ -60,7 +61,9 @@ namespace MathExecutor.RuleBinders
                     results.Add(new Step
                     {
                         FullExpression = result.Expression,
-                        RuleDescription = result.RuleDescription
+                        RuleDescription = result.RuleDescription,
+                        IsDescriptive = result.HelperExpressions != null && result.HelperExpressions.Any(),
+                        HelperSteps = result.HelperExpressions
                     });
                 }
             }

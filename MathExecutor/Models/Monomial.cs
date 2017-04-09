@@ -22,6 +22,12 @@ namespace MathExecutor.Models
             ParentExpression = parent;
         }
 
+        public Monomial(double coefficient, string variableName)
+        {
+            Coefficient = coefficient;
+            Variables = new List<IVariable> {new Variable {Exponent = 1, Name = variableName} };
+        }
+
         public Monomial(double coefficient, IEnumerable<IVariable> variables)
         {
             Coefficient = coefficient;

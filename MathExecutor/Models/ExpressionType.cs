@@ -10,6 +10,7 @@
         Rational = 5,
         Root = 6,
         Exponent = 7,
-        List = 8
+        List = 8,
+        Set = 9
     }
 }

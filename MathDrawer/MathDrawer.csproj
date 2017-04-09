@@ -51,6 +51,7 @@
     <Compile Include="Drawers\ParenthesisDrawer.cs" />
     <Compile Include="Drawers\RootDrawer.cs" />
     <Compile Include="Drawers\SuperscriptDrawer.cs" />
+    <Compile Include="Drawers\NularyDrawer.cs" />
     <Compile Include="Drawers\UnaryDrawer.cs" />
     <Compile Include="Drawers\VariableDrawer.cs" />
     <Compile Include="ElementsDrawer.cs" />

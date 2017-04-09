@@ -22,7 +22,8 @@ namespace MathExecutorUnitTests.RuleBinders
             _sequentialRuleMatcher = new SequentialRuleMatcher(
                 interpreter, 
                 new ExpressionFlatener(), 
-                new OhterExpressionAdder()
+                new OhterExpressionAdder(),
+                new StepsReucer()
                 );
         }
 

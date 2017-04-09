@@ -10,17 +10,20 @@ namespace MathExecutor.RuleBinders
         private readonly ISequentialRuleMatcher _sequentialRuleMatcher;
         private readonly IMultiRuleChecker _multiRuleChecker;
         private readonly IFinalResultChecker _finalResultChecker;
+        private readonly IStepsReducer _stepsReducer;
 
         private IEnumerable<Step> _shortestResultSteps = new List<Step>();
 
         public RecursiveRuleMatcher(
             ISequentialRuleMatcher sequentialRuleMatcher,
             IMultiRuleChecker multiRuleChecker,
-            IFinalResultChecker finalResultChecker)
+            IFinalResultChecker finalResultChecker,
+            IStepsReducer stepsReducer)
         {
             _sequentialRuleMatcher = sequentialRuleMatcher;
             _multiRuleChecker = multiRuleChecker;
             _finalResultChecker = finalResultChecker;
+            _stepsReducer = stepsReducer;
         }
 
         private static bool StepExists(IEnumerable<Step> stepsBefore, IExpression expression)
@@ -33,7 +36,7 @@ namespace MathExecutor.RuleBinders
             var firstStep = new List<Step> { new Step { FullExpression = expression } };
             _shortestResultSteps = firstStep;
             var result = SolveExpressionRecursive(new List<Step>(), expression, 0);
-            return result ?? _shortestResultSteps;
+            return _stepsReducer.ReduceSteps(result ?? _shortestResultSteps);
         }
 
         private IEnumerable<Step> SolveExpressionRecursive(IEnumerable<Step> stepsBefore, IExpression expression, int height)
@@ -58,6 +61,7 @@ namespace MathExecutor.RuleBinders
 
             var possibleRules = _multiRuleChecker.ApplyRules(lastStep.FullExpression.Clone());
             var ruleAddedSteps = addedSteps as IList<Step> ?? addedSteps.ToList();
+            IEnumerable<Step> bestSteps = null;
             foreach (var possibleRule in possibleRules)
             {
                 if (StepExists(ruleAddedSteps, possibleRule.FullExpression))
@@ -68,8 +72,15 @@ namespace MathExecutor.RuleBinders
                 var ruleResult = SolveExpressionRecursive(newSteps, possibleRule.FullExpression.Clone(), height+1);
                 if (ruleResult != null)
                 {
-                    return ruleResult;
+                    if (bestSteps == null || ruleResult.Count() < bestSteps.Count())
+                    {
+                        bestSteps = ruleResult;
+                    }
                 }
+            }
+            if (bestSteps != null)
+            {
+                return bestSteps;
             }
             if (StepsAreBetter(ruleAddedSteps))
             {

@@ -6,15 +6,19 @@ namespace MathExecutor.Interfaces
 {
     public abstract class AbstractNullaryExpression : IExpression
     {
-        public ExpressionType Type => ExpressionType.Arithmetic;
+        public abstract ExpressionType Type { get; }
         public int Arity => 0;
         public abstract int Order { get; }
-        public bool CanBeExecuted() => true;
+        public abstract bool CanBeExecuted();
         protected abstract double Value { get; }
 
         public IExpression Execute()
         {
-            return new Monomial(Value);
+            if (CanBeExecuted())
+            {
+                return new Monomial(Value);
+            }
+            return this;
         }
         public IExpression ParentExpression { get; set; }
         public void AddStep(IExpression expressionBefore, IExpression expressionAfter)
@@ -33,7 +37,7 @@ namespace MathExecutor.Interfaces
         public bool IsEqualTo(IExpression other)
         {
             var otherE = other as AbstractNullaryExpression;
-            return otherE != null && Math.Abs(otherE.Value - Value) < 0.001;
+            return otherE != null && otherE.Name == Name;
         }
     }
 }

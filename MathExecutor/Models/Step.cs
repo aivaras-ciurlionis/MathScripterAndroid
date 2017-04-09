@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MathExecutor.Interfaces;
 
 namespace MathExecutor.Models
@@ -9,6 +10,8 @@ namespace MathExecutor.Models
         public IExpression ExpressionResult { get; set; }
         public string TextExpressionResult { get; set; }
         public string RuleDescription { get; set; }
+        public bool IsDescriptive { get; set; }
+        public IEnumerable<IExpression> HelperSteps { get; set; }
 
         public override string ToString()
         {

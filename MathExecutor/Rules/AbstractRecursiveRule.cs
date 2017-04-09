@@ -18,16 +18,14 @@ namespace MathExecutor.Rules
             for (var i = 0; i < operands.Count; i++)
             {
                 var operandResult = ApplyRuleRecursive(operands[i]);
-                if (operandResult != null)
+                if (operandResult == null) continue;
+                operandResult.Expression.ParentExpression = expression;
+                operands[i] = operandResult.Expression;
+                if (operandResult.ConsumeParent)
                 {
-                    operandResult.Expression.ParentExpression = expression;
-                    operands[i] = operandResult.Expression;
-                    if (operandResult.ConsumeParent)
-                    {
-                        expression = new SumExpression(operands[0], operandResult.Expression);
-                    }
-                    return new InnerRuleResult (expression);
+                    expression = new SumExpression(operands[0], operandResult.Expression);
                 }
+                return new InnerRuleResult (expression, false, operandResult.HelperSteps);
             }
             return null;
         }
@@ -39,7 +37,9 @@ namespace MathExecutor.Rules
             {
                 Applied = result != null,
                 Expression = result?.Expression,
-                RuleDescription = Description
+                RuleDescription = Description,
+                HelperExpressions = result?.HelperSteps,
+                RuleType = GetType()
             };
         }
 

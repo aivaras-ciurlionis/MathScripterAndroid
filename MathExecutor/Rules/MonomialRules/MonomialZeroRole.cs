@@ -12,21 +12,21 @@ namespace MathExecutor.Rules.MonomialRules
             var m1 = expression.Operands[0] as Monomial;
             var m2 = expression.Operands[1] as Monomial;
             var isNegative = expression is SubtractExpression;
-            if (m1 != null)
+            if (m1 != null && Math.Abs(m1.Coefficient) < 0.001)
             {
-                return Math.Abs(m1.Coefficient) < 0.001 ? new InnerRuleResult(
-                    isNegative 
-                    ? new NegationExpression(expression.Operands[1]) 
-                    : expression.Operands[1]) 
-                    : null;
+                return new InnerRuleResult(
+                        isNegative
+                        ? new NegationExpression(expression.Operands[1])
+                        : expression.Operands[1]
+                        );
             }
-            if (m2 != null)
+            if (m2 != null && Math.Abs(m2.Coefficient) < 0.001)
             {
-                return Math.Abs(m2.Coefficient) < 0.001 ? new InnerRuleResult(
-                    isNegative
-                    ? new NegationExpression(expression.Operands[0])
-                    : expression.Operands[0])
-                    : null;
+                return new InnerRuleResult(
+                        isNegative
+                        ? new NegationExpression(expression.Operands[0])
+                        : expression.Operands[0]
+                        );
             }
             return null;
         }

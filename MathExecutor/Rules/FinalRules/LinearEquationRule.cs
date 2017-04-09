@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
+using MathExecutor.Expressions.Equality;
+using MathExecutor.Expressions.Sets;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -17,12 +19,25 @@ namespace MathExecutor.Rules.FinalRules
             {
                 return null;
             }
-            var x = new Monomial(1, new List<IVariable>() { left.Variables.ElementAt(0)});
+            var x = new Monomial(1, left.Variables.ElementAt(0).Name);
+            if (Math.Abs(left.Coefficient) < 0.001)
+            {
+                if (Math.Abs(right.Coefficient) < 0.001)
+                {
+                    var result = new MemberOfExpression(x, new RealSetExpression());
+                    return new InnerRuleResult(result);
+                }
+                else
+                {
+                    var result = new MemberOfExpression(x, new EmptySetExpression());
+                    return new InnerRuleResult(result);
+                }
+            }
+           
             left.Variables = null;
             var division = new DivisionExpression(right, left);
             expression.Operands[0] = x;
             expression.Operands[1] = division;
-
             x.ParentExpression = expression;
             division.ParentExpression = expression;
             return new InnerRuleResult(expression);

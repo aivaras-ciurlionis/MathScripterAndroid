@@ -21,7 +21,7 @@ namespace MathDrawer
             _elementsDrawer = elementsDrawer;
         }
 
-        public void DrawSteps(IEnumerable<Step> steps, Paint p, 
+        public int DrawSteps(IEnumerable<Step> steps, Paint p, 
             Canvas canvas, int totalHeight, int totalWidth)
         {
             var parameters = new TextParameters
@@ -52,6 +52,7 @@ namespace MathDrawer
                 _elementsDrawer.DrawExpressions(drawableExpressions, p, canvas, 0);
                 i++;
             }
+            return height;
         }
     }
 }

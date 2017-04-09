@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Expressions.Arithmetic;
@@ -55,7 +56,7 @@ namespace MathExecutor.Rules.QuadraticRules
             {
                 return false;
             }
-            if (!m1.HasSingleVariableWithExponent(2))
+            if (!m1.HasSingleVariableWithExponent(2) || Math.Abs(m2.Coefficient) < 0.001)
             {
                 return false;
             }

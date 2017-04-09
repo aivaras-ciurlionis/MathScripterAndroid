@@ -18,13 +18,11 @@ namespace MathExecutor.RuleBinders
         private List<Step> _steps;
 
         private readonly IInterpreter _interpreter;
+        private readonly IStepsReducer _stepsReducer;
 
         private void AddStep(Step step)
         {
-            if (!_steps.Any() || !_steps.Any(s => s.FullExpression.IsEqualTo(step.FullExpression)))
-            {
-                _steps.Add(step);
-            }
+            _steps.Add(step);
         }
 
         private void AddSteps(IEnumerable<Step> steps)
@@ -65,13 +63,15 @@ namespace MathExecutor.RuleBinders
         public SequentialRuleMatcher(
             IInterpreter interpreter,
             IExpressionFlatener expressionFlatener,
-            IOtherExpressionAdder expressionAdder)
+            IOtherExpressionAdder expressionAdder, 
+            IStepsReducer stepsReducer)
         {
             _signMergeRule = new SignMergeRule();
             _reorderRule = new ReorderRule(expressionFlatener, expressionAdder);
             _equalityReorderRule = new EqualityReorderRule(expressionFlatener, expressionAdder);
             _finalParenthesisRule = new FinalParenthesisRule();
             _interpreter = interpreter;
+            _stepsReducer = stepsReducer;
             _steps = new List<Step>();
         }
 
@@ -99,7 +99,7 @@ namespace MathExecutor.RuleBinders
                 expression = _steps.Last().FullExpression.Clone();
 
             } while (!startingExpression.IsEqualTo(expression));
-            return _steps;
+            return _stepsReducer.ReduceSteps(_steps);
         }
     }
 }

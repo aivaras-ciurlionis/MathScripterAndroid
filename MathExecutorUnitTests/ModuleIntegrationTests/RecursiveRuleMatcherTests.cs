@@ -26,11 +26,13 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             var adder = new OhterExpressionAdder();
             var elementsChanger = new ElementsChanger();
             var parentChecher = new ParentChecker();
+            var stepsReducer = new StepsReucer();
             _expressionFlatener = new ExpressionFlatener();
             _multiRuleChecker = new MultiRuleChecher(_expressionFlatener, elementsChanger, parentChecher);
             _finalResultChecker = new FinalResultChecker(_expressionFlatener);
-            _sequentialRuleMatcher = new SequentialRuleMatcher(interpreter, _expressionFlatener, adder);
-            _recursiveRuleMathcer = new RecursiveRuleMatcher(_sequentialRuleMatcher, _multiRuleChecker, _finalResultChecker);
+            _sequentialRuleMatcher = new SequentialRuleMatcher(interpreter, _expressionFlatener, adder, stepsReducer);
+            _recursiveRuleMathcer = new RecursiveRuleMatcher(_sequentialRuleMatcher, _multiRuleChecker,
+                _finalResultChecker, stepsReducer);
         }
 
         [Test]
@@ -120,14 +122,6 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             var steps = _recursiveRuleMathcer.SolveExpression(expression);
             Assert.AreEqual("x = 3 , x = -3", steps.Last().FullExpression.ToString());
         }
-
-        //[Test]
-        //public void ItShouldMultiplyTwoFractions()
-        //{
-        //    var expression = _parser.Parse("((x+3)/(x+1))*((x+4)/(x+2))");
-        //    var steps = _recursiveRuleMathcer.SolveExpression(expression);
-        //    Assert.AreEqual("(x^2 + 7x + 12) / (x^2 + 3x + 2)", steps.Last().FullExpression.ToString());
-        //}
 
         [Test]
         public void ItShouldSumFractionsWithEqualDenominator()
@@ -232,7 +226,47 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
         {
             var expression = _parser.Parse("x^2 - x + 3 = 0");
             var steps = _recursiveRuleMathcer.SolveExpression(expression);
-            Assert.AreEqual("x \u2208 -1", steps.Last().FullExpression.ToString());
+            Assert.AreEqual("x \u2208 \u2205", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldComputeQuadraticExpressionAndRemoveXSquared()
+        {
+            var expression = _parser.Parse("(x+2)^2-x^2");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("4x + 4", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldSimplifyFractionTopAndBottom()
+        {
+            var expression = _parser.Parse("x(x+2)/(x+(x+2)-2)");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("x^2 + 2x / 2x", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldReturnEmptySetExpression()
+        {
+            var expression = _parser.Parse("x = x + 6");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("x \u2208 \u2205", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldReturnRealSetExpression()
+        {
+            var expression = _parser.Parse("x = x + 6 - 2 * 3");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("x \u2208 R", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldReturnRealSetExpressionForEqualVariables()
+        {
+            var expression = _parser.Parse("a = a");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("a \u2208 R", steps.Last().FullExpression.ToString());
         }
 
     }
