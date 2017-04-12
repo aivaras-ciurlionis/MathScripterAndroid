@@ -112,8 +112,8 @@ namespace MathScripter
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06000a
-			public const int cameraButton = 2131099658;
+			// aapt resource value: 0x7f06000d
+			public const int cameraButton = 2131099661;
 			
 			// aapt resource value: 0x7f060001
 			public const int cameraView = 2131099649;
@@ -121,8 +121,11 @@ namespace MathScripter
 			// aapt resource value: 0x7f060000
 			public const int captureButton = 2131099648;
 			
-			// aapt resource value: 0x7f06000b
-			public const int editButton = 2131099659;
+			// aapt resource value: 0x7f06000e
+			public const int editButton = 2131099662;
+			
+			// aapt resource value: 0x7f060009
+			public const int expressionButton = 2131099657;
 			
 			// aapt resource value: 0x7f060005
 			public const int expressionEdit = 2131099653;
@@ -142,8 +145,14 @@ namespace MathScripter
 			// aapt resource value: 0x7f060007
 			public const int linearLayout1 = 2131099655;
 			
-			// aapt resource value: 0x7f060009
-			public const int rightPanel = 2131099657;
+			// aapt resource value: 0x7f06000a
+			public const int resultButton = 2131099658;
+			
+			// aapt resource value: 0x7f06000c
+			public const int rightPanel = 2131099660;
+			
+			// aapt resource value: 0x7f06000b
+			public const int stepsButton = 2131099659;
 			
 			// aapt resource value: 0x7f060003
 			public const int textView1 = 2131099651;

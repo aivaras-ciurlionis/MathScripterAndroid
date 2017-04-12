@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
@@ -11,6 +12,7 @@ using MathExecutor.Interpreter;
 using MathExecutor.Models;
 using MathExecutor.RuleBinders;
 using MathScripter.Models;
+using SkiaSharp;
 
 namespace MathScripter.Views
 {
@@ -28,8 +30,9 @@ namespace MathScripter.Views
 
         private string _expression = "";
         private IExpression _expressionModel;
+        private IExpression _expressionResult;
         private IEnumerable<Step> _steps = new List<Step>();
-        private int _stepHeight = 0;
+        private int _stepHeight;
         private ExpressionViewMode _mode;
 
         private bool _needsRedraw = true;
@@ -76,6 +79,17 @@ namespace MathScripter.Views
             _expressionDrawer.Draw(e, _p, canvas, canvas.Width, canvas.Height);
         }
 
+        public void DrawSolution(Canvas canvas)
+        {
+            canvas.DrawColor(Color.White);
+            if (_expressionModel == null ||
+                _expressionResult == null) return;
+            _expressionDrawer.Draw(_expressionModel, _p, canvas,
+                canvas.Width, (int)(0.8 * canvas.Height / 2));
+            _expressionDrawer.Draw(_expressionResult, _p, canvas,
+                canvas.Width, (int)(0.8 * canvas.Height / 2), canvas.Height / 2);
+        }
+
         public void SetMode(ExpressionViewMode mode)
         {
             _mode = mode;
@@ -93,18 +107,15 @@ namespace MathScripter.Views
             if (string.IsNullOrWhiteSpace(_expression)
                 || !_interpreter.CanBeParsed(_expression)) return;
             _expressionModel = _interpreter.GetExpression(_expression);
-            _steps = _ruleMatcher.SolveExpression(_expressionModel);
+            _steps = _ruleMatcher.SolveExpression(_expressionModel.Clone());
+            _expressionResult = _steps?.Last().FullExpression;
         }
 
         public void SetExpression(string expression)
         {
             _currentOffsetY = 0;
             _expression = expression;
-
-            if (_mode != ExpressionViewMode.Expression)
-            {
-                ComputeSolution();
-            }
+            ComputeSolution();
             _needsRedraw = true;
             Invalidate();
         }
@@ -119,17 +130,25 @@ namespace MathScripter.Views
         {
             base.OnDraw(canvas);
             canvas.DrawColor(Color.White);
-            if (_mode == ExpressionViewMode.Steps)
+            switch (_mode)
             {
-                if (_needsRedraw)
-                {
-                    DrawStepsToBuffer(canvas);
-                }
-                canvas.DrawBitmap(_buffer, 0, _currentOffsetY, null);
-            }
-            else
-            {
-                DrawExpression(canvas);
+                case ExpressionViewMode.Expression:
+                    DrawExpression(canvas);
+                    break;
+                case ExpressionViewMode.Solution:
+                    DrawSolution(canvas);
+                    break;
+                case ExpressionViewMode.Steps:
+                    if (_needsRedraw)
+                    {
+                        DrawStepsToBuffer(canvas);
+                    }
+                    canvas.DrawBitmap(_buffer, 0, _currentOffsetY, null);
+                    break;
+                case ExpressionViewMode.Animation:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
