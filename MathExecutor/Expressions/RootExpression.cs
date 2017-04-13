@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
@@ -9,11 +10,12 @@ namespace MathExecutor.Expressions
     {
         private Solution SolutionTracker { get; }
 
-        public RootExpression(IExpression operand, Solution solution)
+        public RootExpression(IExpression operand, Solution solution, string id = null)
         {
             operand.ParentExpression = this;
             Operands = new List<IExpression> {operand};
             SolutionTracker = solution;
+            Id = id ?? Guid.NewGuid().ToString();
         }
 
         public ExpressionType Type => ExpressionType.List;
@@ -75,7 +77,7 @@ namespace MathExecutor.Expressions
 
         public IExpression Clone()
         {
-            return new RootExpression(Operands[0], SolutionTracker);
+            return new RootExpression(Operands[0], SolutionTracker, Id);
         }
 
         public IList<IExpression> Operands { get; }
@@ -87,5 +89,7 @@ namespace MathExecutor.Expressions
             }
             return other.Operands.Count > 0 && Operands[0].IsEqualTo(other.Operands[0]);
         }
+
+        public string Id { get; set; }
     }
 }

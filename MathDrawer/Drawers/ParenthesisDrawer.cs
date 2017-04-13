@@ -59,6 +59,7 @@ namespace MathDrawer.Drawers
             {
                 drawableExpressions.Add(new DrawableExpression
                 {
+                    Id = expression.Id,
                     Elements = new List<DrawableElement> { operationElement1, operationElement2 }
                 });
             }

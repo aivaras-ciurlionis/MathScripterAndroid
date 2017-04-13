@@ -5,7 +5,7 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class SubtractExpression : AbstractBinaryExpression
     {
-        public SubtractExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public SubtractExpression(IExpression leftOperand, IExpression rightOperand, string id = null) : base(leftOperand, rightOperand, id)
         {
         }
 
@@ -34,7 +34,7 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override IExpression Clone()
         {
-            return new SubtractExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new SubtractExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override string Name => "-";

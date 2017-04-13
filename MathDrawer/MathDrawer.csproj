@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationStepsDrawer.cs" />
     <Compile Include="BaseDrawer.cs" />
     <Compile Include="DrawerFactory.cs" />
     <Compile Include="Drawers\BinaryDrawer.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Helpers\BoundsMeasurer.cs" />
     <Compile Include="Helpers\ParenthesisChecker.cs" />
     <Compile Include="Helpers\TextMeasurer.cs" />
+    <Compile Include="Interfaces\IAnimationStepsDrawer.cs" />
     <Compile Include="Interfaces\IBaseDrawer.cs" />
     <Compile Include="Interfaces\IBoundsMeasurer.cs" />
     <Compile Include="Interfaces\IDrawer.cs" />

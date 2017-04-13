@@ -8,13 +8,14 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class DivisionExpression : AbstractBinaryExpression
     {
-        public DivisionExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public DivisionExpression(IExpression leftOperand, IExpression rightOperand,
+            string id = null) : base(leftOperand, rightOperand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new DivisionExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new DivisionExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

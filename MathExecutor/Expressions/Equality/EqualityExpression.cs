@@ -5,13 +5,14 @@ namespace MathExecutor.Expressions.Equality
 {
     public class EqualityExpression : AbstractBinaryExpression
     {
-        public EqualityExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public EqualityExpression(IExpression leftOperand, IExpression rightOperand, string id = null) 
+            : base(leftOperand, rightOperand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new EqualityExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new EqualityExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

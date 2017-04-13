@@ -46,6 +46,7 @@ namespace MathDrawer.Drawers
             drawableExpressions.AddRange(insDrawables);
             drawableExpressions.Add(new DrawableExpression
             {
+                Id = expression.Id,
                 Elements = new List<DrawableElement> { operationElement }
             });
             return drawableExpressions;

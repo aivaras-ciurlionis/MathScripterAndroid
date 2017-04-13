@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Logarithmic
 {
     public class NaturalLogarithmicExpression : AbstractUnaryExpression
     {
-        public NaturalLogarithmicExpression(IExpression operand) : base(operand)
+        public NaturalLogarithmicExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new NaturalLogarithmicExpression(Operands[0].Clone());
+            return new NaturalLogarithmicExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

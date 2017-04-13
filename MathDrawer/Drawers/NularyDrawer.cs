@@ -32,6 +32,7 @@ namespace MathDrawer.Drawers
             {
                 new DrawableExpression
                 {
+                    Id = expression.Id,
                     Elements = new List<DrawableElement> {operationElement}
                 }
             };

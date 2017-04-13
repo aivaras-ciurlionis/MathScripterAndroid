@@ -96,7 +96,9 @@ namespace MathScripter
 
         private void _openAnimation(object sender, EventArgs args)
         {
-            StartActivityForResult(typeof(AnimationActivity), 0);
+            var intent = new Intent(this, typeof(AnimationActivity));
+            intent.PutExtra("expression", _expression);
+            StartActivityForResult(intent, 0);
         }
 
         private void _openEdit(object sender, EventArgs args)

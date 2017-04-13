@@ -94,6 +94,7 @@ namespace MathScripter
             Container.RegisterType<IElementsDrawer, ElementsDrawer>();
             Container.RegisterType<IStepsDrawer, StepsDrawer>();
             Container.RegisterType<IExpressionDrawer, ExpressionDrawer>();
+            Container.RegisterType<IAnimationStepsDrawer, AnimationStepsDrawer>();
         }
     }
 }

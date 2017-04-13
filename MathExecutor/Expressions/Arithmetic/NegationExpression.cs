@@ -5,13 +5,13 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class NegationExpression : AbstractUnaryExpression
     {
-        public NegationExpression(IExpression operand) : base(operand)
+        public NegationExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-           return new NegationExpression(Operands[0].Clone());
+           return new NegationExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

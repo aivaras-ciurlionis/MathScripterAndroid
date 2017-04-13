@@ -5,7 +5,8 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class SumExpression : AbstractBinaryExpression
     {
-        public SumExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public SumExpression(IExpression leftOperand, IExpression rightOperand, string id = null) 
+            : base(leftOperand, rightOperand, id)
         {
         }
 
@@ -35,7 +36,7 @@ namespace MathExecutor.Expressions.Arithmetic
 
         public override IExpression Clone()
         {
-            return new SumExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new SumExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override string Name => "+";

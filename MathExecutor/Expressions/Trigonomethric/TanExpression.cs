@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Trigonomethric
 {
     public class TanExpression : AbstractUnaryExpression
     {
-        public TanExpression(IExpression operand) : base(operand)
+        public TanExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new TanExpression(Operands[0].Clone());
+            return new TanExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

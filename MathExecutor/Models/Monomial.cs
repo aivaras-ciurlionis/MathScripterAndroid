@@ -11,30 +11,35 @@ namespace MathExecutor.Models
         public double Coefficient { get; set; }
         public IEnumerable<IVariable> Variables { get; set; }
 
-        public Monomial(double coefficient)
+        public Monomial(string id = null)
+        {
+            Id = id ?? Guid.NewGuid().ToString();
+        }
+
+        public Monomial(double coefficient, string id = null) : this(id)
         {
             Coefficient = coefficient;
         }
 
-        public Monomial(double coefficient, IExpression parent)
+        public Monomial(double coefficient, IExpression parent, string id = null) : this(id)
         {
             Coefficient = coefficient;
             ParentExpression = parent;
         }
 
-        public Monomial(double coefficient, string variableName)
+        public Monomial(double coefficient, string variableName, string id = null) : this(id)
         {
             Coefficient = coefficient;
             Variables = new List<IVariable> {new Variable {Exponent = 1, Name = variableName} };
         }
 
-        public Monomial(double coefficient, IEnumerable<IVariable> variables)
+        public Monomial(double coefficient, IEnumerable<IVariable> variables, string id = null) : this(id)
         {
             Coefficient = coefficient;
             Variables = variables;
         }
 
-        public Monomial(double coefficient, IEnumerable<IVariable> variables, IExpression parent)
+        public Monomial(double coefficient, IEnumerable<IVariable> variables, IExpression parent, string id = null) : this(id)
         {
             Coefficient = coefficient;
             Variables = variables;
@@ -124,7 +129,7 @@ namespace MathExecutor.Models
 
         public IExpression Clone()
         {
-            return new Monomial(Coefficient, Variables);
+            return new Monomial(Coefficient, Variables, Id);
         }
 
         public IList<IExpression> Operands => null;
@@ -135,5 +140,7 @@ namespace MathExecutor.Models
             var otherMonomial = other as Monomial;
             return otherMonomial != null && IsEqual(otherMonomial);
         }
+
+        public string Id { get; set; }
     }
 }

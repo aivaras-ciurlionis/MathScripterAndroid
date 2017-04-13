@@ -57,7 +57,11 @@ namespace MathDrawer.Drawers
             var drawableExpressions = new List<DrawableExpression>();
             drawableExpressions.AddRange(leftDrawables);
             drawableExpressions.AddRange(rightDrawables);
-            drawableExpressions.Add(new DrawableExpression { Elements = new List<DrawableElement> { operationElement } });
+            drawableExpressions.Add(new DrawableExpression
+            {
+                Id = expression.Id,
+                Elements = new List<DrawableElement> { operationElement }
+            });
             return drawableExpressions;
         }
 

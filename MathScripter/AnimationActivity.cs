@@ -11,6 +11,7 @@ using MathDrawer.Models;
 using MathExecutor.Expressions;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
+using MathExecutor.Models;
 using MathScripter.Views;
 
 namespace MathScripter
@@ -28,27 +29,9 @@ namespace MathScripter
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            var expression = _interpreter.GetExpression("(2+3+4)/(25*x)+17^2");
-            if (!(expression is RootExpression))
-            {
-                expression = new RootExpression(expression, null);
-            }
-            var el = _baseDrawer.DrawExpression(expression,
-                new TextParameters
-                {
-                    Size = 72,
-                    Typeface = Typeface.CreateFromAsset(Assets, "LinLibertine_R.ttf")
-                },
-                new EquationBounds
-                {
-                    X = 500,
-                    Y = 200,
-                    Width = 500,
-                    Height = 500
-                }, 
-                250
-             );
-            var application = new CCApplication {ApplicationDelegate = new AnimationDelegate(el) };
+            var e = Intent.GetStringExtra("expression");
+            var expression = _interpreter.GetExpression(e);
+            var application = new CCApplication {ApplicationDelegate = new AnimationDelegate(expression) };
             SetContentView(application.AndroidContentView);
             application.StartGame();
         }

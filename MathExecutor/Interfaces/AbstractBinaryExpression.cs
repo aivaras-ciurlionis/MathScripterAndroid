@@ -7,7 +7,8 @@ namespace MathExecutor.Interfaces
     {
         protected AbstractBinaryExpression(
             IExpression leftOperand,
-            IExpression rightOperand) : base(new List<IExpression> {leftOperand, rightOperand})
+            IExpression rightOperand,
+            string id = null) : base(new List<IExpression> {leftOperand, rightOperand}, id)
         {
         }
 

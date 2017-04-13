@@ -42,13 +42,14 @@ namespace MathDrawer
             {
                 p.TextSize = 60;
                 var r = new RootExpression(step.FullExpression, new Solution());
+                float size;
                 var drawableExpressions = _baseDrawer.DrawExpression(r, parameters, new EquationBounds
                 {
                     X = totalWidth / 2,
                     Y = offset + i * height,
                     Width = (int)(totalWidth * 0.8),
                     Height = (int)(height - 0.2 * height),
-                }, 100);
+                }, 100, out size);
                 _elementsDrawer.DrawExpressions(drawableExpressions, p, canvas, 0);
                 i++;
             }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Models;
@@ -6,7 +7,7 @@ namespace MathExecutor.Interfaces
 {
     public abstract class AbstractExpression : IExpression
     {
-        protected AbstractExpression(IList<IExpression> operands)
+        protected AbstractExpression(IList<IExpression> operands, string id = null)
         {
             Operands = operands;
             foreach (var expression in operands)
@@ -16,6 +17,7 @@ namespace MathExecutor.Interfaces
                     expression.ParentExpression = this;
                 }
             }
+            Id = id ?? Guid.NewGuid().ToString();
         }
 
         public IList<IExpression> Operands { get; set; }
@@ -73,5 +75,7 @@ namespace MathExecutor.Interfaces
             }
             return true;
         }
+
+        public string Id { get; set; }
     }
 }

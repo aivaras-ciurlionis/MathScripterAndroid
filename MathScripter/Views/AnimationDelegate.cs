@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using CocosSharp;
 using MathDrawer.Models;
+using MathExecutor.Interfaces;
 
 namespace MathScripter.Views
 {
     public class AnimationDelegate : CCApplicationDelegate
     {
-        private readonly IEnumerable<DrawableExpression> _elements;
+        private readonly IExpression _expression;
 
-        public AnimationDelegate(IEnumerable<DrawableExpression> elements)
+        public AnimationDelegate(IExpression elements)
         {
-            _elements = elements;
+            _expression = elements;
         }
 
         public override void ApplicationDidFinishLaunching(CCApplication application, CCWindow mainWindow)
@@ -21,7 +22,7 @@ namespace MathScripter.Views
             var bounds = mainWindow.WindowSizeInPixels;
             CCScene.SetDefaultDesignResolution(bounds.Width, bounds.Height, CCSceneResolutionPolicy.ShowAll);
 
-            var gameScene = new AnimationScene(mainWindow, _elements);
+            var gameScene = new AnimationScene(mainWindow, _expression);
             mainWindow.RunWithScene(gameScene);
 
         }

@@ -7,7 +7,8 @@ namespace MathExecutor.Expressions.Logarithmic
 {
     public class LogarithmicExpression : AbstractBinaryExpression
     {
-        public LogarithmicExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public LogarithmicExpression(IExpression leftOperand, IExpression rightOperand, string id = null) 
+            : base(leftOperand, rightOperand, id)
         {
         }
 
@@ -44,7 +45,7 @@ namespace MathExecutor.Expressions.Logarithmic
 
         public override IExpression Clone()
         {
-            return new SumExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new SumExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override string Name => "log";

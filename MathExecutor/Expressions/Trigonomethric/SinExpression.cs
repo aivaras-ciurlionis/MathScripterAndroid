@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Trigonomethric
 {
     public class SinExpression : AbstractUnaryExpression
     {
-        public SinExpression(IExpression operand) : base(operand)
+        public SinExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new SinExpression(Operands[0].Clone());
+            return new SinExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

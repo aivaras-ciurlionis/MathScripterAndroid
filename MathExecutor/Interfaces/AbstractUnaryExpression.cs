@@ -5,7 +5,8 @@ namespace MathExecutor.Interfaces
 {
     public abstract class AbstractUnaryExpression : AbstractExpression
     {
-        protected AbstractUnaryExpression(IExpression operand) : base(new List<IExpression> { operand })
+        protected AbstractUnaryExpression(IExpression operand, string id = null) 
+            : base(new List<IExpression> { operand }, id)
         {
         }
 

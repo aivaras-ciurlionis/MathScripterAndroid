@@ -12,6 +12,11 @@ namespace MathExecutor.Interfaces
         public abstract bool CanBeExecuted();
         protected abstract double Value { get; }
 
+        protected AbstractNullaryExpression(string id = null)
+        {
+            Id = id ?? Guid.NewGuid().ToString();
+        }
+
         public IExpression Execute()
         {
             if (CanBeExecuted())
@@ -39,5 +44,7 @@ namespace MathExecutor.Interfaces
             var otherE = other as AbstractNullaryExpression;
             return otherE != null && otherE.Name == Name;
         }
+
+        public string Id { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace MathExecutor.RuleBinders
                     expression = ruleResult.Expression.Clone();
                 }
             }
-            var result = _interpreter.FindSolution(expression);
+            var result = _interpreter.FindSolution(expression.Clone());
             steps.AddRange(result.Steps);
             return steps;
         }

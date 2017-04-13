@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Trigonomethric
 {
     public class CosExpression : AbstractUnaryExpression
     {
-        public CosExpression(IExpression operand) : base(operand)
+        public CosExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new CosExpression(Operands[0].Clone());
+            return new CosExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

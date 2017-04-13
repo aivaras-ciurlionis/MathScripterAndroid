@@ -48,7 +48,11 @@ namespace MathDrawer.Drawers
             var drawableExpressions = new List<DrawableExpression>();
             drawableExpressions.AddRange(topDrawables);
             drawableExpressions.AddRange(botDrawables);
-            drawableExpressions.Add(new DrawableExpression { Elements = new List<DrawableElement> { fractionElement } });
+            drawableExpressions.Add(new DrawableExpression
+            {
+                Id = expression.Id,
+                Elements = new List<DrawableElement> { fractionElement }
+            });
             return drawableExpressions;
         }
 

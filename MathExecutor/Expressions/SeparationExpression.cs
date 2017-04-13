@@ -5,13 +5,14 @@ namespace MathExecutor.Expressions
 {
     public class SeparationExpression : AbstractBinaryExpression
     {
-        public SeparationExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public SeparationExpression(IExpression leftOperand, IExpression rightOperand, string id = null) 
+            : base(leftOperand, rightOperand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new SeparationExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new SeparationExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

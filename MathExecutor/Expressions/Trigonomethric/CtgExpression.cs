@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Trigonomethric
 {
     public class CtgExpression : AbstractUnaryExpression
     {
-        public CtgExpression(IExpression operand) : base(operand)
+        public CtgExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new CtgExpression(Operands[0].Clone());
+            return new CtgExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

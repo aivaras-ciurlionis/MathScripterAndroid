@@ -7,13 +7,14 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class MultiplyExpression : AbstractBinaryExpression
     {
-        public MultiplyExpression(IExpression leftOperand, IExpression rightOperand) : base(leftOperand, rightOperand)
+        public MultiplyExpression(IExpression leftOperand, IExpression rightOperand, string id = null) 
+            : base(leftOperand, rightOperand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new MultiplyExpression(Operands[0].Clone(), Operands[1].Clone());
+            return new MultiplyExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

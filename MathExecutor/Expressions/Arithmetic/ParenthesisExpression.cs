@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class ParenthesisExpression : AbstractUnaryExpression
     {
-        public ParenthesisExpression(IExpression operand) : base(operand)
+        public ParenthesisExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new ParenthesisExpression(Operands.First().Clone());
+            return new ParenthesisExpression(Operands.First().Clone(), Id);
         }
 
         public override IExpression InnerExecute()

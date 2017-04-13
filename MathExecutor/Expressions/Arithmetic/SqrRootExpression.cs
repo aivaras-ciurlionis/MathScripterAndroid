@@ -6,13 +6,13 @@ namespace MathExecutor.Expressions.Arithmetic
 {
     public class SqrRootExpression : AbstractUnaryExpression
     {
-        public SqrRootExpression(IExpression operand) : base(operand)
+        public SqrRootExpression(IExpression operand, string id = null) : base(operand, id)
         {
         }
 
         public override IExpression Clone()
         {
-            return new SqrRootExpression(Operands[0].Clone());
+            return new SqrRootExpression(Operands[0].Clone(), Id);
         }
 
         public override IExpression InnerExecute()

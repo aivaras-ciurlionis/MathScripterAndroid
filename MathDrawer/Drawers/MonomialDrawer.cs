@@ -53,6 +53,7 @@ namespace MathDrawer.Drawers
             }
             var drawable = new DrawableExpression
             {
+                Id = expression.Id,
                 Elements = elements
             };
             return new List<DrawableExpression> { drawable };

@@ -20,15 +20,21 @@ namespace MathDrawer
             IExpression expression,
             TextParameters p,
             EquationBounds bounds,
-            int minHeight)
+            int minHeight,
+            out float size,
+            bool fitSize = true)
         {
             var innerExpression = expression.Operands.First();
             var drawer = _drawerFactory.GetDrawer(innerExpression);
-            var equationBounds = GetBounds(expression, p);
-            var ratioW = (float)bounds.Width / equationBounds.Width;
-            var ratioH = (float)bounds.Height / equationBounds.Height;
-            var ratio = Math.Min(ratioW, ratioH);
-            p.Size *= ratio;
+            if (fitSize)
+            {
+                var equationBounds = GetBounds(expression, p);
+                var ratioW = (float) bounds.Width / equationBounds.Width;
+                var ratioH = (float) bounds.Height / equationBounds.Height;
+                var ratio = Math.Min(ratioW, ratioH);
+                p.Size *= ratio;
+            }
+            size = p.Size;
             var newBounds = GetBounds(expression, p);
             return drawer.DrawExpression(innerExpression, p,
                 new EquationBounds

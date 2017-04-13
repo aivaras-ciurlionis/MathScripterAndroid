@@ -17,5 +17,6 @@ namespace MathExecutor.Interfaces
         void AddStep(IExpression expressionBefore, IExpression expressionAfter);
         IExpression ReplaceVariables(Dictionary<string, double> values);
         IExpression Clone();
+        string Id { get; set; }
     }
 }
