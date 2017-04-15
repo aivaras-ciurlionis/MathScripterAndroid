@@ -13,9 +13,9 @@ namespace MathExecutor.Expressions.Arithmetic
         {
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new DivisionExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
+            return new DivisionExpression(Operands[0].Clone(changeId), Operands[1].Clone(changeId), Id);
         }
 
         public override IExpression InnerExecute()
@@ -60,6 +60,14 @@ namespace MathExecutor.Expressions.Arithmetic
                 return new Monomial(left.Coefficient / right.Coefficient, topVariables, ParentExpression);
             }
 
+            var newExpression = new DivisionExpression(new Monomial(left.Coefficient / right.Coefficient, topVariables, ParentExpression),
+                new Monomial(1, botVariables, ParentExpression));
+
+            if (newExpression.IsEqualTo(this))
+            {
+                return this;
+            }
+
             return new DivisionExpression(new Monomial(left.Coefficient / right.Coefficient, topVariables, ParentExpression),
                 new Monomial(1, botVariables, ParentExpression));
         }
@@ -76,5 +84,6 @@ namespace MathExecutor.Expressions.Arithmetic
         }
 
         public override string Name => "/";
+
     }
 }

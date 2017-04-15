@@ -24,21 +24,21 @@ namespace MathExecutor.Rules.QuadraticRules
             var isNegative = expression is SubtractExpression;
             var isNegativeParent = !_parentChecker.LeftParentIsPositive(a);
             var x = new Monomial(a.Coefficient, new List<IVariable> {new Variable {Exponent = 1, Name = name} });
-            var bc = b.Clone() as Monomial;
+            var bc = b.Clone(true) as Monomial;
             bc.Variables = null;
             IExpression e;
             var negativeSign = (isNegative || isNegativeParent) &&
                                !(isNegative && isNegativeParent);
             if (negativeSign)
             {
-                e = new SubtractExpression(x, bc);
+                e = new SubtractExpression(x.Clone(true), bc);
             }
             else
             {
-                e = new SumExpression(x, bc);
+                e = new SumExpression(x.Clone(true), bc);
             }
             var x2 = new Monomial(isNegativeParent ? -1 : 1, new List<IVariable> { new Variable { Exponent = 1, Name = name } });
-            var result = new MultiplyExpression(x2, new ParenthesisExpression(e));
+            var result = new MultiplyExpression(x2.Clone(true), new ParenthesisExpression(e));
             return new InnerRuleResult(result, isNegativeParent);
         }
 

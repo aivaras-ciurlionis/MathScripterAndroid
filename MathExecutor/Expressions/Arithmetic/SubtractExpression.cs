@@ -1,3 +1,4 @@
+using System;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -32,9 +33,10 @@ namespace MathExecutor.Expressions.Arithmetic
             return $"{Operands[0]} - {Operands[1]}";
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new SubtractExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
+            return new SubtractExpression(Operands[0].Clone(changeId), 
+                Operands[1].Clone(changeId), changeId ? null : Id);
         }
 
         public override string Name => "-";

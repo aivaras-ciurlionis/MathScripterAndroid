@@ -20,10 +20,10 @@ namespace MathExecutor.Rules.QuadraticRules
 
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
-            var left = expression.Operands[0];
-            var c1 = expression.Operands[1] as Monomial;
-            var b1 = left.Operands[1] as Monomial;
-            var a1 = left.Operands[0] as Monomial;
+            var left = expression.Operands[0].Clone(true);
+            var c1 = expression.Operands[1].Clone(true) as Monomial;
+            var b1 = left.Operands[1].Clone(true) as Monomial;
+            var a1 = left.Operands[0].Clone(true) as Monomial;
 
             var a = a1.Coefficient;
             var b = b1.Coefficient;
@@ -46,10 +46,10 @@ namespace MathExecutor.Rules.QuadraticRules
             {
                 expression,
                 new SeparationExpression(
-                    new EqualityExpression(new Monomial(1, "a"), new Monomial(a)),
+                    new EqualityExpression(new Monomial(1, 'a'), new Monomial(a)),
                     new SeparationExpression(
-                        new EqualityExpression(new Monomial(1, "b"), new Monomial(b)),
-                        new EqualityExpression(new Monomial(1, "c"), new Monomial(c))
+                        new EqualityExpression(new Monomial(1, 'b'), new Monomial(b)),
+                        new EqualityExpression(new Monomial(1, 'c'), new Monomial(c))
                     ))
             };
             var dExpression = new SubtractExpression(
@@ -58,11 +58,11 @@ namespace MathExecutor.Rules.QuadraticRules
             );
 
             helperSteps.Add(
-                new EqualityExpression(new Monomial(1, "D"), dExpression)
+                new EqualityExpression(new Monomial(1, 'D'), dExpression)
             );
 
             helperSteps.Add(
-                new EqualityExpression(new Monomial(1, "D"), new Monomial(d))
+                new EqualityExpression(new Monomial(1, 'D'), new Monomial(d))
             );
 
           
@@ -72,11 +72,21 @@ namespace MathExecutor.Rules.QuadraticRules
             if (Math.Abs(d) < 0.001)
             {
                 var x = -b / 2 * a;
-                helperSteps.Add(new EqualityExpression(new Monomial(1, name),new Monomial(x)));
-                var p1 = new ParenthesisExpression(new SubtractExpression(m.Clone(), new Monomial(x)));
-                var p2 = new ParenthesisExpression(new SubtractExpression(m.Clone(), new Monomial(x)));
+                helperSteps.Add(new EqualityExpression(new Monomial(1, name[0]),new Monomial(x)));
+                IExpression p1;
+                IExpression p2;
+                if (x < 0)
+                {
+                    p1 = new ParenthesisExpression(new SumExpression(m.Clone(true), new Monomial(-x)));
+                    p2 = new ParenthesisExpression(new SumExpression(m.Clone(true), new Monomial(-x)));
+                }
+                else
+                {
+                    p1 = new ParenthesisExpression(new SubtractExpression(m.Clone(true), new Monomial(x)));
+                    p2 = new ParenthesisExpression(new SubtractExpression(m.Clone(true), new Monomial(x)));
+                }
                 result = new MultiplyExpression(p1, p2);
-                helperSteps.Add(new EqualityExpression(expression, result));
+                helperSteps.Add(new EqualityExpression(expression.Clone(true), result.Clone(true)));
             }
             else
             {
@@ -84,15 +94,22 @@ namespace MathExecutor.Rules.QuadraticRules
                 var x2 = (-b - Math.Sqrt(d)) / (2 * a);
                 helperSteps.Add(
                     new SeparationExpression(
-                    new EqualityExpression(new Monomial(1, name), new Monomial(x1)),
-                    new EqualityExpression(new Monomial(1, name), new Monomial(x2))
+                    new EqualityExpression(new Monomial(1, name[0]), new Monomial(x1)),
+                    new EqualityExpression(new Monomial(1, name[0]), new Monomial(x2))
                     )
                 );
                 var p1 = new Monomial(a);
-                var p2 = new ParenthesisExpression(new SubtractExpression(m.Clone(), new Monomial(x1)));
-                var p3 = new ParenthesisExpression(new SubtractExpression(m.Clone(), new Monomial(x2)));
+
+                IExpression p2 = x1 < 0
+                    ? new ParenthesisExpression(new SumExpression(m.Clone(true), new Monomial(-x1))) 
+                    : new ParenthesisExpression(new SubtractExpression(m.Clone(true), new Monomial(x1)));
+
+                IExpression p3 = x2 < 0 
+                    ? new ParenthesisExpression(new SumExpression(m.Clone(true), new Monomial(-x2))) 
+                    : new ParenthesisExpression(new SubtractExpression(m.Clone(true), new Monomial(x2)));
+
                 result = new MultiplyExpression(new MultiplyExpression(p1, p2), p3);
-                helperSteps.Add(new EqualityExpression(expression, result));
+                helperSteps.Add(new EqualityExpression(expression.Clone(true), result.Clone(true)));
             }
             return new InnerRuleResult(result, false, helperSteps);
         }

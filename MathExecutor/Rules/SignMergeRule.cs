@@ -1,3 +1,4 @@
+using System;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
@@ -13,6 +14,7 @@ namespace MathExecutor.Rules
             if (monomial != null)
             {
                 monomial.Coefficient *= -1;
+                monomial.Id = Guid.NewGuid().ToString();
             }
 
             if (rightOperand is NegationExpression)

@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Logarithmic
         {
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new NaturalLogarithmicExpression(Operands[0].Clone(), Id);
+            return new NaturalLogarithmicExpression(Operands[0].Clone(), changeId ? null : Id);
         }
 
         public override IExpression InnerExecute()

@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Sets
         }
 
         public override int Order => 8;
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new EmptySetExpression(Id);
+            return new EmptySetExpression(changeId ? null : Id);
         }
 
         public override string Name => "\u2205";

@@ -75,9 +75,9 @@ namespace MathExecutor.Expressions
             return Operands[0].ToString();
         }
 
-        public IExpression Clone()
+        public IExpression Clone(bool changeId)
         {
-            return new RootExpression(Operands[0], SolutionTracker, Id);
+            return new RootExpression(Operands[0], SolutionTracker, changeId ? null : Id);
         }
 
         public IList<IExpression> Operands { get; }
@@ -91,5 +91,9 @@ namespace MathExecutor.Expressions
         }
 
         public string Id { get; set; }
+        public IExpression Clone()
+        {
+            return Clone(false);
+        }
     }
 }

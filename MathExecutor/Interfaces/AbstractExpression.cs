@@ -54,7 +54,11 @@ namespace MathExecutor.Interfaces
             return this;
         }
 
-        public abstract IExpression Clone();
+        public IExpression Clone()
+        {
+            return Clone(false);
+        }
+
         public abstract IExpression InnerExecute();
         public abstract override string ToString();
         public abstract string Name { get; }
@@ -77,5 +81,6 @@ namespace MathExecutor.Interfaces
         }
 
         public string Id { get; set; }
+        public abstract IExpression Clone(bool changeId);
     }
 }

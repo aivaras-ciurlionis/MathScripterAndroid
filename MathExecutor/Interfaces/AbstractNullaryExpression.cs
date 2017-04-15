@@ -35,7 +35,12 @@ namespace MathExecutor.Interfaces
             return this;
         }
 
-        public abstract IExpression Clone();
+        public abstract IExpression Clone(bool changeId);
+
+        public IExpression Clone()
+        {
+            return Clone(false);
+        }
 
         public IList<IExpression> Operands => null;
         public abstract string Name { get; }

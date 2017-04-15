@@ -36,9 +36,10 @@ namespace MathExecutor.RuleBinders
         private IEnumerable<Step> ApplyAndInterpret(IExpression expression, IRule rule, IRule fixingRule = null)
         {
             var steps = new List<Step>();
+            var expressionStart = expression.Clone();
             if (rule != null)
             {
-                var ruleResult = rule.ApplyRule(expression);
+                var ruleResult = rule.ApplyRule(expression.Clone());
                 if (ruleResult.Applied)
                 {
                     if (fixingRule != null)
@@ -46,13 +47,17 @@ namespace MathExecutor.RuleBinders
                         var fixedResult = fixingRule.ApplyRule(ruleResult.Expression.Clone());
                         ruleResult = fixedResult.Applied ? fixedResult : ruleResult;
                     }
-                    steps.Add(
-                        new Step
-                        {
-                            FullExpression = ruleResult.Expression.Clone(),
-                            RuleDescription = ruleResult.RuleDescription
-                        });
-                    expression = ruleResult.Expression.Clone();
+
+                    if (!expressionStart.IsEqualTo(ruleResult.Expression))
+                    {
+                       steps.Add(
+                       new Step
+                       {
+                           FullExpression = ruleResult.Expression.Clone(),
+                           RuleDescription = ruleResult.RuleDescription
+                       });
+                        expression = ruleResult.Expression.Clone();
+                    }
                 }
             }
             var result = _interpreter.FindSolution(expression.Clone());
@@ -63,7 +68,7 @@ namespace MathExecutor.RuleBinders
         public SequentialRuleMatcher(
             IInterpreter interpreter,
             IExpressionFlatener expressionFlatener,
-            IOtherExpressionAdder expressionAdder, 
+            IOtherExpressionAdder expressionAdder,
             IStepsReducer stepsReducer)
         {
             _signMergeRule = new SignMergeRule();
@@ -98,7 +103,7 @@ namespace MathExecutor.RuleBinders
                 AddSteps(ApplyAndInterpret(expression, _finalParenthesisRule));
                 expression = _steps.Last().FullExpression.Clone();
 
-            } while (!startingExpression.IsEqualTo(expression));
+                } while (!startingExpression.IsEqualTo(expression));
             return _stepsReducer.ReduceSteps(_steps);
         }
     }

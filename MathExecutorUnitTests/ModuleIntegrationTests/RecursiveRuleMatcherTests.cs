@@ -269,5 +269,29 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
             Assert.AreEqual("a \u2208 R", steps.Last().FullExpression.ToString());
         }
 
+        [Test]
+        public void ItShouldReturnSameIdsForSameVariables()
+        {
+            var expression = _parser.Parse("(x^2+6x+9)/(2x^2+5x-3)");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+             Assert.AreEqual("(x + 3) / (2x - 1)", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldReturnSameIdsForSameVariablesReorderExpression()
+        {
+            var expression = _parser.Parse("24+x+x^3=36");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("x^3 + x = 12", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldReturnSameIdsForFractionsWithSameDenomitator()
+        {
+            var expression = _parser.Parse("1/x+2/x+3/x+4/x");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("10 / x", steps.Last().FullExpression.ToString());
+        }
+
     }
 }

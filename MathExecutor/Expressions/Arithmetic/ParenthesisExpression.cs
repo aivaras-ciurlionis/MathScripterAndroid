@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Arithmetic
         {
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new ParenthesisExpression(Operands.First().Clone(), Id);
+            return new ParenthesisExpression(Operands.First().Clone(changeId), changeId ? null : Id);
         }
 
         public override IExpression InnerExecute()

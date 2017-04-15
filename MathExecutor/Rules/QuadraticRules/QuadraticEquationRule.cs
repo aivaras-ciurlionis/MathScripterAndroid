@@ -40,19 +40,19 @@ namespace MathExecutor.Rules.QuadraticRules
 
             helperSteps.Add(
                 new SeparationExpression(
-                    new EqualityExpression(new Monomial(1, "a"), new Monomial(a)),
+                    new EqualityExpression(new Monomial(1, 'a'), new Monomial(a)),
                     new SeparationExpression(
-                         new EqualityExpression(new Monomial(1, "b"), new Monomial(b)),
-                         new EqualityExpression(new Monomial(1, "c"), new Monomial(c))
+                         new EqualityExpression(new Monomial(1, 'b'), new Monomial(b)),
+                         new EqualityExpression(new Monomial(1, 'c'), new Monomial(c))
                     ))
             );
 
             var dStrExpression = new SubtractExpression(
-                new ExponentExpression(new Monomial(1, "b"), new Monomial(2)),
-                new MultiplyExpression(new Monomial(4), new MultiplyExpression(new Monomial(1, "a"), new Monomial(1, "c")))
+                new ExponentExpression(new Monomial(1, 'b'), new Monomial(2)),
+                new MultiplyExpression(new Monomial(4), new MultiplyExpression(new Monomial(1, 'a'), new Monomial(1, 'c')))
             );
             helperSteps.Add(
-                 new EqualityExpression(new Monomial(1, "D"), dStrExpression)
+                 new EqualityExpression(new Monomial(1, 'D'), dStrExpression)
             );
 
             var dExpression = new SubtractExpression(
@@ -61,20 +61,20 @@ namespace MathExecutor.Rules.QuadraticRules
             );
 
             helperSteps.Add(
-                new EqualityExpression(new Monomial(1, "D"), dExpression)
+                new EqualityExpression(new Monomial(1, 'D'), dExpression)
             );
 
             helperSteps.Add(
-                new EqualityExpression(new Monomial(1, "D"), new Monomial(d))
+                new EqualityExpression(new Monomial(1, 'D'), new Monomial(d))
             );
 
             var x = new Monomial(1, new List<IVariable> { new Variable { Name = name, Exponent = 1 } });
             if (d < 0)
             {
                 helperSteps.Add(
-                    new LessExpression(new Monomial(1, "D"), new Monomial(0))
+                    new LessExpression(new Monomial(1, 'D'), new Monomial(0))
                 );
-                return new InnerRuleResult(new MemberOfExpression(x, new EmptySetExpression()), false, helperSteps);
+                return new InnerRuleResult(new MemberOfExpression(x.Clone(true), new EmptySetExpression()), false, helperSteps);
             }
 
             IExpression result;
@@ -83,7 +83,7 @@ namespace MathExecutor.Rules.QuadraticRules
             if (Math.Abs(d) < 0.001)
             {
                 result = new EqualityExpression(
-                    x,
+                    x.Clone(true),
                     new DivisionExpression(
                         new Monomial(-b),
                         bottom
@@ -95,19 +95,19 @@ namespace MathExecutor.Rules.QuadraticRules
             var ds = new Monomial(d);
 
             helperSteps.Add(
-                new MoreExpression(new Monomial(1, "D"), new Monomial(0))
+                new MoreExpression(new Monomial(1, 'D'), new Monomial(0))
             );
 
-            var x1 = new EqualityExpression(x,
+            var x1 = new EqualityExpression(x.Clone(true),
                 new DivisionExpression(
-                    new SubtractExpression(new Monomial(-b), new SqrRootExpression(ds)),
-                    bottom
+                    new SubtractExpression(new Monomial(-b), new SqrRootExpression(ds.Clone(true))),
+                    bottom.Clone(true)
                     )
             );
-            var x2 = new EqualityExpression(x,
+            var x2 = new EqualityExpression(x.Clone(true),
                 new DivisionExpression(
-                    new SumExpression(new Monomial(-b), new SqrRootExpression(ds)),
-                    bottom
+                    new SumExpression(new Monomial(-b), new SqrRootExpression(ds.Clone(true))),
+                    bottom.Clone(true)
                     )
             );
             result = new SeparationExpression(x1, x2);

@@ -18,6 +18,7 @@ namespace MathScripter.Views
         {
             application.PreferMultiSampling = false;
             application.ContentRootDirectory = "Content";
+            application.ContentSearchPaths.Add("Fonts");
 
             var bounds = mainWindow.WindowSizeInPixels;
             CCScene.SetDefaultDesignResolution(bounds.Width, bounds.Height, CCSceneResolutionPolicy.ShowAll);

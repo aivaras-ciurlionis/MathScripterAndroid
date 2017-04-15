@@ -122,6 +122,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\AnimationAction.cs" />
     <Compile Include="Models\ExpressionViewMode.cs" />
+    <Compile Include="Providers\CocosRootDrawer.cs" />
+    <Compile Include="Providers\CocosTextDrawer.cs" />
+    <Compile Include="Providers\CocosFractionDrawer.cs" />
     <Compile Include="Providers\EquationKeyResolver.cs" />
     <Compile Include="Providers\NetworkDataLoader.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -131,9 +134,8 @@
     <Compile Include="Views\ExpressionView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\LinLibertine_R.ttf" />
+    <AndroidAsset Include="Assets\Content\Fonts\LinLibertine_R.ttf" />
     <AndroidAsset Include="Assets\keyCodes.json" />
-    <AndroidAsset Include="Assets\Content\fonts\LinLibertine_R.ttf" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
@@ -217,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\ball.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

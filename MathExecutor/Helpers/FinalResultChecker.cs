@@ -42,9 +42,9 @@ namespace MathExecutor.Helpers
             var monomial = m as Monomial;
             return monomial != null &&
                    Math.Abs(monomial.Coefficient - 1) < 0.001 &&
+                   monomial.Variables != null &&
                    monomial.Variables.Count() == 1 &&
                    Math.Abs(monomial.Variables.First().Exponent - 1) < 0.001;
-
         }
 
         public bool IsNumericMonomial(IExpression m)

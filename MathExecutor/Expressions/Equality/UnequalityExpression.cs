@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Equality
         {
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new UnequalityExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
+            return new UnequalityExpression(Operands[0].Clone(changeId), Operands[1].Clone(changeId), changeId ? null : Id);
         }
 
         public override IExpression InnerExecute()

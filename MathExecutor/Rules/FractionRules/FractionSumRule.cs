@@ -34,7 +34,7 @@ namespace MathExecutor.Rules.FractionRules
                 return null;
             }
 
-            var newBot = new MultiplyExpression(leftBot, rightBot);
+            var newBot = new MultiplyExpression(leftBot.Clone(true), rightBot.Clone(true));
 
             var newTopLeft = new MultiplyExpression(adjustedLeftTop, rightBot);
             var newTopRight = new MultiplyExpression(rightTop, leftBot);

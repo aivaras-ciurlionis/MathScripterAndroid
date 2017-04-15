@@ -35,7 +35,7 @@ namespace MathExecutor.Rules.FractionRules
             {
                 return null;
             }
-            var newBot = leftBot;
+            var newBot = leftBot.Clone();
             IExpression newTop;
             if (isSubtract)
             {

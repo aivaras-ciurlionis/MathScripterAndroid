@@ -194,6 +194,7 @@ namespace MathExecutor.Rules
 
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
+            var topValue = expression.Clone();
             var leftTop = expression.Operands[0];
             var rightTop = expression.Operands[1];
             var left = _flatener.FlattenExpression(expression.Operands[0], true, true);
@@ -216,7 +217,8 @@ namespace MathExecutor.Rules
             {
                 rightSide.ParentExpression = expression;
             }
-            return new InnerRuleResult(expression);
+            var applied = !topValue.IsEqualTo(expression);
+            return applied ? new InnerRuleResult(expression) : null;
         }
 
         protected override bool CanBeApplied(IExpression expression)
@@ -224,6 +226,6 @@ namespace MathExecutor.Rules
             return expression is EqualityExpression;
         }
 
-        public override string Description => "Variables reorder";
+        public override string Description => "Equality Variables reorder";
     }
 }

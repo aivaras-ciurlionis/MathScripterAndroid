@@ -41,15 +41,15 @@ namespace MathExecutor.Rules.ParenthesisRules
                                                                e.Expression is SubtractExpression));
 
             var flatExpressionResults = replacableElements as IList<FlatExpressionResult> ?? replacableElements.ToList();
-            if (flatExpressionResults.Count() == 1)
+            if (flatExpressionResults.Count == 1)
             {
-                return new InnerRuleResult(new MultiplyExpression(workingOperand.Clone(), 
-                    flatExpressionResults.First().Expression.Clone()));
+                return new InnerRuleResult(new MultiplyExpression(workingOperand.Clone(true), 
+                    flatExpressionResults.First().Expression.Clone(true)));
             }
 
             foreach (var element in flatExpressionResults)
             {
-                var replacement = new MultiplyExpression(workingOperand.Clone(), element.Expression.Clone());
+                var replacement = new MultiplyExpression(workingOperand.Clone(true), element.Expression.Clone(true));
                 _elementsChanger.ChangeElement(element.Expression, replacement);
             }
             _elementsChanger.ChangeElement(workingExpression, insideParenthesis);

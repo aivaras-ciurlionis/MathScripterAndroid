@@ -86,7 +86,7 @@ namespace MathExecutorUnitTests.Rules
         {
             var expression = _parser.Parse("x=12");
             var reordered = _reorderRule.ApplyRule(expression);
-            Assert.AreEqual("x = 12", reordered.Expression.ToString());
+            Assert.IsNull(reordered.Expression);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MathExecutorUnitTests.Rules
         {
             var expression = _parser.Parse("x=0");
             var reordered = _reorderRule.ApplyRule(expression);
-            Assert.AreEqual("x = 0", reordered.Expression.ToString());
+            Assert.IsNull(reordered.Expression);
         }
 
         [Test]

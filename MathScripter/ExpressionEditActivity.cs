@@ -47,6 +47,7 @@ namespace MathScripter
             _expression = Intent.GetStringExtra("expression") ?? "";
             _expressionView = FindViewById<ExpressionView>(Resource.Id.expressionView);
             _editText = FindViewById<EditText>(Resource.Id.expressionEdit);
+            _expressionView.SetNotSolve();
             _expressionView.SetExpression(_expression);
             _expressionView.SetMode(ExpressionViewMode.Expression);
             _editText.Text = _expression;

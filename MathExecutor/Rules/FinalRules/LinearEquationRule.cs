@@ -19,7 +19,7 @@ namespace MathExecutor.Rules.FinalRules
             {
                 return null;
             }
-            var x = new Monomial(1, left.Variables.ElementAt(0).Name);
+            var x = new Monomial(1, left.Variables.ElementAt(0).Name[0]);
             if (Math.Abs(left.Coefficient) < 0.001)
             {
                 if (Math.Abs(right.Coefficient) < 0.001)

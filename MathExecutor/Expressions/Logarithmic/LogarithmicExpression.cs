@@ -43,9 +43,9 @@ namespace MathExecutor.Expressions.Logarithmic
             return $"{Operands[0]} log {Operands[1]}";
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new SumExpression(Operands[0].Clone(), Operands[1].Clone(), Id);
+            return new SumExpression(Operands[0].Clone(changeId), Operands[1].Clone(changeId), changeId ? null : Id);
         }
 
         public override string Name => "log";

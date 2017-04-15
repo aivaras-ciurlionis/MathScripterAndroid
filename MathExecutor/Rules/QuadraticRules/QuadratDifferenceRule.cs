@@ -18,8 +18,8 @@ namespace MathExecutor.Rules.QuadraticRules
         {
             var a = expression.Operands[0];
             var b = expression.Operands[1];
-            var left = new ParenthesisExpression(new SubtractExpression(a, b));
-            var right = new ParenthesisExpression(new SumExpression(a, b));
+            var left = new ParenthesisExpression(new SubtractExpression(a.Clone(true), b.Clone(true)));
+            var right = new ParenthesisExpression(new SumExpression(a.Clone(true), b.Clone(true)));
             return new InnerRuleResult(new ParenthesisExpression(new MultiplyExpression(left, right)));
         }
 

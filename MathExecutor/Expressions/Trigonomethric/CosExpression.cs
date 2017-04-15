@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Trigonomethric
         {
         }
 
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new CosExpression(Operands[0].Clone(), Id);
+            return new CosExpression(Operands[0].Clone(changeId), changeId ? null : Id);
         }
 
         public override IExpression InnerExecute()

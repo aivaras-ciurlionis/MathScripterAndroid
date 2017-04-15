@@ -16,6 +16,6 @@ namespace MathExecutor.Interfaces
         public abstract override ExpressionType Type { get; }
         public abstract override int Order { get; }
         public abstract override bool CanBeExecuted();
-        public abstract override IExpression Clone();
+        public abstract override IExpression Clone(bool changeId);
     }
 }

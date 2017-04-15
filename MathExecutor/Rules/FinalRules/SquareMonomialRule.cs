@@ -22,16 +22,16 @@ namespace MathExecutor.Rules.FinalRules
             {
                 var r = new SqrRootExpression(right);
                 var fullResult = new SeparationExpression(
-                    new EqualityExpression(x.Clone(), r),
-                    new EqualityExpression(x.Clone(), new NegationExpression(r)) 
+                    new EqualityExpression(x.Clone(true), r.Clone(true)),
+                    new EqualityExpression(x.Clone(true), new NegationExpression(r.Clone(true))) 
                 );
                 return new InnerRuleResult(fullResult);
             }
             var division = new DivisionExpression(right, left);
             var root = new SqrRootExpression(division);
             var fullResult2 = new SeparationExpression(
-                     new EqualityExpression(x.Clone(), root),
-                     new EqualityExpression(x.Clone(), new NegationExpression(root))
+                     new EqualityExpression(x.Clone(true), root.Clone(true)),
+                     new EqualityExpression(x.Clone(true), new NegationExpression(root.Clone(true)))
                  );
             return new InnerRuleResult(fullResult2);
         }

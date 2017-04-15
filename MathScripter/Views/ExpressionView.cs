@@ -35,6 +35,8 @@ namespace MathScripter.Views
         private int _stepHeight;
         private ExpressionViewMode _mode;
 
+        private bool _solve = true;
+
         private bool _needsRedraw = true;
         private Bitmap _buffer = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888);
         private float _currentOffsetY;
@@ -54,7 +56,7 @@ namespace MathScripter.Views
                 Color = Color.Black,
                 TextSize = 60
             };
-            var tf = Typeface.CreateFromAsset(assets, "LinLibertine_R.ttf");
+            var tf = Typeface.CreateFromAsset(assets, "Content/Fonts/LinLibertine_R.ttf");
             _p.SetTypeface(tf);
         }
 
@@ -111,11 +113,19 @@ namespace MathScripter.Views
             _expressionResult = _steps?.Last().FullExpression;
         }
 
+        public void SetNotSolve()
+        {
+            _solve = false;
+        }
+
         public void SetExpression(string expression)
         {
             _currentOffsetY = 0;
             _expression = expression;
-            ComputeSolution();
+            if (_solve)
+            {
+                ComputeSolution();
+            }
             _needsRedraw = true;
             Invalidate();
         }

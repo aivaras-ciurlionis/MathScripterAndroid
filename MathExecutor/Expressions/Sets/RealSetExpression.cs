@@ -10,9 +10,9 @@ namespace MathExecutor.Expressions.Sets
         }
 
         public override int Order => 8;
-        public override IExpression Clone()
+        public override IExpression Clone(bool changeId)
         {
-            return new RealSetExpression(Id);
+            return new RealSetExpression(changeId ? null : Id);
         }
 
         public override string Name => "R";

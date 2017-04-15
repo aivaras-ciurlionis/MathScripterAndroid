@@ -31,9 +31,9 @@ namespace MathExecutor.Rules.QuadraticRules
             var operation = flatExpressionResults.First().Expression;
             var a = operation.Operands[0];
             var b = operation.Operands[1];
-            var e1 = new ExponentExpression(a, new Monomial(2));
-            var e2 = new MultiplyExpression(new Monomial(2), new MultiplyExpression(a, b));
-            var e3 = new ExponentExpression(b, new Monomial(2));
+            var e1 = new ExponentExpression(a.Clone(true), new Monomial(2));
+            var e2 = new MultiplyExpression(new Monomial(2), new MultiplyExpression(a.Clone(true), b.Clone(true)));
+            var e3 = new ExponentExpression(b.Clone(true), new Monomial(2));
             IExpression signExpression;
             if (operation is SumExpression)
             {

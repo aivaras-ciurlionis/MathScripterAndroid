@@ -18,12 +18,14 @@ namespace MathExecutor.Rules.FractionRules
 
         protected override InnerRuleResult ApplyRuleInner(IExpression expression)
         {
+            var divisionLeft = _parentChecker.GetUnderParenthesis(expression.Operands[0]);
             var divisionRight = _parentChecker.GetUnderParenthesis(expression.Operands[1]);
             var rightTop = divisionRight.Operands[0];
             var rightBot = divisionRight.Operands[1];
             var newRight = new DivisionExpression(rightBot, rightTop);
             _elementsChanger.ChangeElement(divisionRight, newRight);
-            return new InnerRuleResult(expression);
+            var result = new MultiplyExpression(divisionLeft, newRight);
+            return new InnerRuleResult(result);
         }
        
         protected override bool CanBeApplied(IExpression expression)

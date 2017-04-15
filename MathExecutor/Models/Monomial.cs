@@ -27,10 +27,10 @@ namespace MathExecutor.Models
             ParentExpression = parent;
         }
 
-        public Monomial(double coefficient, string variableName, string id = null) : this(id)
+        public Monomial(double coefficient, char variableName, string id = null) : this(id)
         {
             Coefficient = coefficient;
-            Variables = new List<IVariable> {new Variable {Exponent = 1, Name = variableName} };
+            Variables = new List<IVariable> {new Variable {Exponent = 1, Name = variableName.ToString()} };
         }
 
         public Monomial(double coefficient, IEnumerable<IVariable> variables, string id = null) : this(id)
@@ -127,9 +127,9 @@ namespace MathExecutor.Models
                 ?? GetCoefficientString();
         }
 
-        public IExpression Clone()
+        public IExpression Clone(bool changeId)
         {
-            return new Monomial(Coefficient, Variables, Id);
+            return new Monomial(Coefficient, Variables, changeId ? null : Id);
         }
 
         public IList<IExpression> Operands => null;
@@ -142,5 +142,9 @@ namespace MathExecutor.Models
         }
 
         public string Id { get; set; }
+        public IExpression Clone()
+        {
+            return Clone(false);
+        }
     }
 }
