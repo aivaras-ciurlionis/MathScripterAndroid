@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Android.App;
 using CocosSharp;
 using MathDrawer;
 using MathDrawer.Interfaces;
@@ -16,6 +17,10 @@ namespace MathScripter.Views
     public class AnimationScene : CCScene
     {
         private readonly CCLayer _mainLayer;
+        private readonly CCLayer _uiLayer;
+        private readonly CCApplication _app;
+
+        private CCSprite _exitSprite;
 
         private IEnumerable<Step> _steps;
         private IEnumerable<IEnumerable<DrawableExpression>> _drawableSteps;
@@ -28,13 +33,32 @@ namespace MathScripter.Views
         private readonly IAnimationStepsDrawer _animationDrawer =
           App.Container.Resolve(typeof(AnimationStepsDrawer), "animationStepsDrawer") as IAnimationStepsDrawer;
 
+        private readonly Activity _launcher;
 
 
-
-        public AnimationScene(CCWindow window, IExpression expression) : base(window)
+        private void ConstructUI()
         {
+            _exitSprite = new CCSprite("ball.png")
+            {
+                PositionX = 50,
+                PositionY = _mainLayer.VisibleBoundsWorldspace.MaxY - 50,
+                Scale = 5
+            };
+            _uiLayer.AddChild(_exitSprite);
+            AddChild(_uiLayer, 5);
+        }
+
+        public AnimationScene(CCWindow window, IExpression expression,
+            CCApplication app, Activity launcher) : base(window)
+        {
+            _app = app;
+            _launcher = launcher;
             _mainLayer = new CCLayer();
+            _uiLayer = new CCLayer();
             AddChild(_mainLayer);
+            ConstructUI();
+            var touchListener = new CCEventListenerTouchAllAtOnce { OnTouchesBegan = HandleTouchesMoved };
+            AddEventListener(touchListener, this);
             DrawBackground();
             LoadSteps(expression);
             InitStep(_drawableSteps.First());
@@ -244,11 +268,24 @@ namespace MathScripter.Views
             _drawableSteps = _animationDrawer.GetAnimationSteps(
                 _steps,
                 null,
-                (int)(_mainLayer.VisibleBoundsWorldspace.Center.X),
-                (int)(_mainLayer.VisibleBoundsWorldspace.Center.Y),
+                (int)_mainLayer.VisibleBoundsWorldspace.Center.X,
+                (int)_mainLayer.VisibleBoundsWorldspace.Center.Y,
                 (int)_mainLayer.VisibleBoundsWorldspace.MaxX,
                 (int)_mainLayer.VisibleBoundsWorldspace.MaxY
             );
+        }
+
+        private void HandleTouchesMoved(List<CCTouch> touches, CCEvent touchEvent)
+        {
+            var x = _mainLayer.ScreenToWorldspace(touches[0].LocationOnScreen);
+            if (!_exitSprite.BoundingBoxTransformedToWorld.ContainsPoint(x)) return;
+            Exit();
+        }
+
+        private void Exit()
+        {
+            _app.ExitGame();
+            _launcher.Finish();
         }
 
     }

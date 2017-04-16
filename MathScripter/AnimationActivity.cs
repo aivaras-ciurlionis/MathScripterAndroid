@@ -31,7 +31,10 @@ namespace MathScripter
             base.OnCreate(savedInstanceState);
             var e = Intent.GetStringExtra("expression");
             var expression = _interpreter.GetExpression(e);
-            var application = new CCApplication {ApplicationDelegate = new AnimationDelegate(expression) };
+            var application = new CCApplication
+            {
+                ApplicationDelegate = new AnimationDelegate(expression, this) 
+            };
             SetContentView(application.AndroidContentView);
             application.StartGame();
         }
