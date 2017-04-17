@@ -2,8 +2,10 @@ using System;
 using Android.App;
 using Android.Runtime;
 using MathDrawer;
+using MathDrawer.Functions;
 using MathDrawer.Interfaces;
 using MathExecutor.Expressions;
+using MathExecutor.Functions;
 using MathExecutor.Helpers;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
@@ -88,6 +90,7 @@ namespace MathScripter
             Container.RegisterType<IParentChecker, ParentChecker>();
             Container.RegisterType<ISequentialRuleMatcher, SequentialRuleMatcher>();
             Container.RegisterType<IStepsReducer, StepsReucer>();
+            Container.RegisterType<IFunctionManager, FunctionManager>();
 
             Container.RegisterType<IBaseDrawer, BaseDrawer>();
             Container.RegisterType<IDrawerFactory, DrawerFactory>();
@@ -95,6 +98,7 @@ namespace MathScripter
             Container.RegisterType<IStepsDrawer, StepsDrawer>();
             Container.RegisterType<IExpressionDrawer, ExpressionDrawer>();
             Container.RegisterType<IAnimationStepsDrawer, AnimationStepsDrawer>();
+            Container.RegisterType<IGraphDrawer, GraphDrawer>();
         }
     }
 }

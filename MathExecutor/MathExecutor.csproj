@@ -69,6 +69,7 @@
     <Compile Include="Expressions\Trigonomethric\TanExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\CosExpression.cs" />
     <Compile Include="Expressions\Trigonomethric\SinExpression.cs" />
+    <Compile Include="Functions\FunctionManager.cs" />
     <Compile Include="Helpers\ElementsChanger.cs" />
     <Compile Include="Helpers\ExpressionFlatener.cs" />
     <Compile Include="Helpers\FinalResultChecker.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Interfaces\IExpressionFlatener.cs" />
     <Compile Include="Interfaces\IExpressionSolver.cs" />
     <Compile Include="Interfaces\IFinalResultChecker.cs" />
+    <Compile Include="Interfaces\IFunctionManager.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
     <Compile Include="Interfaces\IMinOperationFinder.cs" />
     <Compile Include="Interfaces\IMultiRuleChecker.cs" />

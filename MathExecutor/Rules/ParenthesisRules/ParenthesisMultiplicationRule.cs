@@ -39,8 +39,8 @@ namespace MathExecutor.Rules.ParenthesisRules
                                      !_parentChecker.LeftParentIsPositive(elementY.Expression)) &&
                                      !(!_parentChecker.LeftParentIsPositive(elementX.Expression) &&
                                      !_parentChecker.LeftParentIsPositive(elementY.Expression));
-                    IExpression mul = new MultiplyExpression(elementX.Expression.Clone(),
-                                                             elementY.Expression.Clone());
+                    IExpression mul = new MultiplyExpression(elementX.Expression.Clone(true),
+                                                             elementY.Expression.Clone(true));
                     if (isNegative)
                     {
                         mul = new NegationExpression(mul);

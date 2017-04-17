@@ -117,6 +117,7 @@
     <Compile Include="CameraActivity.cs" />
     <Compile Include="AnimationActivity.cs" />
     <Compile Include="ExpressionEditActivity.cs" />
+    <Compile Include="GraphActivity.cs" />
     <Compile Include="Interfaces\IEquationKeyResolver.cs" />
     <Compile Include="Interfaces\INetworkDataLoader.cs" />
     <Compile Include="MainActivity.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Views\AnimationDelegate.cs" />
     <Compile Include="Views\AnimationScene.cs" />
     <Compile Include="Views\ExpressionView.cs" />
+    <Compile Include="Views\GraphView.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\Fonts\LinLibertine_R.ttf" />
@@ -147,6 +149,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\EquationKeyboard.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Graph.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

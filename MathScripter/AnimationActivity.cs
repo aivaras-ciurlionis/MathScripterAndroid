@@ -22,21 +22,25 @@ namespace MathScripter
         private readonly IInterpreter _interpreter =
            App.Container.Resolve(typeof(Interpreter), "interpreter") as IInterpreter;
 
-        private readonly IBaseDrawer _baseDrawer =
-           App.Container.Resolve(typeof(BaseDrawer), "interpreter") as IBaseDrawer;
+        private CCApplication _application;
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            _application.ExitGame();
+        }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             var e = Intent.GetStringExtra("expression");
             var expression = _interpreter.GetExpression(e);
-            var application = new CCApplication
+            _application = new CCApplication
             {
                 ApplicationDelegate = new AnimationDelegate(expression, this) 
             };
-            SetContentView(application.AndroidContentView);
-            application.StartGame();
+            SetContentView(_application.AndroidContentView);
+            _application.StartGame();
         }
     }
 }

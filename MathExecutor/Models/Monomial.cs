@@ -51,6 +51,13 @@ namespace MathExecutor.Models
             return this;
         }
 
+        public IEnumerable<string> GetVariables()
+        {
+            return IsNumeral() 
+                   ? new List<string>()
+                   : Variables.Select(v => v.Name);
+        }
+
         public ExpressionType Type => ExpressionType.Terminal;
         public int Arity => 0;
         public int Order => 0;

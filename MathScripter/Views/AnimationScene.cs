@@ -40,9 +40,9 @@ namespace MathScripter.Views
         {
             _exitSprite = new CCSprite("ball.png")
             {
-                PositionX = 50,
-                PositionY = _mainLayer.VisibleBoundsWorldspace.MaxY - 50,
-                Scale = 5
+                PositionX = 80,
+                PositionY = _mainLayer.VisibleBoundsWorldspace.MaxY - 80,
+                Scale = 3
             };
             _uiLayer.AddChild(_exitSprite);
             AddChild(_uiLayer, 5);
@@ -284,7 +284,6 @@ namespace MathScripter.Views
 
         private void Exit()
         {
-            _app.ExitGame();
             _launcher.Finish();
         }
 

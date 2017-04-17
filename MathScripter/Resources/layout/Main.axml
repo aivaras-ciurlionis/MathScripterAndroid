@@ -6,65 +6,74 @@
     p1:layout_width="match_parent"
     p1:layout_height="match_parent"
     p1:id="@+id/linearLayout1">
-  <ScrollView
-      p1:minWidth="25px"
-      p1:minHeight="25px"
-      p1:layout_width="0dp"
-      p1:layout_weight="0.10"
-      p1:layout_height="match_parent"
-      p1:id="@+id/leftPanel"
-      p1:background="@color/white">
-    <LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
-                  p1:orientation="vertical"
-                  p1:layout_width="match_parent"
-                  p1:layout_height="match_parent">
-      <Button
-          p1:text="E"
-          p1:layout_width="match_parent"
-          p1:layout_height="match_parent"
-          p1:id="@+id/expressionButton" />
-      <Button
-           p1:text="R"
-           p1:layout_width="match_parent"
-           p1:layout_height="match_parent"
-           p1:id="@+id/resultButton" />
-      <Button
-           p1:text="S"
-           p1:layout_width="match_parent"
-           p1:layout_height="match_parent"
-           p1:id="@+id/stepsButton" />
-    </LinearLayout>
-  </ScrollView>
-  <MathScripter.Views.ExpressionView
-      p1:minWidth="25px"
-      p1:minHeight="25px"
-      p1:layout_width="0dp"
-      p1:layout_weight="0.80"
-      p1:layout_height="match_parent"
-      p1:id="@+id/expressionView" />
-  <ScrollView
-      p1:minWidth="25px"
-      p1:minHeight="25px"
-      p1:layout_width="0dp"
-      p1:layout_weight="0.10"
-      p1:layout_height="match_parent"
-      p1:id="@+id/rightPanel"
-      p1:background="@color/white">
-    <LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
-                  p1:orientation="vertical"
-                  p1:layout_width="match_parent"
-                  p1:layout_height="match_parent">
-      <Button
-          p1:text="Cam"
-          p1:layout_width="match_parent"
-          p1:layout_height="match_parent"
-          p1:id="@+id/cameraButton" />
-      <Button
-           p1:text="Edit"
-           p1:layout_width="match_parent"
-           p1:layout_height="match_parent"
-           p1:id="@+id/editButton" />
-    </LinearLayout>
-
-  </ScrollView>
+    <ScrollView
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="0dp"
+        p1:layout_weight="0.10"
+        p1:layout_height="match_parent"
+        p1:id="@+id/leftPanel"
+        p1:background="@color/white">
+        <LinearLayout
+            p1:orientation="vertical"
+            p1:layout_width="match_parent"
+            p1:layout_height="match_parent">
+            <Button
+                p1:text="E"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/expressionButton" />
+            <Button
+                p1:text="R"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/resultButton" />
+            <Button
+                p1:text="S"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/stepsButton" />
+            <Button
+                p1:text="A"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/animationButton" />
+            <Button
+                p1:text="G"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/graphButton" />
+        </LinearLayout>
+    </ScrollView>
+    <MathScripter.Views.ExpressionView
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="0dp"
+        p1:layout_weight="0.80"
+        p1:layout_height="match_parent"
+        p1:id="@+id/expressionView" />
+    <ScrollView
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="0dp"
+        p1:layout_weight="0.10"
+        p1:layout_height="match_parent"
+        p1:id="@+id/rightPanel"
+        p1:background="@color/white">
+        <LinearLayout
+            p1:orientation="vertical"
+            p1:layout_width="match_parent"
+            p1:layout_height="match_parent">
+            <Button
+                p1:text="Cam"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/cameraButton" />
+            <Button
+                p1:text="Edit"
+                p1:layout_width="match_parent"
+                p1:layout_height="match_parent"
+                p1:id="@+id/editButton" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -19,6 +19,8 @@ namespace MathScripter
         private Button _expressionButton;
         private Button _resultButton;
         private Button _stepsButton;
+        private Button _animationButton;
+        private Button _graphButton;
 
         private ExpressionView _expressionView;
         private ExpressionViewMode _mode;
@@ -38,10 +40,15 @@ namespace MathScripter
             _expressionButton = FindViewById<Button>(Resource.Id.expressionButton);
             _resultButton = FindViewById<Button>(Resource.Id.resultButton);
             _stepsButton = FindViewById<Button>(Resource.Id.stepsButton);
+
+            _graphButton = FindViewById<Button>(Resource.Id.graphButton);
+            _animationButton = FindViewById<Button>(Resource.Id.animationButton);
+
             _expressionView = FindViewById<ExpressionView>(Resource.Id.expressionView);
 
             _expression = bundle?.GetString("expression") ?? "";
             _mode = ExpressionViewMode.Solution;
+
             if (bundle != null)
             {
                 _mode = (ExpressionViewMode)bundle.GetInt("mode");
@@ -49,12 +56,19 @@ namespace MathScripter
 
             _cameraButton.Click += _openCamera;
             _editButton.Click += _openEdit;
-            _expressionButton.Click += _openAnimation;
+            _expressionButton.Click += _expressionButton_Click;
             _stepsButton.Click += _stepsButton_Click;
             _resultButton.Click += _resultButton_Click;
+            _animationButton.Click += _openAnimation;
+            _graphButton.Click += GraphButtonOnClick;
 
             _expressionView.SetExpression(_expression);
             _expressionView.SetMode(_mode);
+        }
+
+        private void GraphButtonOnClick(object sender, EventArgs eventArgs)
+        {
+            StartActivityForResult(typeof(GraphActivity), 0);
         }
 
         private void _resultButton_Click(object sender, EventArgs e)
