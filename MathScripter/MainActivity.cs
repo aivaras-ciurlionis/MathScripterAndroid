@@ -68,7 +68,7 @@ namespace MathScripter
 
         private void GraphButtonOnClick(object sender, EventArgs eventArgs)
         {
-            StartActivityForResult(typeof(GraphActivity), 0);
+            StartActivity(typeof(GraphActivity));
         }
 
         private void _resultButton_Click(object sender, EventArgs e)

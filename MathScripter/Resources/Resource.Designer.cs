@@ -112,65 +112,71 @@ namespace MathScripter
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06000f
-			public const int animationButton = 2131099663;
-			
-			// aapt resource value: 0x7f060012
-			public const int cameraButton = 2131099666;
-			
 			// aapt resource value: 0x7f060001
-			public const int cameraView = 2131099649;
-			
-			// aapt resource value: 0x7f060000
-			public const int captureButton = 2131099648;
-			
-			// aapt resource value: 0x7f060013
-			public const int editButton = 2131099667;
-			
-			// aapt resource value: 0x7f06000c
-			public const int expressionButton = 2131099660;
-			
-			// aapt resource value: 0x7f060005
-			public const int expressionEdit = 2131099653;
-			
-			// aapt resource value: 0x7f060004
-			public const int expressionView = 2131099652;
-			
-			// aapt resource value: 0x7f060010
-			public const int graphButton = 2131099664;
-			
-			// aapt resource value: 0x7f060008
-			public const int graphView = 2131099656;
-			
-			// aapt resource value: 0x7f060002
-			public const int imageView1 = 2131099650;
-			
-			// aapt resource value: 0x7f060006
-			public const int keyboardview = 2131099654;
-			
-			// aapt resource value: 0x7f06000b
-			public const int leftPanel = 2131099659;
-			
-			// aapt resource value: 0x7f06000a
-			public const int linearLayout1 = 2131099658;
-			
-			// aapt resource value: 0x7f060007
-			public const int linearLayout2 = 2131099655;
-			
-			// aapt resource value: 0x7f06000d
-			public const int resultButton = 2131099661;
-			
-			// aapt resource value: 0x7f060009
-			public const int rightGraphPanel = 2131099657;
+			public const int AnimationView = 2131099649;
 			
 			// aapt resource value: 0x7f060011
-			public const int rightPanel = 2131099665;
+			public const int animationButton = 2131099665;
 			
-			// aapt resource value: 0x7f06000e
-			public const int stepsButton = 2131099662;
+			// aapt resource value: 0x7f060014
+			public const int cameraButton = 2131099668;
 			
 			// aapt resource value: 0x7f060003
-			public const int textView1 = 2131099651;
+			public const int cameraView = 2131099651;
+			
+			// aapt resource value: 0x7f060002
+			public const int captureButton = 2131099650;
+			
+			// aapt resource value: 0x7f060015
+			public const int editButton = 2131099669;
+			
+			// aapt resource value: 0x7f06000e
+			public const int expressionButton = 2131099662;
+			
+			// aapt resource value: 0x7f060007
+			public const int expressionEdit = 2131099655;
+			
+			// aapt resource value: 0x7f060006
+			public const int expressionView = 2131099654;
+			
+			// aapt resource value: 0x7f060012
+			public const int graphButton = 2131099666;
+			
+			// aapt resource value: 0x7f06000a
+			public const int graphView = 2131099658;
+			
+			// aapt resource value: 0x7f060004
+			public const int imageView1 = 2131099652;
+			
+			// aapt resource value: 0x7f060008
+			public const int keyboardview = 2131099656;
+			
+			// aapt resource value: 0x7f06000d
+			public const int leftPanel = 2131099661;
+			
+			// aapt resource value: 0x7f06000c
+			public const int linearLayout1 = 2131099660;
+			
+			// aapt resource value: 0x7f060009
+			public const int linearLayout2 = 2131099657;
+			
+			// aapt resource value: 0x7f060000
+			public const int linearLayout3 = 2131099648;
+			
+			// aapt resource value: 0x7f06000f
+			public const int resultButton = 2131099663;
+			
+			// aapt resource value: 0x7f06000b
+			public const int rightGraphPanel = 2131099659;
+			
+			// aapt resource value: 0x7f060013
+			public const int rightPanel = 2131099667;
+			
+			// aapt resource value: 0x7f060010
+			public const int stepsButton = 2131099664;
+			
+			// aapt resource value: 0x7f060005
+			public const int textView1 = 2131099653;
 			
 			static Id()
 			{
@@ -186,19 +192,22 @@ namespace MathScripter
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Camera = 2130903040;
+			public const int Animation = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int EquationKeyboard = 2130903041;
+			public const int Camera = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int ExpressionEdit = 2130903042;
+			public const int EquationKeyboard = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Graph = 2130903043;
+			public const int ExpressionEdit = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int Main = 2130903044;
+			public const int Graph = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int Main = 2130903045;
 			
 			static Layout()
 			{

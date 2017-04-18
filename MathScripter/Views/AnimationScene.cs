@@ -18,7 +18,6 @@ namespace MathScripter.Views
     {
         private readonly CCLayer _mainLayer;
         private readonly CCLayer _uiLayer;
-        private readonly CCApplication _app;
 
         private CCSprite _exitSprite;
 
@@ -48,10 +47,8 @@ namespace MathScripter.Views
             AddChild(_uiLayer, 5);
         }
 
-        public AnimationScene(CCWindow window, IExpression expression,
-            CCApplication app, Activity launcher) : base(window)
+        public AnimationScene(IExpression expression, Activity launcher, CCGameView view) : base(view)
         {
-            _app = app;
             _launcher = launcher;
             _mainLayer = new CCLayer();
             _uiLayer = new CCLayer();
@@ -62,7 +59,7 @@ namespace MathScripter.Views
             DrawBackground();
             LoadSteps(expression);
             InitStep(_drawableSteps.First());
-            Schedule(AnimateSteps, Speed + Speed * 0.2f, (uint) (_drawableSteps.Count() - 2), Speed);
+            Schedule(AnimateSteps, Speed + Speed * 0.2f, (uint)(_drawableSteps.Count() - 2), Speed);
         }
 
         private void DrawBackground()
@@ -97,7 +94,7 @@ namespace MathScripter.Views
                     triggerElement.Type == DrawableType.Division &&
                    Math.Abs(triggerElement.Width - expression.Elements[i].Width) > 15)
                 {
-                    var fade = new CCScaleTo(Speed*0.1f, ccLabels[i].ScaleX, 0);
+                    var fade = new CCScaleTo(Speed * 0.1f, ccLabels[i].ScaleX, 0);
                     actions.Add(new AnimationAction { Node = ccLabels[i], Action = fade });
                     var n = fractionDrawer.DrawFraction(expression.Elements[i], _mainLayer.VisibleBoundsWorldspace.MaxY);
                     var startX = n.ScaleX;
@@ -127,9 +124,9 @@ namespace MathScripter.Views
                 var offset = triggerElement != null && triggerElement.Type != DrawableType.Symbolic
                     ? triggerElement.Type == DrawableType.Division ? element.Height * 3 : element.Size * 0.075f * 2.5f
                     : 0;
-                    var moveAction = new CCMoveTo(Speed,
-                        new CCPoint(element.X, _mainLayer.VisibleBoundsWorldspace.MaxY - element.Y + offset));
-                    actions.Add(new AnimationAction { Node = ccLabels[i], Action = moveAction });
+                var moveAction = new CCMoveTo(Speed,
+                    new CCPoint(element.X, _mainLayer.VisibleBoundsWorldspace.MaxY - element.Y + offset));
+                actions.Add(new AnimationAction { Node = ccLabels[i], Action = moveAction });
             }
             return actions;
         }

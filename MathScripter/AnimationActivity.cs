@@ -1,46 +1,43 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Android.App;
-using Android.Graphics;
 using Android.OS;
-using Microsoft.Xna.Framework;
 using CocosSharp;
-using MathDrawer;
-using MathDrawer.Interfaces;
-using MathDrawer.Models;
-using MathExecutor.Expressions;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
-using MathExecutor.Models;
 using MathScripter.Views;
 
 namespace MathScripter
 {
     [Activity(Label = "Animation")]
-    public class AnimationActivity : AndroidGameActivity
+    public class AnimationActivity : Activity
     {
         private readonly IInterpreter _interpreter =
            App.Container.Resolve(typeof(Interpreter), "interpreter") as IInterpreter;
 
-        private CCApplication _application;
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            _application.ExitGame();
-        }
+        private IExpression _expression;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.Animation);
             var e = Intent.GetStringExtra("expression");
-            var expression = _interpreter.GetExpression(e);
-            _application = new CCApplication
-            {
-                ApplicationDelegate = new AnimationDelegate(expression, this) 
-            };
-            SetContentView(_application.AndroidContentView);
-            _application.StartGame();
+            _expression = _interpreter.GetExpression(e);
+            var gameView = (CCGameView) FindViewById(Resource.Id.AnimationView);
+            gameView.ViewCreated += LoadGame;
         }
+
+        private void LoadGame(object sender, EventArgs e)
+        {
+            var contentSearchPaths = new List<string> {"Fonts"};
+            var gameView = sender as CCGameView;
+            if (gameView == null) return;
+            // Set world dimensions
+            gameView.ContentManager.SearchPaths = contentSearchPaths;
+            gameView.DesignResolution = new CCSizeI(gameView.Width, gameView.Height);
+            var gameScene = new AnimationScene(_expression, this, gameView);
+            gameView.RunWithScene(gameScene);
+        }
+
     }
 }
