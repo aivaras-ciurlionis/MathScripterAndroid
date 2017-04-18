@@ -8,6 +8,6 @@ namespace MathExecutor.Interfaces
         bool AddFunction(IExpression function);
         bool RemoveFunction(int index);
         IEnumerable<double?> GetSingleGraphPoints(int index, double start, double end, double stepInterval);
-        IEnumerable<IEnumerable<double?>> GetGraphPoints(int index, double start, double end, double stepInterval);
+        IEnumerable<IEnumerable<double?>> GetGraphPoints(double start, double end, double stepInterval);
     }
 }

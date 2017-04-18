@@ -25,7 +25,7 @@ namespace MathExecutor.Expressions.Arithmetic
             if (Math.Abs(left.Coefficient) < 0.001 && 
                 Math.Abs(right.Coefficient) < 0.001)
             {
-                throw new ArgumentException("Cannot exponentiate 0 by 0");
+                throw new ArithmeticException("Cannot exponentiate 0 by 0");
             }
 
             var exponent = right.Coefficient;

@@ -11,15 +11,14 @@ namespace MathDrawer.Functions
 {
     public class GraphDrawer : IGraphDrawer
     {
-        private const float DefaultStartX = -10;
-        private const float DefaultStartY = 10;
-        private const int DefaultSize = 1;
+        private const float DefaultStartX = -10f;
+        private const float DefaultStartY = 10f;
+        private const float DefaultSize = 0.5f;
         private const float DefaultPixels = 100;
-        private const int Accuracy = 100;
 
         private float _pixelsPerUnit;
-        private float _baseX = 0;
-        private float _baseY = 0;
+        private float _baseX;
+        private float _baseY;
         private Typeface _typeface;
 
         private readonly IFunctionManager _functionManager;
@@ -34,7 +33,7 @@ namespace MathDrawer.Functions
             new GraphNetString {Width = 4, Frequency = 100, MaxSize = 0.01f}
         };
 
-        private IList<Color> _functionColors = new List<Color>();
+        private readonly IList<Color> _functionColors = new List<Color>();
 
         public GraphDrawer(IFunctionManager functionManager)
         {
@@ -50,9 +49,49 @@ namespace MathDrawer.Functions
             _typeface = typeface;
         }
 
+        private float FunctionValue(double? value, bool x)
+        {
+            if (value == null)
+            {
+                return 0;
+            }
+            return (float) (value.Value * _pixelsPerUnit + (x ? _baseX : _baseY));
+        }
+
+        private void DrawFunction(int index, float step, IEnumerable<double?> functionPoints, Canvas c, Paint p)
+        {
+            var color = _functionColors[index];
+            var points = functionPoints.ToList();
+            p.Color = color;
+            p.StrokeWidth = 6;
+            var currentX = StartX;
+            for (var i = 0; i < points.Count - 1; i++)
+            {
+                var first = points[i];
+                var second = points[i + 1];
+                
+                if (first != null && second != null)
+                {
+                    var firstP = FunctionValue(-first, false);
+                    var secondP = FunctionValue(-second, false);
+                    c.DrawLine(FunctionValue(currentX, true), firstP, 
+                        FunctionValue(currentX + step, true), secondP, p);
+                }
+                currentX += step;
+            }
+        }
+
         private void DrawFunctions(Canvas c, Paint p)
         {
-
+            var step = Scale / 10;
+            var functionValues = _functionManager
+                .GetGraphPoints(StartX, StartX + SizeX / _pixelsPerUnit, step);
+            var i = 0;
+            foreach (var functionPoints in functionValues)
+            {
+                DrawFunction(i, step, functionPoints, c, p);
+                i++;
+            }
         }
 
         private void DrawVerticalLine(float x, int width, Canvas c, Paint p)
@@ -69,7 +108,7 @@ namespace MathDrawer.Functions
             c.DrawLine(0, y, SizeX, y, p);
         }
 
-        private void DrawVerticalNet(float startX,   float startUnit, Canvas c, Paint p)
+        private void DrawVerticalNet(float startX, float startUnit, Canvas c, Paint p)
         {
             var currentPoint = startUnit;
             var currentPixels = startX;

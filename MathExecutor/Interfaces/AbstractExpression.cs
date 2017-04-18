@@ -47,9 +47,11 @@ namespace MathExecutor.Interfaces
 
         public IExpression ReplaceVariables(Dictionary<string, double> values)
         {
-            foreach (var expression in Operands)
+            for (var i = 0; i < Operands.Count; i++)
             {
-                expression.ReplaceVariables(values);
+                var e = Operands[i].ReplaceVariables(values);
+                Operands[i] = e;
+                e.ParentExpression = this;
             }
             return this;
         }

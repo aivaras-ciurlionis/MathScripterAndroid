@@ -68,7 +68,7 @@ namespace MathExecutor.Functions
 
         private double? GetFunctionPointAt(int index, double value)
         {
-            var expression = _expressions[index];
+            var expression = _expressions[index].Clone();
             var variableName = GetVariableName(expression);
             var replacement = new Dictionary<string, double> { { variableName, value } };
             double? result = null;
@@ -104,7 +104,7 @@ namespace MathExecutor.Functions
             return points;
         }
 
-        public IEnumerable<IEnumerable<double?>> GetGraphPoints(int index, double start, double end, double stepInterval)
+        public IEnumerable<IEnumerable<double?>> GetGraphPoints(double start, double end, double stepInterval)
         {
             var points = new List<IEnumerable<double?>>();
             for (var i = 0; i < _expressions.Count; i++)

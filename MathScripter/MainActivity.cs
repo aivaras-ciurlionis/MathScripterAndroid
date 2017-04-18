@@ -68,7 +68,9 @@ namespace MathScripter
 
         private void GraphButtonOnClick(object sender, EventArgs eventArgs)
         {
-            StartActivity(typeof(GraphActivity));
+            var intent = new Intent(this, typeof(GraphActivity));
+            intent.PutExtra("expression", _expression);
+            StartActivity(intent);
         }
 
         private void _resultButton_Click(object sender, EventArgs e)
@@ -85,9 +87,8 @@ namespace MathScripter
 
         private void _expressionButton_Click(object sender, EventArgs e)
         {
-            //_mode = ExpressionViewMode.Expression;
-            //_expressionView.SetMode(ExpressionViewMode.Expression);
-          
+            _mode = ExpressionViewMode.Expression;
+            _expressionView.SetMode(ExpressionViewMode.Expression);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)
