@@ -10,17 +10,17 @@ using MathExecutor.Interfaces;
 
 namespace MathScripter.Views
 {
-    public class GraphView : View, GestureDetector.IOnGestureListener
+    public class GraphView : View, GestureDetector.IOnGestureListener, GestureDetector.IOnDoubleTapListener
     {
         private readonly IGraphDrawer _graphDrawer =
             App.Container.Resolve(typeof(GraphDrawer), "graphDrawer") as IGraphDrawer;
 
-        private const int BufferSizeX = 2000;
-        private const int BufferSizeY = 2000;
+        private const int BufferSizeX = 3000;
+        private const int BufferSizeY = 3000;
 
         private int _lastColor;
 
-        private Color _netColor = Color.Rgb(133, 248, 185);
+        private readonly Color _netColor = Color.Rgb(133, 248, 185);
 
         private readonly IList<Color> _colors = new List<Color>
         {
@@ -44,7 +44,7 @@ namespace MathScripter.Views
             _graphDrawer.Init(BufferSizeX, BufferSizeY, _netColor, tf);
             _gestureDetector = new GestureDetector(this);
             _redraw = true;
-          
+
         }
 
         public override bool OnTouchEvent(MotionEvent e)
@@ -80,11 +80,6 @@ namespace MathScripter.Views
             {
                 _currentOffsetY -= distanceY;
             }
-
-            Console.WriteLine(_currentOffsetX);
-            Console.WriteLine(_currentOffsetY);
-            Console.WriteLine(Width);
-            Console.WriteLine(Height);
             Invalidate();
             return true;
         }
@@ -98,11 +93,16 @@ namespace MathScripter.Views
             return false;
         }
 
+        private void CenterOffset()
+        {
+            _currentOffsetY = Convert.ToInt32((BufferSizeY - Height) / -2);
+            _currentOffsetX = Convert.ToInt32((BufferSizeX - Width) / -2);
+        }
+
         private void PrecomputeOffset()
         {
             if (Height <= 0 || Width <= 0 || _currentOffsetX != null) return;
-            _currentOffsetY = Convert.ToInt32((BufferSizeY - Height) / -2);
-            _currentOffsetX = Convert.ToInt32((BufferSizeX - Width) / -2);
+            CenterOffset();
         }
 
         protected override void OnDraw(Canvas canvas)
@@ -149,5 +149,24 @@ namespace MathScripter.Views
             Invalidate();
         }
 
+        public bool OnDoubleTap(MotionEvent e)
+        {
+            _graphDrawer.ZoomToPoint(e.GetX() - _currentOffsetX ?? 0, e.GetY() - _currentOffsetY ?? 0, 
+                _graphDrawer.Scale * 1.5f);
+            CenterOffset();
+            _redraw = true;
+            Invalidate();
+            return true;
+        }
+
+        public bool OnDoubleTapEvent(MotionEvent e)
+        {
+            return false;
+        }
+
+        public bool OnSingleTapConfirmed(MotionEvent e)
+        {
+            return false;
+        }
     }
 }

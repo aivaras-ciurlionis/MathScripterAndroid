@@ -19,5 +19,6 @@ namespace MathDrawer.Interfaces
         void RemoveFunction(int index);
         void ClearGraph();
         void Reset();
+        void ZoomToPoint(float pixelsX, float pixelsY, float scale);
     }
 }

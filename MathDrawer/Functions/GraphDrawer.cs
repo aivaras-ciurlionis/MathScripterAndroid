@@ -11,9 +11,9 @@ namespace MathDrawer.Functions
 {
     public class GraphDrawer : IGraphDrawer
     {
-        private const float DefaultStartX = -10f;
-        private const float DefaultStartY = 10f;
-        private const float DefaultSize = 0.5f;
+        private const float DefaultStartX = -15f;
+        private const float DefaultStartY = 15f;
+        private const float DefaultSize = 1f;
         private const float DefaultPixels = 100;
 
         private float _pixelsPerUnit;
@@ -27,10 +27,10 @@ namespace MathDrawer.Functions
 
         private readonly IEnumerable<GraphNetString> _netStrings = new List<GraphNetString>
         {
-            new GraphNetString {Width = 1, Frequency = 1, MaxSize = 5f},
+            new GraphNetString {Width = 1, Frequency = 1, MaxSize = 2f},
             new GraphNetString {Width = 2, Frequency = 4, MaxSize = 0.25f},
-            new GraphNetString {Width = 3, Frequency = 20, MaxSize = 0.05f},
-            new GraphNetString {Width = 4, Frequency = 100, MaxSize = 0.01f}
+            new GraphNetString {Width = 4, Frequency = 20, MaxSize = 0.05f},
+            new GraphNetString {Width = 6, Frequency = 100, MaxSize = 0.01f}
         };
 
         private readonly IList<Color> _functionColors = new List<Color>();
@@ -55,7 +55,7 @@ namespace MathDrawer.Functions
             {
                 return 0;
             }
-            return (float) (value.Value * _pixelsPerUnit + (x ? _baseX : _baseY));
+            return (float)(value.Value * _pixelsPerUnit + (x ? _baseX : _baseY));
         }
 
         private void DrawFunction(int index, float step, IEnumerable<double?> functionPoints, Canvas c, Paint p)
@@ -69,12 +69,12 @@ namespace MathDrawer.Functions
             {
                 var first = points[i];
                 var second = points[i + 1];
-                
+
                 if (first != null && second != null)
                 {
                     var firstP = FunctionValue(-first, false);
                     var secondP = FunctionValue(-second, false);
-                    c.DrawLine(FunctionValue(currentX, true), firstP, 
+                    c.DrawLine(FunctionValue(currentX, true), firstP,
                         FunctionValue(currentX + step, true), secondP, p);
                 }
                 currentX += step;
@@ -83,7 +83,7 @@ namespace MathDrawer.Functions
 
         private void DrawFunctions(Canvas c, Paint p)
         {
-            var step = Scale / 10;
+            var step = 0.1f / Scale;
             var functionValues = _functionManager
                 .GetGraphPoints(StartX, StartX + SizeX / _pixelsPerUnit, step);
             var i = 0;
@@ -120,13 +120,14 @@ namespace MathDrawer.Functions
                 {
                     DrawVerticalLine(currentPixels, 6, c, p);
                 }
-                if (i % _scaleString.Frequency == 0)
+                if (Math.Abs(currentPoint * 100 % _scaleString.Frequency * 25) < 0.1)
                 {
                     DrawLabel(currentPixels, _baseY, currentPoint, c, p);
                 }
                 foreach (var netString in _netStrings.Reverse())
                 {
-                    if (i < 1 || !(netString.MaxSize < Scale) || i % netString.Frequency != 0) continue;
+                    if (i < 1 || !(netString.MaxSize < Scale) ||
+                        !(Math.Abs((currentPoint * 100) % (netString.Frequency * 25)) < 0.1)) continue;
                     DrawVerticalLine(currentPixels, netString.Width, c, p);
                     break;
                 }
@@ -147,13 +148,14 @@ namespace MathDrawer.Functions
                 {
                     DrawHorizontalLine(currentPixels, 6, c, p);
                 }
-                if (i % _scaleString.Frequency == 0)
+                if (Math.Abs(currentPoint * 100 % _scaleString.Frequency * 25) < 0.1)
                 {
                     DrawLabel(_baseX, currentPixels, currentPoint, c, p);
                 }
                 foreach (var netString in _netStrings.Reverse())
                 {
-                    if (i < 1 || !(netString.MaxSize < Scale) || i % netString.Frequency != 0) continue;
+                    if (i < 1 || !(netString.MaxSize < Scale) ||
+                        !(Math.Abs(currentPoint * 100 % (netString.Frequency * 25)) < 0.1)) continue;
                     DrawHorizontalLine(currentPixels, netString.Width, c, p);
                     break;
                 }
@@ -164,10 +166,15 @@ namespace MathDrawer.Functions
 
         private void DrawNet(Canvas c, Paint p)
         {
-            var offsetX = (float)(Convert.ToInt32(StartX * 100) % 25) / 100;
-            var offsetY = (float)(Convert.ToInt32(StartY * 100) % 25) / 100;
-            DrawHorizontalNet(offsetY * _pixelsPerUnit, StartY + offsetY, c, p);
-            DrawVerticalNet(offsetX * _pixelsPerUnit, StartX + offsetX, c, p);
+            var fixedX = Convert.ToInt32(StartX * 100) / 100f;
+            var fixedY = Convert.ToInt32(StartY * 100) / 100f;
+            var offsetX = (fixedX * 100 % 25) / 100;
+            var offsetY = (fixedY * 100 % 25) / 100;
+            StartX = fixedX;
+            StartY = fixedY;
+            SetScale(Scale);
+            DrawHorizontalNet(offsetY * _pixelsPerUnit, StartY - offsetY, c, p);
+            DrawVerticalNet(-offsetX * _pixelsPerUnit, StartX - offsetX, c, p);
         }
 
         public float StartX { get; set; }
@@ -233,6 +240,23 @@ namespace MathDrawer.Functions
             _pixelsPerUnit = DefaultPixels * scale;
             _baseX = Math.Abs(StartX) * _pixelsPerUnit;
             _baseY = Math.Abs(StartY) * _pixelsPerUnit;
+        }
+
+        private float PixelsToPoint(float pixels, bool isX)
+        {
+            return (pixels - (isX ? _baseX : _baseY)) / _pixelsPerUnit;
+        }
+
+        public void ZoomToPoint(float pixelsX, float pixelsY, float scale)
+        {
+            var px = PixelsToPoint(pixelsX, true);
+            var py = -PixelsToPoint(pixelsY, false);
+            SetScale(scale);
+            var offsetX = 10 / Scale * (SizeX * 0.5f / 1000);
+            var offsetY = 10 / Scale * (SizeY * 0.5f / 1000);
+            StartX = px - offsetX;
+            StartY = py + offsetY;
+            SetScale(scale);
         }
     }
 }
