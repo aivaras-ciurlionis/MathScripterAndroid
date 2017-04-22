@@ -28,6 +28,8 @@ namespace MathScripter.Views
         private readonly IRecursiveRuleMathcer _ruleMatcher =
             App.Container.Resolve(typeof(RecursiveRuleMatcher), "recursiveRuleMatcher") as IRecursiveRuleMathcer;
 
+        private Color _expressionColor = Color.Black;
+
         private string _expression = "";
         private IExpression _expressionModel;
         private IExpression _expressionResult;
@@ -53,7 +55,7 @@ namespace MathScripter.Views
             _mode = ExpressionViewMode.Expression;
             _p = new Paint
             {
-                Color = Color.Black,
+                Color = _expressionColor,
                 TextSize = 60
             };
             var tf = Typeface.CreateFromAsset(assets, "Content/Fonts/LinLibertine_R.ttf");
@@ -90,6 +92,13 @@ namespace MathScripter.Views
                 canvas.Width, (int)(0.8 * canvas.Height / 2));
             _expressionDrawer.Draw(_expressionResult, _p, canvas,
                 canvas.Width, (int)(0.8 * canvas.Height / 2), canvas.Height / 2);
+        }
+
+        public void SetExpressionColor(Color color)
+        {
+            _expressionColor = color;
+            _p.Color = _expressionColor;
+            Invalidate();
         }
 
         public void SetMode(ExpressionViewMode mode)

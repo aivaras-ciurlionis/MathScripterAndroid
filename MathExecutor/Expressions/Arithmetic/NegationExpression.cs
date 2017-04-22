@@ -26,7 +26,7 @@ namespace MathExecutor.Expressions.Arithmetic
         }
 
         public override ExpressionType Type => ExpressionType.Arithmetic;
-        public override int Order => 1;
+        public override int Order => 2;
         public override bool CanBeExecuted() => true;
 
         public override string ToString()

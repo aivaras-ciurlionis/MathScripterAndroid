@@ -114,5 +114,14 @@ namespace MathExecutor.Functions
             return points;
         }
 
+        public bool ChangeFunctionAt(int index, IExpression expression)
+        {
+            if (index < 0 || index >= _expressions.Count)
+            {
+                return false;
+            }
+            _expressions[index] = expression;
+            return true;
+        }
     }
 }

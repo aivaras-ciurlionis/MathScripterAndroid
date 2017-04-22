@@ -15,8 +15,8 @@ namespace MathScripter.Views
         private readonly IGraphDrawer _graphDrawer =
             App.Container.Resolve(typeof(GraphDrawer), "graphDrawer") as IGraphDrawer;
 
-        private const int BufferSizeX = 3000;
-        private const int BufferSizeY = 3000;
+        private const int BufferSizeX = 2000;
+        private const int BufferSizeY = 2000;
 
         private int _lastColor;
 
@@ -45,6 +45,12 @@ namespace MathScripter.Views
             _gestureDetector = new GestureDetector(this);
             _redraw = true;
 
+        }
+
+        public Color GetColorAt(int index)
+        {
+            if (index < 0 || index >= _colors.Count) return Color.Black;
+            return _colors[index];
         }
 
         public override bool OnTouchEvent(MotionEvent e)
@@ -117,6 +123,11 @@ namespace MathScripter.Views
             canvas.DrawBitmap(_buffer, _currentOffsetX ?? 0, _currentOffsetY ?? 0, null);
         }
 
+        public void Clean()
+        {
+            _buffer.Recycle();
+        }
+
         public void DrawGraphToBuffer()
         {
             _buffer.Recycle();
@@ -141,6 +152,13 @@ namespace MathScripter.Views
             Invalidate();
         }
 
+        public void ChangeExpressionAt(int index, IExpression expression)
+        {
+            _graphDrawer.ChangeFunctionAt(index, expression);
+            _redraw = true;
+            Invalidate();
+        }
+
         public void Clear()
         {
             _graphDrawer.ClearGraph();
@@ -149,13 +167,43 @@ namespace MathScripter.Views
             Invalidate();
         }
 
-        public bool OnDoubleTap(MotionEvent e)
+        public void ZoomToPoint(float xPixels, float yPixels)
         {
-            _graphDrawer.ZoomToPoint(e.GetX() - _currentOffsetX ?? 0, e.GetY() - _currentOffsetY ?? 0, 
+            _graphDrawer.ZoomToPoint(xPixels - _currentOffsetX ?? 0, yPixels - _currentOffsetY ?? 0,
                 _graphDrawer.Scale * 1.5f);
+        }
+
+        public void ZoomToZero()
+        {
+            _graphDrawer.ZoomToZero(_graphDrawer.Scale * 1.5f);
+            OnZoom();
+        }
+
+        public void ZoomOutToZero()
+        {
+            _graphDrawer.ZoomToZero(_graphDrawer.Scale / 1.5f);
+            OnZoom();
+        }
+
+        private void OnZoom()
+        {
             CenterOffset();
             _redraw = true;
             Invalidate();
+        }
+
+        public void Reset()
+        {
+            _graphDrawer.Reset();
+            CenterOffset();
+            _redraw = true;
+            Invalidate();
+        }
+
+        public bool OnDoubleTap(MotionEvent e)
+        {
+            ZoomToPoint(e.GetX(), e.GetY());
+            OnZoom();
             return true;
         }
 

@@ -17,8 +17,10 @@ namespace MathDrawer.Interfaces
         void DrawGraph(Canvas c, Paint p);
         bool AddFunction(IExpression expression, Color color);
         void RemoveFunction(int index);
+        void ChangeFunctionAt(int index, IExpression expression);
         void ClearGraph();
         void Reset();
         void ZoomToPoint(float pixelsX, float pixelsY, float scale);
+        void ZoomToZero(float scale);
     }
 }

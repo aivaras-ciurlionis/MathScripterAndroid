@@ -11,8 +11,11 @@ namespace MathDrawer.Functions
 {
     public class GraphDrawer : IGraphDrawer
     {
-        private const float DefaultStartX = -15f;
-        private const float DefaultStartY = 15f;
+        private const float ScaleMin = 0.1f;
+        private const float ScaleMax = 10f;
+
+        private const float DefaultStartX = -10f;
+        private const float DefaultStartY = 10f;
         private const float DefaultSize = 1f;
         private const float DefaultPixels = 100;
 
@@ -74,8 +77,11 @@ namespace MathDrawer.Functions
                 {
                     var firstP = FunctionValue(-first, false);
                     var secondP = FunctionValue(-second, false);
-                    c.DrawLine(FunctionValue(currentX, true), firstP,
-                        FunctionValue(currentX + step, true), secondP, p);
+                    if (Math.Abs(firstP - secondP) < 500)
+                    {
+                        c.DrawLine(FunctionValue(currentX, true), firstP,
+                            FunctionValue(currentX + step, true), secondP, p);
+                    }
                 }
                 currentX += step;
             }
@@ -120,7 +126,7 @@ namespace MathDrawer.Functions
                 {
                     DrawVerticalLine(currentPixels, 6, c, p);
                 }
-                if (Math.Abs(currentPoint * 100 % _scaleString.Frequency * 25) < 0.1)
+                if (Math.Abs(currentPoint * 100 % (_scaleString.Frequency * 25)) < 0.1)
                 {
                     DrawLabel(currentPixels, _baseY, currentPoint, c, p);
                 }
@@ -148,7 +154,7 @@ namespace MathDrawer.Functions
                 {
                     DrawHorizontalLine(currentPixels, 6, c, p);
                 }
-                if (Math.Abs(currentPoint * 100 % _scaleString.Frequency * 25) < 0.1)
+                if (Math.Abs(currentPoint * 100 % (_scaleString.Frequency * 25)) < 0.1)
                 {
                     DrawLabel(_baseX, currentPixels, currentPoint, c, p);
                 }
@@ -205,7 +211,7 @@ namespace MathDrawer.Functions
             var result = _functionManager.RemoveFunction(index);
             if (result)
             {
-                _functionColors.RemoveAt(index);
+                _functionColors.RemoveAt(_functionColors.Count-1);
             }
         }
 
@@ -231,7 +237,6 @@ namespace MathDrawer.Functions
             StartX = DefaultStartX;
             StartY = DefaultStartY;
             SetScale(DefaultSize);
-            _scaleString = _netStrings.First(n => n.MaxSize < Scale);
         }
 
         public void SetScale(float scale)
@@ -240,6 +245,7 @@ namespace MathDrawer.Functions
             _pixelsPerUnit = DefaultPixels * scale;
             _baseX = Math.Abs(StartX) * _pixelsPerUnit;
             _baseY = Math.Abs(StartY) * _pixelsPerUnit;
+            _scaleString = _netStrings.First(n => n.MaxSize < Scale);
         }
 
         private float PixelsToPoint(float pixels, bool isX)
@@ -249,6 +255,10 @@ namespace MathDrawer.Functions
 
         public void ZoomToPoint(float pixelsX, float pixelsY, float scale)
         {
+            if (scale < ScaleMin || scale > ScaleMax)
+            {
+                return;
+            }
             var px = PixelsToPoint(pixelsX, true);
             var py = -PixelsToPoint(pixelsY, false);
             SetScale(scale);
@@ -258,5 +268,25 @@ namespace MathDrawer.Functions
             StartY = py + offsetY;
             SetScale(scale);
         }
+
+        public void ChangeFunctionAt(int index, IExpression expression)
+        {
+            _functionManager.ChangeFunctionAt(index, expression);
+        }
+
+        public void ZoomToZero(float scale)
+        {
+            if (scale < ScaleMin || scale > ScaleMax)
+            {
+                return;
+            }
+            SetScale(scale);
+            var offsetX = 10 / Scale * (SizeX * 0.5f / 1000);
+            var offsetY = 10 / Scale * (SizeY * 0.5f / 1000);
+            StartX = 0 - offsetX;
+            StartY = 0 + offsetY;
+            SetScale(scale);
+        }
+
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Android.Graphics;
 using MathDrawer.Interfaces;
@@ -21,7 +22,6 @@ namespace MathDrawer
             {
                 foreach (var element in drawableExpression.Elements)
                 {
-                    p.Color = Color.Black;
                     switch (element.Type)
                     {
                         case DrawableType.Division:
@@ -39,6 +39,8 @@ namespace MathDrawer
                             p.TextSize = element.Size;
                             c.DrawText(element.Text, element.X, element.Y + offsetY, p);
                             break;
+                        default: 
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
             }
