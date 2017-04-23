@@ -121,11 +121,11 @@ namespace MathScripter
 			// aapt resource value: 0x7f060014
 			public const int cameraButton = 2131099668;
 			
-			// aapt resource value: 0x7f060003
-			public const int cameraView = 2131099651;
-			
 			// aapt resource value: 0x7f060002
-			public const int captureButton = 2131099650;
+			public const int cameraView = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int captureButton = 2131099651;
 			
 			// aapt resource value: 0x7f060015
 			public const int editButton = 2131099669;
