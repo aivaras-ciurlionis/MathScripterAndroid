@@ -31,14 +31,16 @@ namespace MathScripter
 
         private GestureDetector _gestureDetector;
 
-        private int boxX = 500;
-        private int boxY = 250;
+        private int _boxX;
+        private int _boxY;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Camera);
-
+            var prefs = GetPreferences(FileCreationMode.Private);
+            _boxX = prefs.GetInt("boxX", 500);
+            _boxY = prefs.GetInt("boxY", 200);
             _textureView = FindViewById<TextureView>(Resource.Id.cameraView);
             _textView = FindViewById<TextView>(Resource.Id.textView1);
             _textureView.SurfaceTextureListener = this;
@@ -68,7 +70,7 @@ namespace MathScripter
 
         public void OnScroll()
         {
-            _imageView.LayoutParameters = new FrameLayout.LayoutParams(boxX, boxY, GravityFlags.Center);
+            _imageView.LayoutParameters = new FrameLayout.LayoutParams(_boxX, _boxY, GravityFlags.Center);
             _imageView.RequestLayout();
         }
 
@@ -105,7 +107,7 @@ namespace MathScripter
 
             _imageView.SetX(_textureView.GetX());
             _imageView.SetY(_textureView.GetY());
-            _imageView.LayoutParameters = new FrameLayout.LayoutParams(boxX, boxY, GravityFlags.Center);
+            _imageView.LayoutParameters = new FrameLayout.LayoutParams(_boxX, _boxY, GravityFlags.Center);
             _imageView.RequestLayout();
             _textureView.LayoutParameters =
               new FrameLayout.LayoutParams(previewSize.Width, previewSize.Height, GravityFlags.Center);
@@ -141,7 +143,7 @@ namespace MathScripter
             if (!_textureView.IsAvailable) return;
             var b1 = _textureView.GetBitmap(_textureView.Width, _textureView.Height);
             _recognizer = App.Container.Resolve(typeof(Recognizer), "recognizer") as IRecognizer;
-            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - boxX / 2, _textureView.Height / 2 - boxY / 2, boxX, boxY);
+            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - _boxX / 2, _textureView.Height / 2 - _boxY / 2, _boxX, _boxY);
             Image image;
             using (var stream = new MemoryStream())
             {
@@ -189,11 +191,11 @@ namespace MathScripter
 
         public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
         {
-            var newX = boxX - distanceX;
-            var newY = boxY + distanceY;
+            var newX = _boxX - distanceX;
+            var newY = _boxY + distanceY;
             if (!(newX * newY < 150000) || !(newX > 50) || !(newY > 50)) return false;
-            boxX = (int) newX;
-            boxY = (int) newY;
+            _boxX = (int)newX;
+            _boxY = (int)newY;
             OnScroll();
             return true;
         }
@@ -206,5 +208,23 @@ namespace MathScripter
         {
             return false;
         }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            var prefs = GetPreferences(FileCreationMode.Private);
+            var editor = prefs.Edit();
+            editor.PutInt("boxX", _boxX);
+            editor.PutInt("boxY", _boxY);
+            editor.Commit();
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            outState.PutInt("boxX", _boxX);
+            outState.PutInt("boxY", _boxY);
+            base.OnSaveInstanceState(outState);
+        }
+
     }
 }
