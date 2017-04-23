@@ -50,6 +50,7 @@ namespace MathScripter
             _expressionView.SetNotSolve();
             _expressionView.SetExpression(_expression);
             _expressionView.SetMode(ExpressionViewMode.Expression);
+            _expressionView.EditMode = true;
             _editText.Text = _expression;
             _editText.TextChanged += _onExpressionChanged;
             _editText.SetOnTouchListener(this);

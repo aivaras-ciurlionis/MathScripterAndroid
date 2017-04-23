@@ -231,6 +231,9 @@ namespace MathScripter
 			// aapt resource value: 0x7f040002
 			public const int CaptureImage = 2130968578;
 			
+			// aapt resource value: 0x7f040005
+			public const int EquationParsingError = 2130968581;
+			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
 			

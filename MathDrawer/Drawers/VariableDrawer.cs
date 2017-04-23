@@ -26,8 +26,8 @@ namespace MathDrawer.Drawers
             var hasExponent = Math.Abs(v.Exponent - 1) > 0.001;
             return new EquationBounds
             {
-                Height = nameBounds.Height() +
-                         (hasExponent ? (expBounds.Height() - nameBounds.Height() / 2) : 0),
+                Height = (int)(nameBounds.Height() +
+                              (hasExponent ? (expBounds.Height() - nameBounds.Height() * 0.75f) : 0)),
                 Width = nameBounds.Width() + (hasExponent ? expBounds.Width() : 0)
             };
         }
@@ -52,7 +52,7 @@ namespace MathDrawer.Drawers
                 {
                     Text = exponent,
                     X = positionX + nameWidth,
-                    Y = positionY - _textMeasurer.GetGenericTextHeight(p) / 2,
+                    Y = positionY - _textMeasurer.GetGenericTextHeight(p) * 0.75f,
                     Size = SizeModifier * p.Size,
                     Type = DrawableType.Symbolic
                 });

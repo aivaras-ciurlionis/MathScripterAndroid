@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -8,8 +7,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using ImageSharp;
-using MathExecutor.Interfaces;
-using MathExecutor.Interpreter;
 using MathRecognizer;
 using Camera = Android.Hardware.Camera;
 using Console = System.Console;

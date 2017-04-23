@@ -6,13 +6,14 @@ using Android.Graphics;
 using Android.Util;
 using Android.Views;
 using MathDrawer;
+using MathDrawer.Helpers;
 using MathDrawer.Interfaces;
+using MathDrawer.Models;
 using MathExecutor.Interfaces;
 using MathExecutor.Interpreter;
 using MathExecutor.Models;
 using MathExecutor.RuleBinders;
 using MathScripter.Models;
-using SkiaSharp;
 
 namespace MathScripter.Views
 {
@@ -27,8 +28,11 @@ namespace MathScripter.Views
            App.Container.Resolve(typeof(StepsDrawer), "expressionDrawer") as IStepsDrawer;
         private readonly IRecursiveRuleMathcer _ruleMatcher =
             App.Container.Resolve(typeof(RecursiveRuleMatcher), "recursiveRuleMatcher") as IRecursiveRuleMathcer;
+        private readonly ITextMeasurer _textMeasurer =
+            App.Container.Resolve(typeof(TextMeasurer), "textMeasurer") as ITextMeasurer;
 
         private Color _expressionColor = Color.Black;
+        private readonly Typeface _typeface;
 
         private string _expression = "";
         private IExpression _expressionModel;
@@ -38,6 +42,8 @@ namespace MathScripter.Views
         private ExpressionViewMode _mode;
 
         private bool _solve = true;
+        public bool EditMode { get; set; }
+        private bool _hasError;
 
         private bool _needsRedraw = true;
         private Bitmap _buffer = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888);
@@ -58,8 +64,8 @@ namespace MathScripter.Views
                 Color = _expressionColor,
                 TextSize = 60
             };
-            var tf = Typeface.CreateFromAsset(assets, "Content/Fonts/LinLibertine_R.ttf");
-            _p.SetTypeface(tf);
+            _typeface = Typeface.CreateFromAsset(assets, "Content/Fonts/LinLibertine_R.ttf");
+            _p.SetTypeface(_typeface);
         }
 
         public void DrawStepsToBuffer(Canvas original)
@@ -113,10 +119,30 @@ namespace MathScripter.Views
             Invalidate();
         }
 
+        private void DrawError(Canvas c)
+        {
+            var errorText = Resources.GetString(Resource.String.EquationParsingError);
+            var p = new Paint { TextSize = 60 };
+            p.SetTypeface(_typeface);
+            p.Color = Color.Red;
+            var v = p.MeasureText(errorText);
+            var ratio = Width / v;
+            p.TextSize *= ratio * 0.9f;
+            var newWidth = p.MeasureText(errorText);
+            var nameHeight =
+                _textMeasurer.GetGenericTextHeight(new TextParameters { Typeface = _typeface, Size = p.TextSize });
+            c.DrawText(errorText, (Width - newWidth) / 2, Height / 2f + nameHeight / 2, p);
+        }
+
         private void ComputeSolution()
         {
             if (string.IsNullOrWhiteSpace(_expression)
-                || !_interpreter.CanBeParsed(_expression)) return;
+                || !_interpreter.CanBeParsed(_expression))
+            {
+                _hasError = true;
+                return;
+            }
+            _hasError = false;
             _expressionModel = _interpreter.GetExpression(_expression);
             _steps = _ruleMatcher.SolveExpression(_expressionModel.Clone());
             _expressionResult = _steps?.Last().FullExpression;
@@ -131,6 +157,7 @@ namespace MathScripter.Views
         {
             _currentOffsetY = 0;
             _expression = expression;
+            _hasError = !_interpreter.CanBeParsed(_expression);
             if (_solve)
             {
                 ComputeSolution();
@@ -149,6 +176,12 @@ namespace MathScripter.Views
         {
             base.OnDraw(canvas);
             canvas.DrawColor(Color.White);
+            if (!EditMode && _hasError && !string.IsNullOrWhiteSpace(_expression))
+            {
+                DrawError(canvas);
+                return;
+            }
+
             switch (_mode)
             {
                 case ExpressionViewMode.Expression:

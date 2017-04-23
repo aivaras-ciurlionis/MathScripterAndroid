@@ -66,24 +66,22 @@ namespace MathScripter
 
         private void AddExpression(string expression)
         {
-            try
+            if (string.IsNullOrWhiteSpace(expression) || !_interpreter.CanBeParsed(expression))
             {
-                var e = _interpreter.GetExpression(expression);
-                if (e is EqualityExpression)
-                {
-                    _expressions.Add(e.Operands[0].ToString());
-                    _expressions.Add(e.Operands[1].ToString());
-                    _graphView.AddExpression(e.Operands[0]);
-                    _graphView.AddExpression(e.Operands[1]);
-                }
-                else
-                {
-                    _expressions.Add(expression);
-                    _graphView.AddExpression(e);
-                }
+                return;
             }
-            catch (Exception)
+            var e = _interpreter.GetExpression(expression);
+            if (e is EqualityExpression)
             {
+                _expressions.Add(e.Operands[0].ToString());
+                _expressions.Add(e.Operands[1].ToString());
+                _graphView.AddExpression(e.Operands[0]);
+                _graphView.AddExpression(e.Operands[1]);
+            }
+            else
+            {
+                _expressions.Add(expression);
+                _graphView.AddExpression(e);
             }
         }
 
@@ -308,6 +306,10 @@ namespace MathScripter
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode != Result.Ok) return;
             var expression = data.GetStringExtra("expression");
+            if (!_interpreter.CanBeParsed(expression))
+            {
+                return;
+            }
             if (_addingIndex < 0)
             {
                 AddExpression(expression);

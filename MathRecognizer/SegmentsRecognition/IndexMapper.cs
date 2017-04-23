@@ -38,7 +38,7 @@ namespace MathRecognizer.SegmentsRecognition
                 case 25: return "c";
                 case 26: return "t";
                 case 27: return "l";
-                case 28: return "g";
+                case 28: return "8";
                 case 29: return "f";
                 case 30: return ">";
                 case 31: return "<";

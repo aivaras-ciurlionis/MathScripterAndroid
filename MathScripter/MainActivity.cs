@@ -3,6 +3,8 @@ using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
+using MathExecutor.Interfaces;
+using MathExecutor.Interpreter;
 using MathScripter.Interfaces;
 using MathScripter.Models;
 using MathScripter.Providers;
@@ -28,6 +30,9 @@ namespace MathScripter
 
         private readonly INetworkDataLoader _networkDataLoader =
             App.Container.Resolve(typeof(NetworkDataLoader), "networkDataLoader") as INetworkDataLoader;
+
+        private readonly IInterpreter _interpreter =
+            App.Container.Resolve(typeof(Interpreter), "interpreter") as IInterpreter;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -111,6 +116,10 @@ namespace MathScripter
 
         private void _openAnimation(object sender, EventArgs args)
         {
+            if (!_interpreter.CanBeParsed(_expression))
+            {
+                return;
+            }
             var intent = new Intent(this, typeof(AnimationActivity));
             intent.PutExtra("expression", _expression);
             StartActivityForResult(intent, 0);

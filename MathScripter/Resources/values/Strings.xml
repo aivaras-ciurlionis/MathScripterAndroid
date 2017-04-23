@@ -5,6 +5,6 @@
   <string name="CaptureImage">Capture</string>
   <string name="Camera">Camera</string>
   <string name="ImageParsingError">Unable to read image. Please try again.</string>
-
+  <string name="EquationParsingError">Error in equation</string>
   <color name="white">#FFFFFF</color>
 </resources>
