@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MathExecutor.Interfaces;
@@ -60,8 +61,19 @@ namespace MathExecutor.RuleBinders
                     }
                 }
             }
-            var result = _interpreter.FindSolution(expression.Clone());
-            steps.AddRange(result.Steps);
+            Solution result;
+            try
+            {
+                result = _interpreter.FindSolution(expression.Clone());
+            }
+            catch (ArithmeticException)
+            {
+                return new List<Step>();
+            }
+            if (result != null)
+            {
+                steps.AddRange(result.Steps);
+            }
             return steps;
         }
 
@@ -84,8 +96,10 @@ namespace MathExecutor.RuleBinders
         {
             _steps = new List<Step>();
             IExpression startingExpression;
+            _steps.Add(new Step {FullExpression = expression});
             do
             {
+                
                 startingExpression = expression.Clone();
                 // only interpreter
                 AddSteps(ApplyAndInterpret(expression, null));

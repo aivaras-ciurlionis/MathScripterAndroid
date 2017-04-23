@@ -24,7 +24,7 @@ namespace MathRecognizer.EquationBuilding
 
             if (!digits.Contains(lastSegment.SegmentName) || !digits.Contains(nextSegment.SegmentName))
             {
-                return "";
+                return "*";
             }
 
             return ".";

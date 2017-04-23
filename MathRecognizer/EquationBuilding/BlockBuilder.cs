@@ -65,7 +65,7 @@ namespace MathRecognizer.EquationBuilding
             var rootSegments = _segments.Where(s => s.SegmentName == "q").ToList();
             for (var i = 0; i < rootSegments.Count; i++)
             {
-                if (_segments[i].SegmentName != "q") continue;
+                if (rootSegments[i].SegmentName != "q") continue;
                 var innerSegments = _intersectionFinder.SegmentsInside(rootSegments[i], _segments);
                 _segments.Remove(rootSegments[i]);
                 RemoveSegments(innerSegments);

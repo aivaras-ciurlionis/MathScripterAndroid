@@ -70,12 +70,10 @@ namespace MathExecutor.RuleBinders
                 }
                 var newSteps = ruleAddedSteps.Union(new List<Step> {possibleRule});
                 var ruleResult = SolveExpressionRecursive(newSteps, possibleRule.FullExpression.Clone(), height+1);
-                if (ruleResult != null)
+                if (ruleResult == null) continue;
+                if (bestSteps == null || ruleResult.Count() < bestSteps.Count())
                 {
-                    if (bestSteps == null || ruleResult.Count() < bestSteps.Count())
-                    {
-                        bestSteps = ruleResult;
-                    }
+                    bestSteps = ruleResult;
                 }
             }
             if (bestSteps != null)

@@ -120,6 +120,10 @@ namespace MathScripter.Views
             {
                 DrawGraphToBuffer();
             }
+            if (_buffer.IsRecycled)
+            {
+                DrawGraphToBuffer();
+            }
             canvas.DrawBitmap(_buffer, _currentOffsetX ?? 0, _currentOffsetY ?? 0, null);
         }
 

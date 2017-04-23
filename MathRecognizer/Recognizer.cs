@@ -36,7 +36,7 @@ namespace MathRecognizer
 
         public string GetEquationsInImage(Image image)
         {
-            var processed = GetProcessedImage(image, 230, 0);
+            var processed = GetProcessedImage(image, 10, 0);
           //  processed.Save("o/contrast.bmp");
             var imagePixels = processed.Pixels.Select(s => s.R).ToArray();
             var segments = _segmentator.GetImageSegments(imagePixels, image.Width, image.Height);

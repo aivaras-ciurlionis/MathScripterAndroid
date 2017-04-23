@@ -28,7 +28,7 @@ namespace MathScripter
         private IRecognizer _recognizer;
 
         const int BX = 500;
-        const int BY = 120;
+        const int BY = 250;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

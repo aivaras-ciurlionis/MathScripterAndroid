@@ -287,10 +287,18 @@ namespace MathExecutorUnitTests.ModuleIntegrationTests
 
         [Test]
         public void ItShouldReturnSameIdsForFractionsWithSameDenomitator()
-        {
+        { 
             var expression = _parser.Parse("1/x+2/x+3/x+4/x");
             var steps = _recursiveRuleMathcer.SolveExpression(expression);
             Assert.AreEqual("10 / x", steps.Last().FullExpression.ToString());
+        }
+
+        [Test]
+        public void ItShouldComputeBinarySquareAndSolveLinearEquation()
+        {
+            var expression = _parser.Parse("(x+2)^2=x^2");
+            var steps = _recursiveRuleMathcer.SolveExpression(expression);
+            Assert.AreEqual("x = -1", steps.Last().FullExpression.ToString());
         }
 
     }
