@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextureView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cameraView" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <Button
+       android:text="Edit"
+       android:layout_width="0dp"
+       android:layout_height="match_parent"
+       android:layout_weight="0.3"
+       android:id="@+id/editBitmapButton" />
     <Button
        android:text="Capture"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_width="0dp"
+       android:layout_height="match_parent"
+       android:layout_weight="0.7"
        android:id="@+id/captureButton" />
+  </LinearLayout>
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.7"
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:background="@color/white"
+      android:id="@+id/cameraViewHolder">
+    <TextureView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/cameraView" />
     <ImageView
         android:src="@drawable/rect"
         android:layout_width="match_parent"
@@ -21,10 +43,52 @@
         android:scaleType="fitXY"
         android:layout_gravity="center" />
     <TextView
-        android:text="zzz"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/textView1"
-        android:layout_marginTop="150px" />
-</FrameLayout>
+        android:id="@+id/textView1"/>
+  </FrameLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.2"
+      android:orientation="horizontal"
+      android:id="@+id/bottomEditPanel">
+    <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="0.5"
+          android:orientation="vertical">
+      <SeekBar
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="0.5"
+          android:id="@+id/contrastBar" />
+      <TextView
+            android:text="Contrast: 0"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:id="@+id/contrastText"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+      <SeekBar
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="0.5"
+          android:id="@+id/brightnessBar" />
+      <TextView
+          android:text="Brightness: 0"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="0.5"
+          android:id="@+id/brightnessText"/>
+    </LinearLayout>
+
+  </LinearLayout>
+</LinearLayout>

@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="BitmapEditActivity.cs" />
     <Compile Include="CameraActivity.cs" />
     <Compile Include="AnimationActivity.cs" />
     <Compile Include="ExpressionEditActivity.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\AnimationAction.cs" />
     <Compile Include="Models\ExpressionViewMode.cs" />
+    <Compile Include="Providers\BitmapProcessor.cs" />
     <Compile Include="Providers\CocosRootDrawer.cs" />
     <Compile Include="Providers\CocosTextDrawer.cs" />
     <Compile Include="Providers\CocosFractionDrawer.cs" />
@@ -161,6 +163,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Animation.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\BitmapEdit.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

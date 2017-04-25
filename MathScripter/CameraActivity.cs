@@ -11,22 +11,37 @@ using MathRecognizer;
 using Camera = Android.Hardware.Camera;
 using Console = System.Console;
 using MathRecognizer.Interfaces;
+using MathScripter.Providers;
+using Color = Android.Graphics.Color;
 
 namespace MathScripter
 {
     [Activity(Label = "CameraActivity")]
-    public class CameraActivity : Activity, TextureView.ISurfaceTextureListener, GestureDetector.IOnGestureListener
+    public class CameraActivity : Activity, TextureView.ISurfaceTextureListener, GestureDetector.IOnGestureListener,
+        SeekBar.IOnSeekBarChangeListener
     {
         private Camera _camera;
         private TextureView _textureView;
         private Button _captureButton;
+        private Button _editBitmapButton;
         private ImageView _imageView;
         private TextView _textView;
+        private TextView _contrastText;
+        private SeekBar _contrastSlider;
+        private LinearLayout _editPanel;
+
+        private TextView _brightnessText;
+        private SeekBar _brightnessSlider;
+
         private IRecognizer _recognizer;
 
         private SurfaceTexture _surfaceTexture;
 
         private GestureDetector _gestureDetector;
+
+        private bool _editing;
+        private Bitmap _editableBitmap;
+        private Bitmap _editedBitmap;
 
         private int _boxX;
         private int _boxY;
@@ -40,11 +55,27 @@ namespace MathScripter
             _boxY = prefs.GetInt("boxY", 200);
             _textureView = FindViewById<TextureView>(Resource.Id.cameraView);
             _textView = FindViewById<TextView>(Resource.Id.textView1);
+            _textView.Text = "Point to equation an tap capture.";
             _textureView.SurfaceTextureListener = this;
             _gestureDetector = new GestureDetector(this);
+
             _imageView = FindViewById<ImageView>(Resource.Id.imageView1);
             _captureButton = FindViewById<Button>(Resource.Id.captureButton);
+            _editBitmapButton = FindViewById<Button>(Resource.Id.editBitmapButton);
+            _contrastText = FindViewById<TextView>(Resource.Id.contrastText);
+            _contrastSlider = FindViewById<SeekBar>(Resource.Id.contrastBar);
+            _brightnessText = FindViewById<TextView>(Resource.Id.brightnessText);
+            _brightnessSlider = FindViewById<SeekBar>(Resource.Id.brightnessBar);
+            _editPanel = FindViewById<LinearLayout>(Resource.Id.bottomEditPanel);
+
+            _contrastSlider.Max = 100;
+            _brightnessSlider.Max = 255 * 2;
+            _brightnessSlider.Progress = 255;
+            _editPanel.Visibility = ViewStates.Invisible;
+            _editBitmapButton.Click += OpenBitmapEdit;
             _captureButton.Click += OnCapture;
+            _contrastSlider.SetOnSeekBarChangeListener(this);
+            _brightnessSlider.SetOnSeekBarChangeListener(this);
         }
 
         private void ReleaseCamera()
@@ -62,7 +93,14 @@ namespace MathScripter
 
         public void OnCapture(object sender, EventArgs args)
         {
-            ProcessImage();
+            if (_editing)
+            {
+                ProcessImage(_editedBitmap);
+            }
+            else
+            {
+                DirectCapture();
+            }
         }
 
         public void OnScroll()
@@ -82,7 +120,7 @@ namespace MathScripter
             }
             if (pr.SupportedFlashModes != null)
             {
-                pr.FlashMode = Camera.Parameters.FlashModeTorch;
+               pr.FlashMode = Camera.Parameters.FlashModeTorch;
             }
             _camera.SetParameters(pr);
             try
@@ -134,13 +172,67 @@ namespace MathScripter
             // do nothing
         }
 
-        public void ProcessImage()
+        private Bitmap GetBoundedBitmap()
+        {
+            if (!_textureView.IsAvailable) return null;
+            var b1 = _textureView.GetBitmap(_textureView.Width, _textureView.Height);
+
+            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - _boxX / 2, _textureView.Height / 2 - _boxY / 2, _boxX, _boxY);
+            return bitmap;
+        }
+
+        private void CancelBitmapEdit()
+        {
+            RunCamera(_surfaceTexture);
+            _textureView.Visibility = ViewStates.Visible;
+            _editing = false;
+            _editBitmapButton.Text = "Edit";
+            _editPanel.Visibility = ViewStates.Invisible;
+            _textView.SetTextColor(Color.White);
+            _imageView.SetImageResource(Resource.Drawable.rect);
+            _textView.Text = "Point to equation an tap capture.";
+        }
+
+        private void StartBitmapEdit()
+        {
+            _editableBitmap = GetBoundedBitmap();
+            _editedBitmap = _editableBitmap.Copy(_editableBitmap.GetConfig(), true);
+            ReleaseCamera();
+            _textureView.Visibility = ViewStates.Gone;
+            _imageView.SetImageBitmap(_editableBitmap);
+            _editing = true;
+            _textView.Text = "Adjust image using sliders below";
+            _textView.SetTextColor(Color.Black);
+            _editBitmapButton.Text = "Cancel";
+            _editPanel.Visibility = ViewStates.Visible;
+        }
+
+        private void OpenBitmapEdit(object sender, EventArgs args)
+        {
+            if (_editing)
+            {
+                CancelBitmapEdit();
+            }
+            else
+            {
+                StartBitmapEdit();
+            }
+        }
+
+        public void DirectCapture()
         {
             ReleaseCamera();
-            if (!_textureView.IsAvailable) return;
-            var b1 = _textureView.GetBitmap(_textureView.Width, _textureView.Height);
+            var bitmap = GetBoundedBitmap();
+            ProcessImage(bitmap);
+        }
+
+        public void ProcessImage(Bitmap bitmap)
+        {
             _recognizer = App.Container.Resolve(typeof(Recognizer), "recognizer") as IRecognizer;
-            var bitmap = Bitmap.CreateBitmap(b1, _textureView.Width / 2 - _boxX / 2, _textureView.Height / 2 - _boxY / 2, _boxX, _boxY);
+            if (bitmap == null)
+            {
+                return;
+            }
             Image image;
             using (var stream = new MemoryStream())
             {
@@ -161,7 +253,10 @@ namespace MathScripter
             {
                 Console.WriteLine(e.Message);
                 _textView.Text = Resources.GetString(Resource.String.ImageParsingError);
-                RunCamera(_surfaceTexture);
+                if (!_editing)
+                {
+                    RunCamera(_surfaceTexture);
+                }
             }
         }
 
@@ -188,6 +283,10 @@ namespace MathScripter
 
         public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
         {
+            if (_editing)
+            {
+                return false;
+            }
             var newX = _boxX - distanceX;
             var newY = _boxY + distanceY;
             if (!(newX * newY < 150000) || !(newX > 50) || !(newY > 50)) return false;
@@ -223,5 +322,22 @@ namespace MathScripter
             base.OnSaveInstanceState(outState);
         }
 
+        public void OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
+        {
+            _editedBitmap?.Recycle();
+            _editedBitmap = BitmapProcessor
+                .ChangeBitmapContrastBrightness(_editableBitmap, _contrastSlider.Progress / 20f ,_brightnessSlider.Progress - 255);
+            _imageView.SetImageBitmap(_editedBitmap);
+            _contrastText.Text = $"Contrast: {_contrastSlider.Progress}";
+            _brightnessText.Text = $"Brightness: {_brightnessSlider.Progress - 255}";
+        }
+
+        public void OnStartTrackingTouch(SeekBar seekBar)
+        {
+        }
+
+        public void OnStopTrackingTouch(SeekBar seekBar)
+        {
+        }
     }
 }
