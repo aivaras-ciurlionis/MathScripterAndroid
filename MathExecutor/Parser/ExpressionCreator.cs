@@ -53,7 +53,8 @@ namespace MathExecutor.Parser
 
         public IExpression CreateExpression(IEnumerable<Token> tokens)
         {
-            return ToExpression(tokens.ToList());
+            var validTokens = tokens.Where(t => t.Value != ")");
+            return ToExpression(validTokens.ToList());
         }
     }
 }

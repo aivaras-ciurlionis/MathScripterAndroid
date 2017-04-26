@@ -131,6 +131,8 @@ namespace MathScripter
                 case -2:
                     ClearText();
                     break;
+                case -3:
+                    break;
                 default:
                     AddText(code);
                     break;

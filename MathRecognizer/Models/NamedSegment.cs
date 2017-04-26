@@ -16,7 +16,7 @@ namespace MathRecognizer.Models
         {
 
             var height = MaxY - MinY;
-            var heightMult = "-+.,=".Contains(next.SegmentName) ? 0.8 : 0.35;
+            var heightMult = "-+.,=".Contains(next.SegmentName) ? 0.8 : 0.45;
             return next.MaxY < MaxY - height * heightMult &&
                   next.MaxY < MaxY;
         }

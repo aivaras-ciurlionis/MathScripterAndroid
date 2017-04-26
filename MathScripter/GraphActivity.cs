@@ -310,14 +310,14 @@ namespace MathScripter
 
         private void RemoveClick(object sender, EventArgs args)
         {
-            var id = (sender as Button)?.Id ?? 0;
+            var id = (sender as ImageButton)?.Id ?? 0;
             RemoveExpression(id);
             RenderRightPanel();
         }
 
         private void EditClick(object sender, EventArgs args)
         {
-            var id = (sender as Button)?.Id ?? 0;
+            var id = (sender as ImageButton)?.Id ?? 0;
             _addingIndex = id;
             var intent = new Intent(this, typeof(ExpressionEditActivity));
             intent.PutExtra("expression", _expressions[id]);

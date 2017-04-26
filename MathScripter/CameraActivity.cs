@@ -139,13 +139,42 @@ namespace MathScripter
             RunCamera(surface);
             var previewSize = _camera.GetParameters().PreviewSize;
             _surfaceTexture = surface;
-
             _imageView.SetX(_textureView.GetX());
             _imageView.SetY(_textureView.GetY());
             _imageView.LayoutParameters = new FrameLayout.LayoutParams(_boxX, _boxY, GravityFlags.Center);
             _imageView.RequestLayout();
+
+            var rotation = WindowManager.DefaultDisplay.Rotation;
+            var rotatedWidth = 0;
+            var rotatedHeight = 0;
+            switch (rotation)
+            {
+                case SurfaceOrientation.Rotation0:
+                    _camera.SetDisplayOrientation(90);
+                    rotatedWidth = previewSize.Height;
+                    rotatedHeight = previewSize.Width;
+                    break;
+                case SurfaceOrientation.Rotation180:
+                    _camera.SetDisplayOrientation(270);
+                    rotatedWidth = previewSize.Height;
+                    rotatedHeight = previewSize.Width;
+                    break;
+                case SurfaceOrientation.Rotation270:
+                    _camera.SetDisplayOrientation(180);
+                    rotatedWidth = previewSize.Width;
+                    rotatedHeight = previewSize.Height;
+                    break;
+                case SurfaceOrientation.Rotation90:
+                    _camera.SetDisplayOrientation(0);
+                    rotatedWidth = previewSize.Width;
+                    rotatedHeight = previewSize.Height;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             _textureView.LayoutParameters =
-              new FrameLayout.LayoutParams(previewSize.Width, previewSize.Height, GravityFlags.Center);
+             new FrameLayout.LayoutParams(rotatedWidth, rotatedHeight, GravityFlags.Center);
+
         }
 
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)

@@ -7,7 +7,12 @@ namespace MathRecognizer.EquationBuilding
     {
         private static string CheckDotRole(NamedSegment lastSegment, NamedSegment currentSegment, NamedSegment nextSegment)
         {
-            if (lastSegment == null || nextSegment == null)
+            if (nextSegment == null)
+            {
+                return "";
+            }
+
+            if (lastSegment == null)
             {
                 return ".";
             }
@@ -27,7 +32,7 @@ namespace MathRecognizer.EquationBuilding
                 return "*";
             }
 
-            return ".";
+            return "";
         }
 
 

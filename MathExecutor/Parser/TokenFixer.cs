@@ -18,7 +18,13 @@ namespace MathExecutor.Parser
                 return Token.MultiplyToken();
             }
 
-            if (lastToken.TokenType == TokenType.Number && currentToken.TokenType == TokenType.Variable)
+            if (lastToken.Value == ")" && currentToken.Value == "(")
+            {
+                return Token.MultiplyToken();
+            }
+
+            if (lastToken.TokenType == TokenType.Number && currentToken.TokenType == TokenType.Variable &&
+                currentToken.Value != ")")
             {
                 return Token.MultiplyToken();
             }

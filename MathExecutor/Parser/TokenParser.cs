@@ -58,7 +58,8 @@ namespace MathExecutor.Parser
                 currentSymbolType = _symbolTypeChecker.GetSymbolType(character);
                 if (currentToken.Length > 0 && lastSymbolType != currentSymbolType && i > 0)
                 {
-                    AddToken(_tokenCreator.GetToken(lastSymbolType, currentToken, currentLevel, _tokens.LastOrDefault()));
+                    AddToken(_tokenCreator.GetToken(lastSymbolType, currentToken,
+                        currentLevel, _tokens.LastOrDefault()));
                     currentToken = "";
                 }
 
@@ -67,7 +68,13 @@ namespace MathExecutor.Parser
                     currentLevel += character == '(' ? 1 : -1;
                     if (character == '(')
                     {
-                        AddToken(_tokenCreator.GetToken(SymbolType.Parenthesis, "(", currentLevel, _tokens.LastOrDefault()));
+                        AddToken(_tokenCreator.GetToken(SymbolType.Parenthesis, "(", currentLevel,
+                            _tokens.LastOrDefault()));
+                    }
+                    else
+                    {
+                        AddToken(_tokenCreator.GetToken(SymbolType.Parenthesis, ")", currentLevel,
+                            _tokens.LastOrDefault()));
                     }
                 }
                 else

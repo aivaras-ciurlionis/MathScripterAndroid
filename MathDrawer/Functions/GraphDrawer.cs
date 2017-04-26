@@ -89,7 +89,7 @@ namespace MathDrawer.Functions
 
         private void DrawFunctions(Canvas c, Paint p)
         {
-            var step = 0.1f / Scale;
+            var step = 0.05f / Scale;
             var functionValues = _functionManager
                 .GetGraphPoints(StartX, StartX + SizeX / _pixelsPerUnit, step);
             var i = 0;
