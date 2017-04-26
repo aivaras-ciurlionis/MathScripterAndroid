@@ -32,12 +32,12 @@ namespace MathExecutor.Rules.FinalRules
                 );
                 return new InnerRuleResult(fullResult);
             }
-            var division = new DivisionExpression(right, left);
+            var division = new DivisionExpression(right.Clone(true), left.Clone(true));
             if (right.Coefficient / left.Coefficient < 0)
             {
                 return new InnerRuleResult(new MemberOfExpression(x, new EmptySetExpression()));
             }
-            var root = new SqrRootExpression(division);
+            var root = new SqrRootExpression(division.Clone(true));
             var fullResult2 = new SeparationExpression(
                      new EqualityExpression(x.Clone(true), root.Clone(true)),
                      new EqualityExpression(x.Clone(true), new NegationExpression(root.Clone(true)))
