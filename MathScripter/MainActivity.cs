@@ -15,14 +15,14 @@ namespace MathScripter
     [Activity(Label = "MathScripter", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        private Button _cameraButton;
-        private Button _editButton;
+        private ImageButton _cameraButton;
+        private ImageButton _editButton;
 
-        private Button _expressionButton;
-        private Button _resultButton;
-        private Button _stepsButton;
-        private Button _animationButton;
-        private Button _graphButton;
+        private ImageButton _expressionButton;
+        private ImageButton _resultButton;
+        private ImageButton _stepsButton;
+        private ImageButton _animationButton;
+        private ImageButton _graphButton;
 
         private ExpressionView _expressionView;
         private ExpressionViewMode _mode;
@@ -40,14 +40,15 @@ namespace MathScripter
             _networkDataLoader.LoadData(Assets);
             SetContentView(Resource.Layout.Main);
 
-            _cameraButton = FindViewById<Button>(Resource.Id.cameraButton);
-            _editButton = FindViewById<Button>(Resource.Id.editButton);
-            _expressionButton = FindViewById<Button>(Resource.Id.expressionButton);
-            _resultButton = FindViewById<Button>(Resource.Id.resultButton);
-            _stepsButton = FindViewById<Button>(Resource.Id.stepsButton);
+            _cameraButton = FindViewById<ImageButton>(Resource.Id.cameraButton);
+            _editButton = FindViewById<ImageButton>(Resource.Id.editButton);
 
-            _graphButton = FindViewById<Button>(Resource.Id.graphButton);
-            _animationButton = FindViewById<Button>(Resource.Id.animationButton);
+            _expressionButton = FindViewById<ImageButton>(Resource.Id.expressionButton);
+            _resultButton = FindViewById<ImageButton>(Resource.Id.resultButton);
+            _stepsButton = FindViewById<ImageButton>(Resource.Id.stepsButton);
+
+            _graphButton = FindViewById<ImageButton>(Resource.Id.graphButton);
+            _animationButton = FindViewById<ImageButton>(Resource.Id.animationButton);
 
             _expressionView = FindViewById<ExpressionView>(Resource.Id.expressionView);
 

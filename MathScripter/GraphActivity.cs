@@ -30,13 +30,13 @@ namespace MathScripter
         private GraphView _graphView;
         private LinearLayout _rightPanel;
 
-        private Button _zoomInButton;
-        private Button _zoomOutButton;
-        private Button _resetButton;
-        private Button _clearButton;
+        private ImageButton _zoomInButton;
+        private ImageButton _zoomOutButton;
+        private ImageButton _resetButton;
+        private ImageButton _clearButton;
 
-        private Button _addNewButtonCamera;
-        private Button _addNewButtonPencil;
+        private ImageButton _addNewButtonCamera;
+        private ImageButton _addNewButtonPencil;
 
         private readonly IList<string> _expressions = new List<string>();
 
@@ -102,8 +102,13 @@ namespace MathScripter
             var buttonLayoutParams = new LinearLayout.LayoutParams(0,
                 ViewGroup.LayoutParams.MatchParent)
             { Weight = 0.5f };
-            _addNewButtonCamera = new Button(this) { Text = "+C" };
-            _addNewButtonPencil = new Button(this) { Text = "+E" };
+            _addNewButtonCamera = new ImageButton(this) { Background = null };
+            _addNewButtonPencil = new ImageButton(this) { Background = null };
+
+            _addNewButtonCamera.SetImageResource(Resource.Drawable.cameraplus);
+            _addNewButtonCamera.SetScaleType(ImageView.ScaleType.FitCenter);
+            _addNewButtonPencil.SetImageResource(Resource.Drawable.editplus);
+            _addNewButtonPencil.SetScaleType(ImageView.ScaleType.FitCenter);
 
             _addNewButtonCamera.Click += AddNewFunctionCam;
             _addNewButtonPencil.Click += AddNewFunctionPencil;
@@ -130,10 +135,22 @@ namespace MathScripter
             var buttonLayoutParams = new LinearLayout.LayoutParams(0,
                 ViewGroup.LayoutParams.MatchParent)
             { Weight = 0.25f };
-            _zoomInButton = new Button(this) { Text = "+" };
-            _zoomOutButton = new Button(this) { Text = "-" };
-            _resetButton = new Button(this) { Text = "R" };
-            _clearButton = new Button(this) { Text = "C" };
+            _zoomInButton = new ImageButton(this) { Background = null };
+            _zoomOutButton = new ImageButton(this) { Background = null };
+            _resetButton = new ImageButton(this) { Background = null };
+            _clearButton = new ImageButton(this) { Background = null };
+
+            _zoomInButton.SetImageResource(Resource.Drawable.plus);
+            _zoomInButton.SetScaleType(ImageView.ScaleType.FitCenter);
+
+            _zoomOutButton.SetImageResource(Resource.Drawable.minus);
+            _zoomOutButton.SetScaleType(ImageView.ScaleType.FitCenter);
+
+            _resetButton.SetImageResource(Resource.Drawable.zoom);
+            _resetButton.SetScaleType(ImageView.ScaleType.FitCenter);
+
+            _clearButton.SetImageResource(Resource.Drawable.trashblue);
+            _clearButton.SetScaleType(ImageView.ScaleType.FitCenter);
 
             _zoomInButton.LayoutParameters = buttonLayoutParams;
             _zoomOutButton.LayoutParameters = buttonLayoutParams;
@@ -192,11 +209,17 @@ namespace MathScripter
             var actionParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, 0)
             { Weight = 0.5f };
 
-            var removeButton = new Button(this) { LayoutParameters = actionParams, Text = "X", Id = i };
-            var editButton = new Button(this) { LayoutParameters = actionParams, Text = "E", Id = i };
+            var removeButton = new ImageButton(this) { LayoutParameters = actionParams, Background = null, Id = i };
+            var editButton = new ImageButton(this) { LayoutParameters = actionParams, Background = null, Id = i };
 
             removeButton.SetPadding(paddingH, paddingV, paddingH, paddingV);
             editButton.SetPadding(paddingH, paddingV, paddingH, paddingV);
+
+            removeButton.SetImageResource(Resource.Drawable.trash);
+            removeButton.SetScaleType(ImageView.ScaleType.FitCenter);
+
+            editButton.SetImageResource(Resource.Drawable.edit);
+            editButton.SetScaleType(ImageView.ScaleType.FitCenter);
 
             removeButton.Click += RemoveClick;
             editButton.Click += EditClick;

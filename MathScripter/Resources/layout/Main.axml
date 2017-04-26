@@ -6,74 +6,85 @@
     p1:layout_width="match_parent"
     p1:layout_height="match_parent"
     p1:id="@+id/linearLayout1">
-    <ScrollView
-        p1:minWidth="25px"
-        p1:minHeight="25px"
+    <LinearLayout
+        p1:orientation="vertical"
         p1:layout_width="0dp"
         p1:layout_weight="0.10"
         p1:layout_height="match_parent"
-        p1:id="@+id/leftPanel"
         p1:background="@color/white">
-        <LinearLayout
-            p1:orientation="vertical"
-            p1:layout_width="match_parent"
-            p1:layout_height="match_parent">
-            <Button
-                p1:text="E"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/expressionButton" />
-            <Button
-                p1:text="R"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/resultButton" />
-            <Button
-                p1:text="S"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/stepsButton" />
-            <Button
-                p1:text="A"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/animationButton" />
-            <Button
-                p1:text="G"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/graphButton" />
-        </LinearLayout>
-    </ScrollView>
-    <MathScripter.Views.ExpressionView
-        p1:minWidth="25px"
-        p1:minHeight="25px"
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/expression"
+          p1:scaleType="fitCenter"
+          p1:layout_weight="0.2"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:id="@+id/expressionButton" />
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/solution"
+          p1:scaleType="fitCenter"
+          p1:layout_weight="0.2"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:id="@+id/resultButton" />
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/steps"
+          p1:scaleType="fitCenter"
+          p1:layout_weight="0.2"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:id="@+id/stepsButton" />
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/anim"
+          p1:scaleType="fitCenter"
+          p1:layout_weight="0.2"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:id="@+id/animationButton" />
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/graph"
+          p1:scaleType="fitCenter"
+          p1:layout_weight="0.2"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:id="@+id/graphButton" />
+    </LinearLayout>
+  <MathScripter.Views.ExpressionView
+      p1:minWidth="25px"
+      p1:minHeight="25px"
+      p1:layout_width="0dp"
+      p1:layout_weight="0.80"
+      p1:layout_height="match_parent"
+      p1:id="@+id/expressionView" />
+    <LinearLayout
+        p1:orientation="vertical"
         p1:layout_width="0dp"
-        p1:layout_weight="0.80"
         p1:layout_height="match_parent"
-        p1:id="@+id/expressionView" />
-    <ScrollView
-        p1:minWidth="25px"
-        p1:minHeight="25px"
-        p1:layout_width="0dp"
         p1:layout_weight="0.10"
-        p1:layout_height="match_parent"
-        p1:id="@+id/rightPanel"
         p1:background="@color/white">
-        <LinearLayout
-            p1:orientation="vertical"
-            p1:layout_width="match_parent"
-            p1:layout_height="match_parent">
-            <Button
-                p1:text="Cam"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/cameraButton" />
-            <Button
-                p1:text="Edit"
-                p1:layout_width="match_parent"
-                p1:layout_height="match_parent"
-                p1:id="@+id/editButton" />
-        </LinearLayout>
-    </ScrollView>
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/cam"
+          p1:scaleType="fitCenter"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:layout_weight="0.2"
+          p1:id="@+id/cameraButton" />
+      <ImageButton
+          p1:background="@null"
+          p1:src="@drawable/edit"
+          p1:scaleType="fitCenter"
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:layout_weight="0.2"
+          p1:id="@+id/editButton" />
+      <LinearLayout
+          p1:layout_width="match_parent"
+          p1:layout_height="0dp"
+          p1:layout_weight="0.6"/>
+    </LinearLayout>
 </LinearLayout>

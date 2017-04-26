@@ -27,7 +27,7 @@ namespace MathDrawer.Drawers
             return new EquationBounds
             {
                 Height = (int)(nameBounds.Height() +
-                              (hasExponent ? (expBounds.Height() - nameBounds.Height() * 0.75f) : 0)),
+                              (hasExponent ? (expBounds.Height() - nameBounds.Height() * 0.25f) : 0)),
                 Width = nameBounds.Width() + (hasExponent ? expBounds.Width() : 0)
             };
         }

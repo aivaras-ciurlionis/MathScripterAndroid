@@ -37,11 +37,11 @@ namespace MathScripter.Views
 
         private void ConstructUI()
         {
-            _exitSprite = new CCSprite("ball.png")
+            _exitSprite = new CCSprite("back.png")
             {
-                PositionX = 80,
-                PositionY = _mainLayer.VisibleBoundsWorldspace.MaxY - 80,
-                Scale = 3
+                PositionX = 150,
+                PositionY = _mainLayer.VisibleBoundsWorldspace.MaxY - 150,
+                Scale = 1
             };
             _uiLayer.AddChild(_exitSprite);
             AddChild(_uiLayer, 5);

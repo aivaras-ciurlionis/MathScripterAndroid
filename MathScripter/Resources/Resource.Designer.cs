@@ -67,37 +67,82 @@ namespace MathScripter
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int clear = 2130837504;
+			public const int anim = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int delete = 2130837505;
+			public const int back = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int cam = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int less = 2130837507;
+			public const int cameraplus = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int more = 2130837508;
+			public const int clear = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int ok = 2130837509;
+			public const int delete = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int power = 2130837510;
+			public const int edit = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int rect = 2130837511;
+			public const int editplus = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int remove = 2130837512;
+			public const int expression = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int root = 2130837513;
+			public const int graph = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int sqrpower = 2130837514;
+			public const int Icon = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int less = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int minus = 2130837516;
+			
+			// aapt resource value: 0x7f02000d
+			public const int more = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int ok = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int plus = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int power = 2130837520;
+			
+			// aapt resource value: 0x7f020011
+			public const int rect = 2130837521;
+			
+			// aapt resource value: 0x7f020012
+			public const int remove = 2130837522;
+			
+			// aapt resource value: 0x7f020013
+			public const int root = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int solution = 2130837524;
+			
+			// aapt resource value: 0x7f020015
+			public const int sqrpower = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int steps = 2130837526;
+			
+			// aapt resource value: 0x7f020017
+			public const int trash = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int trashblue = 2130837528;
+			
+			// aapt resource value: 0x7f020019
+			public const int zoom = 2130837529;
 			
 			static Drawable()
 			{
@@ -115,8 +160,8 @@ namespace MathScripter
 			// aapt resource value: 0x7f060001
 			public const int AnimationView = 2131099649;
 			
-			// aapt resource value: 0x7f06001a
-			public const int animationButton = 2131099674;
+			// aapt resource value: 0x7f060019
+			public const int animationButton = 2131099673;
 			
 			// aapt resource value: 0x7f060003
 			public const int bitmapView = 2131099651;
@@ -130,8 +175,8 @@ namespace MathScripter
 			// aapt resource value: 0x7f06000e
 			public const int brightnessText = 2131099662;
 			
-			// aapt resource value: 0x7f06001d
-			public const int cameraButton = 2131099677;
+			// aapt resource value: 0x7f06001b
+			public const int cameraButton = 2131099675;
 			
 			// aapt resource value: 0x7f060009
 			public const int cameraView = 2131099657;
@@ -154,11 +199,11 @@ namespace MathScripter
 			// aapt resource value: 0x7f060006
 			public const int editBitmapButton = 2131099654;
 			
-			// aapt resource value: 0x7f06001e
-			public const int editButton = 2131099678;
+			// aapt resource value: 0x7f06001c
+			public const int editButton = 2131099676;
 			
-			// aapt resource value: 0x7f060017
-			public const int expressionButton = 2131099671;
+			// aapt resource value: 0x7f060016
+			public const int expressionButton = 2131099670;
 			
 			// aapt resource value: 0x7f060010
 			public const int expressionEdit = 2131099664;
@@ -166,8 +211,8 @@ namespace MathScripter
 			// aapt resource value: 0x7f06000f
 			public const int expressionView = 2131099663;
 			
-			// aapt resource value: 0x7f06001b
-			public const int graphButton = 2131099675;
+			// aapt resource value: 0x7f06001a
+			public const int graphButton = 2131099674;
 			
 			// aapt resource value: 0x7f060013
 			public const int graphView = 2131099667;
@@ -178,9 +223,6 @@ namespace MathScripter
 			// aapt resource value: 0x7f060011
 			public const int keyboardview = 2131099665;
 			
-			// aapt resource value: 0x7f060016
-			public const int leftPanel = 2131099670;
-			
 			// aapt resource value: 0x7f060015
 			public const int linearLayout1 = 2131099669;
 			
@@ -190,17 +232,14 @@ namespace MathScripter
 			// aapt resource value: 0x7f060000
 			public const int linearLayout3 = 2131099648;
 			
-			// aapt resource value: 0x7f060018
-			public const int resultButton = 2131099672;
+			// aapt resource value: 0x7f060017
+			public const int resultButton = 2131099671;
 			
 			// aapt resource value: 0x7f060014
 			public const int rightGraphPanel = 2131099668;
 			
-			// aapt resource value: 0x7f06001c
-			public const int rightPanel = 2131099676;
-			
-			// aapt resource value: 0x7f060019
-			public const int stepsButton = 2131099673;
+			// aapt resource value: 0x7f060018
+			public const int stepsButton = 2131099672;
 			
 			// aapt resource value: 0x7f06000b
 			public const int textView1 = 2131099659;
