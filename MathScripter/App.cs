@@ -70,6 +70,7 @@ namespace MathScripter
             Container.RegisterType<IEquationStripper, EquationStripper>();
             Container.RegisterType<ICharacterFixer, CharacterFixer>();
             Container.RegisterType<IEqualitySignFinder, EqualitySignFinder>();
+            Container.RegisterType<IExpressionStripper, ExpressionStripper>();
 
             Container.RegisterType<IMonomialResolver, MonomialResolver>();
             Container.RegisterType<IExpressionFactory, ExpressionFactory>();
