@@ -4,6 +4,7 @@ using System.Linq;
 using MathExecutor.Expressions;
 using MathExecutor.Expressions.Arithmetic;
 using MathExecutor.Expressions.Equality;
+using MathExecutor.Expressions.Sets;
 using MathExecutor.Interfaces;
 using MathExecutor.Models;
 
@@ -21,6 +22,10 @@ namespace MathExecutor.Rules.FinalRules
             if (Math.Abs(left.Coefficient - 1) < 0.001)
             {
                 var r = new SqrRootExpression(right);
+                if (right.Coefficient < 0)
+                {
+                    return new InnerRuleResult(new MemberOfExpression(x, new EmptySetExpression()));
+                }
                 var fullResult = new SeparationExpression(
                     new EqualityExpression(x.Clone(true), r.Clone(true)),
                     new EqualityExpression(x.Clone(true), new NegationExpression(r.Clone(true))) 
@@ -28,6 +33,10 @@ namespace MathExecutor.Rules.FinalRules
                 return new InnerRuleResult(fullResult);
             }
             var division = new DivisionExpression(right, left);
+            if (right.Coefficient / left.Coefficient < 0)
+            {
+                return new InnerRuleResult(new MemberOfExpression(x, new EmptySetExpression()));
+            }
             var root = new SqrRootExpression(division);
             var fullResult2 = new SeparationExpression(
                      new EqualityExpression(x.Clone(true), root.Clone(true)),
@@ -51,6 +60,7 @@ namespace MathExecutor.Rules.FinalRules
                    left != null &&
                    right != null &&
                    right.IsNumeral() &&
+                   Math.Abs(left.Coefficient) > 0.001 &&
                    left.HasSingleVariableWithExponent(2);
         }
 
