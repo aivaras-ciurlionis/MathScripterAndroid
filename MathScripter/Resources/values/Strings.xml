@@ -6,5 +6,9 @@
   <string name="Camera">Camera</string>
   <string name="ImageParsingError">Unable to read image. Please try again.</string>
   <string name="EquationParsingError">Error in equation</string>
+  <string name="PointToExpression">Point to equation and tap "Capture".</string>
+  <string name="AdjustContrast">Adjust image using sliders below.</string>
+  <string name="Cancel">Cancel</string>
+  <string name="Edit">Edit</string>
   <color name="white">#FFFFFF</color>
 </resources>

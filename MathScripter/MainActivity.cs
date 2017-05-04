@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.Widget;
 using Android.OS;
 using MathExecutor.Interfaces;
@@ -12,7 +13,7 @@ using MathScripter.Views;
 
 namespace MathScripter
 {
-    [Activity(Label = "MathScripter", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "MathScripter", MainLauncher = true, Icon = "@drawable/expression")]
     public class MainActivity : Activity
     {
         private ImageButton _cameraButton;
@@ -37,7 +38,7 @@ namespace MathScripter
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            _networkDataLoader.LoadData(Assets);
+            _networkDataLoader.LoadData(Assets, GetSystemService(ConnectivityService) as ConnectivityManager);
             SetContentView(Resource.Layout.Main);
 
             _cameraButton = FindViewById<ImageButton>(Resource.Id.cameraButton);

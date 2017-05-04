@@ -126,6 +126,7 @@
     <Compile Include="AnimationActivity.cs" />
     <Compile Include="ExpressionEditActivity.cs" />
     <Compile Include="GraphActivity.cs" />
+    <Compile Include="Interfaces\IDataUpdater.cs" />
     <Compile Include="Interfaces\IEquationKeyResolver.cs" />
     <Compile Include="Interfaces\INetworkDataLoader.cs" />
     <Compile Include="MainActivity.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Providers\CocosRootDrawer.cs" />
     <Compile Include="Providers\CocosTextDrawer.cs" />
     <Compile Include="Providers\CocosFractionDrawer.cs" />
+    <Compile Include="Providers\DataUpdater.cs" />
     <Compile Include="Providers\EquationKeyResolver.cs" />
     <Compile Include="Providers\NetworkDataLoader.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -198,6 +200,10 @@
     <ProjectReference Include="..\MathRecognizer\MathRecognizer.csproj">
       <Project>{3ff2a7a6-2d97-45fe-9173-db1008ab722e}</Project>
       <Name>MathRecognizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MathServerConnector\MathServerConnector.csproj">
+      <Project>{328c620e-c608-4a41-9375-15b4014e9b72}</Project>
+      <Name>MathServerConnector</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

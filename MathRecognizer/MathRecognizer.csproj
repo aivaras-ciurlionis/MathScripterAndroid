@@ -140,6 +140,12 @@
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathServerConnector\MathServerConnector.csproj">
+      <Project>{328c620e-c608-4a41-9375-15b4014e9b72}</Project>
+      <Name>MathServerConnector</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

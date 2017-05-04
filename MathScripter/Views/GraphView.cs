@@ -26,7 +26,7 @@ namespace MathScripter.Views
         {
             Color.DarkBlue,
             Color.DarkRed,
-            Color.Green,
+            Color.Black,
             Color.Orange
         };
 

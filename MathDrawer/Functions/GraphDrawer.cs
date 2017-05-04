@@ -66,7 +66,7 @@ namespace MathDrawer.Functions
             var color = _functionColors[index];
             var points = functionPoints.ToList();
             p.Color = color;
-            p.StrokeWidth = 6;
+            p.StrokeWidth = 8;
             var currentX = StartX;
             for (var i = 0; i < points.Count - 1; i++)
             {

@@ -16,7 +16,7 @@ using Color = Android.Graphics.Color;
 
 namespace MathScripter
 {
-    [Activity(Label = "CameraActivity")]
+    [Activity(Label = "Expression camera")]
     public class CameraActivity : Activity, TextureView.ISurfaceTextureListener, GestureDetector.IOnGestureListener,
         SeekBar.IOnSeekBarChangeListener
     {
@@ -55,7 +55,7 @@ namespace MathScripter
             _boxY = prefs.GetInt("boxY", 200);
             _textureView = FindViewById<TextureView>(Resource.Id.cameraView);
             _textView = FindViewById<TextView>(Resource.Id.textView1);
-            _textView.Text = "Point to equation an tap capture.";
+            _textView.Text = Resources.GetString(Resource.String.PointToExpression);
             _textureView.SurfaceTextureListener = this;
             _gestureDetector = new GestureDetector(this);
 
@@ -120,7 +120,7 @@ namespace MathScripter
             }
             if (pr.SupportedFlashModes != null)
             {
-               pr.FlashMode = Camera.Parameters.FlashModeTorch;
+                pr.FlashMode = Camera.Parameters.FlashModeTorch;
             }
             _camera.SetParameters(pr);
             try
@@ -215,11 +215,11 @@ namespace MathScripter
             RunCamera(_surfaceTexture);
             _textureView.Visibility = ViewStates.Visible;
             _editing = false;
-            _editBitmapButton.Text = "Edit";
+            _editBitmapButton.Text = Resources.GetString(Resource.String.Edit);
             _editPanel.Visibility = ViewStates.Invisible;
             _textView.SetTextColor(Color.White);
             _imageView.SetImageResource(Resource.Drawable.rect);
-            _textView.Text = "Point to equation an tap capture.";
+            _textView.Text = Resources.GetString(Resource.String.PointToExpression);
         }
 
         private void StartBitmapEdit()
@@ -230,9 +230,9 @@ namespace MathScripter
             _textureView.Visibility = ViewStates.Gone;
             _imageView.SetImageBitmap(_editableBitmap);
             _editing = true;
-            _textView.Text = "Adjust image using sliders below";
+            _textView.Text = Resources.GetString(Resource.String.AdjustContrast);
             _textView.SetTextColor(Color.Black);
-            _editBitmapButton.Text = "Cancel";
+            _editBitmapButton.Text = Resources.GetString(Resource.String.Cancel);
             _editPanel.Visibility = ViewStates.Visible;
         }
 
@@ -355,7 +355,7 @@ namespace MathScripter
         {
             _editedBitmap?.Recycle();
             _editedBitmap = BitmapProcessor
-                .ChangeBitmapContrastBrightness(_editableBitmap, _contrastSlider.Progress / 20f ,_brightnessSlider.Progress - 255);
+                .ChangeBitmapContrastBrightness(_editableBitmap, _contrastSlider.Progress / 20f, _brightnessSlider.Progress - 255);
             _imageView.SetImageBitmap(_editedBitmap);
             _contrastText.Text = $"Contrast: {_contrastSlider.Progress}";
             _brightnessText.Text = $"Brightness: {_brightnessSlider.Progress - 255}";

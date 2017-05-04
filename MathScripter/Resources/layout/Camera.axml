@@ -10,13 +10,13 @@
     android:orientation="horizontal"
     >
     <Button
-       android:text="Edit"
+       android:text="@string/Edit"
        android:layout_width="0dp"
        android:layout_height="match_parent"
        android:layout_weight="0.3"
        android:id="@+id/editBitmapButton" />
     <Button
-       android:text="Capture"
+       android:text="@string/CaptureImage"
        android:layout_width="0dp"
        android:layout_height="match_parent"
        android:layout_weight="0.7"
@@ -44,6 +44,10 @@
         android:layout_gravity="center" />
     <TextView
         android:text=""
+        android:shadowColor="@android:color/darker_gray"
+        android:shadowRadius="4"
+        android:shadowDx="4"
+        android:shadowDy="4"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

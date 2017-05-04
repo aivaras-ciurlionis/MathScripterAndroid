@@ -32,6 +32,8 @@ namespace MathScripter
 			global::MathExecutor.Resource.String.Hello = global::MathScripter.Resource.String.Hello;
 			global::MathRecognizer.Resource.String.ApplicationName = global::MathScripter.Resource.String.ApplicationName;
 			global::MathRecognizer.Resource.String.Hello = global::MathScripter.Resource.String.Hello;
+			global::MathServerConnector.Resource.String.ApplicationName = global::MathScripter.Resource.String.ApplicationName;
+			global::MathServerConnector.Resource.String.Hello = global::MathScripter.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -291,14 +293,23 @@ namespace MathScripter
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040007
+			public const int AdjustContrast = 2130968583;
+			
 			// aapt resource value: 0x7f040001
 			public const int ApplicationName = 2130968577;
 			
 			// aapt resource value: 0x7f040003
 			public const int Camera = 2130968579;
 			
+			// aapt resource value: 0x7f040008
+			public const int Cancel = 2130968584;
+			
 			// aapt resource value: 0x7f040002
 			public const int CaptureImage = 2130968578;
+			
+			// aapt resource value: 0x7f040009
+			public const int Edit = 2130968585;
 			
 			// aapt resource value: 0x7f040005
 			public const int EquationParsingError = 2130968581;
@@ -308,6 +319,9 @@ namespace MathScripter
 			
 			// aapt resource value: 0x7f040004
 			public const int ImageParsingError = 2130968580;
+			
+			// aapt resource value: 0x7f040006
+			public const int PointToExpression = 2130968582;
 			
 			static String()
 			{

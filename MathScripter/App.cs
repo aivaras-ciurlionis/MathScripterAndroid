@@ -21,6 +21,8 @@ using MathRecognizer.Segmentation;
 using MathRecognizer.SegmentsRecognition;
 using MathScripter.Interfaces;
 using MathScripter.Providers;
+using MathServerConnector;
+using MathServerConnector.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace MathScripter
@@ -46,6 +48,7 @@ namespace MathScripter
 
             Container.RegisterType<INetworkDataLoader, NetworkDataLoader>();
             Container.RegisterType<IEquationKeyResolver, EquationKeyResolver>();
+            Container.RegisterType<IDataUpdater, DataUpdater>();
 
             Container.RegisterType<IRecognizer, Recognizer>();
             Container.RegisterType<ICenterOfMassComputor, CenterOfMassComputor>();
@@ -100,6 +103,10 @@ namespace MathScripter
             Container.RegisterType<IExpressionDrawer, ExpressionDrawer>();
             Container.RegisterType<IAnimationStepsDrawer, AnimationStepsDrawer>();
             Container.RegisterType<IGraphDrawer, GraphDrawer>();
+
+            Container.RegisterType<IFileUpdater, FileUpdater>();
+            Container.RegisterType<IMathWebClient, MathWebClient>();
+            Container.RegisterType<IImageDataUploader, ImageDataUploader>();
         }
     }
 }
